@@ -1,0 +1,28 @@
+.ButtonStatus{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    cursor: pointer;
+}
+
+.ButtonStatus .Rectangle{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 4px;
+    background: white;
+}
+
+.ButtonStatus .Rectangle-Selected{
+    background: #86A821;
+}
+
+.ButtonStatus .Number-Selected{
+    font-weight: 700;
+}
+
+.ButtonStatus .Text-Selected{
+    font-weight: 700;
+}
