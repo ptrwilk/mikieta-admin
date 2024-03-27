@@ -1,0 +1,14 @@
+.ProductsView{
+    margin: 0 1rem;
+}
+
+.ProductsView h1{
+    font-weight: bold;
+}
+
+.ProductsView .Products{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 2rem;
+}
