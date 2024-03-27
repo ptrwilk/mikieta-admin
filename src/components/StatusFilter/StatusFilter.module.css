@@ -1,0 +1,10 @@
+.StatusFilter{
+    display: flex;
+    gap: 3rem;
+    padding: 1rem;
+    background: rgb(241 245 249);
+}
+
+.StatusFilter .Rectangle{
+    cursor: pointer;
+}

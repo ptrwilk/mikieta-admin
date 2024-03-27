@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import styles from "./Product.module.css";
+import { Rectangle } from "..";
 
 type NumberModel = {
   number: number;
@@ -19,11 +20,9 @@ const Product: React.FC<IProductProps> = ({
 }) => {
   return (
     <div className={styles["Product"]}>
-      <div
-        className={classNames(styles["Rectangle"], {
-          [styles["Selected"]]:
-            numbers?.filter((x) => x.selected).length === numbers?.length,
-        })}
+      <Rectangle
+        className={styles["Rectangle"]}
+        selected={numbers?.filter((x) => x.selected).length === numbers?.length}
       />
       <ul className={styles["Details"]}>
         {details?.map((text, key) => (

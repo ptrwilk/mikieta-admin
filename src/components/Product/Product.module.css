@@ -11,14 +11,6 @@
     position: absolute;
     right: 0.25rem;
     top: 0.25rem;
-    width: 16px;
-    height: 16px;
-    margin-left: auto;
-    border: 1.5px solid rgb(22 163 74);
-}
-
-.Product .Rectangle.Selected{
-    background: rgb(22 163 74);
 }
 
 .Product .Details{
@@ -27,9 +19,6 @@
     padding: 1rem;
     padding-top: 0.5rem;
     margin-right: 1rem;
-}
-
-.Product hr{
 }
 
 .Product .Numbers{

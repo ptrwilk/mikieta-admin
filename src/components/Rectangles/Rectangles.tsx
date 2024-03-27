@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import styles from "./Rectangles.module.css";
+import { Rectangle } from "..";
 
 interface IRectanglesProps {
   amount?: number;
@@ -15,10 +16,9 @@ const Rectangles: React.FC<IRectanglesProps> = ({
       {Array(amount)
         .fill(0)
         .map((_, key) => (
-          <li
-            key={key}
-            className={classNames({ [styles["Selected"]]: key < current })}
-          />
+          <li key={key}>
+            <Rectangle selected={key < current} />
+          </li>
         ))}
     </ul>
   );

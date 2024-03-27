@@ -5,12 +5,6 @@
     width: 100%;
 }
 
-.Rectangles li{
-    width: 16px;
-    height: 16px;
-    border: 1.5px solid rgb(22 163 74);
-}
-
 .Rectangles .Selected{
     background: rgb(22 163 74);
 }
