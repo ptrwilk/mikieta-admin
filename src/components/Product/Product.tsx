@@ -2,20 +2,24 @@ import classNames from "classnames";
 import styles from "./Product.module.css";
 import { Rectangle } from "..";
 
-type NumberModel = {
+export type NumberModel = {
+  id?: string;
   number: number;
   selected: boolean;
 };
 
+export type ProductModel = {
+  details: string[];
+  numbers: NumberModel[];
+};
+
 interface IProductProps {
-  details?: string[];
-  numbers?: NumberModel[];
+  model: ProductModel;
   onNumberClick?: (number: NumberModel) => void;
 }
 
 const Product: React.FC<IProductProps> = ({
-  details,
-  numbers,
+  model: { details, numbers },
   onNumberClick,
 }) => {
   return (

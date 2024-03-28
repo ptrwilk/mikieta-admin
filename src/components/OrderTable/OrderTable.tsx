@@ -75,7 +75,10 @@ const OrderTable: React.FC<IOrderTableProps> = ({ items }) => {
               />
             </TableCell>
             <TableCell>
-              <Rectangles amount={5} current={1} />
+              <Rectangles
+                amount={item.products.length}
+                current={item.products.filter((x) => x.checked).length}
+              />
             </TableCell>
             <TableCell>
               {item.onSitePickup ? "Odbiór osobisty" : "Na wynos"}
