@@ -4,7 +4,6 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import App from "./App";
 import "./styles/global.css";
 import "./styles/theme.css";
-import "ptrwilk-packages/styles";
 
 const router = createBrowserRouter([
   {
