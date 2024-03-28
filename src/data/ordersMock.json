@@ -1,0 +1,59 @@
+[
+  {
+    "id": "1",
+    "number": 1,
+    "name": "Alexander",
+    "address": "Tuwima 1a/8 44-100, Leszczyny",
+    "phone": "+48 511 222 333",
+    "cost": 123,
+    "payed": true,
+    "onSitePickup": false,
+    "status": 0,
+    "products": [
+      {
+        "id": "1a",
+        "name": "Margaritta",
+        "sizeType": 1,
+        "cakeType": 0,
+        "productType": 0,
+        "parentNumber": 1
+      },
+      {
+        "id": "1b",
+        "name": "Hawajska",
+        "sizeType": 0,
+        "cakeType": 1,
+        "productType": 0,
+        "parentNumber": 1,
+        "checked": true
+      }
+    ]
+  },
+  {
+    "id": "2",
+    "number": 2,
+    "name": "Mariusz",
+    "address": "Tuwima 1a/8 44-100, Leszczyny",
+    "phone": "+48 511 222 444",
+    "cost": 50,
+    "payed": false,
+    "onSitePickup": true,
+    "status": 0,
+    "products": [
+      {
+        "id": "2a",
+        "name": "Margaritta",
+        "sizeType": 1,
+        "cakeType": 0,
+        "productType": 0,
+        "parentNumber": 2
+      },
+      {
+        "id": "2b",
+        "name": "Piwo Warka 0.5L",
+        "productType": 1,
+        "parentNumber": 2
+      }
+    ]
+  }
+]
