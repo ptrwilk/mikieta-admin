@@ -1,0 +1,19 @@
+.Rectangle{
+    position: relative;
+    width: 16px;
+    height: 16px;
+    border: 1.5px solid rgb(22 163 74);
+}
+
+.Rectangle.Selected{
+    background: rgb(22 163 74);
+}
+
+.Rectangle .Border{
+    position: absolute;
+    top: -5.5px;
+    right: -5px;
+    width: 24px;
+    height: 24px;
+    border: 2px solid black;
+}

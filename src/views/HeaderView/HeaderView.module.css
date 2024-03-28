@@ -1,0 +1,13 @@
+.HeaderView{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 64px;
+    background: #E4E6EA;
+}
+
+.HeaderView ul{
+    display: flex;
+    justify-content: space-between;
+    width: 1440px;
+}
