@@ -4,6 +4,7 @@ import ordersMock from "../data/ordersMock.json";
 
 type AppState = {
   orders: OrderModel[];
+  selectedOrder?: OrderModel;
 };
 
 const AppContext = createContext<

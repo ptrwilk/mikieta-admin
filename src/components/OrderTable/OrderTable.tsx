@@ -14,9 +14,15 @@ import { DropdownItem, DropdownSwitch, Rectangles } from "..";
 
 interface IOrderTableProps {
   items?: OrderModel[];
+  selectedItem?: OrderModel;
+  onRowClick?: (item: OrderModel) => void;
 }
 
-const OrderTable: React.FC<IOrderTableProps> = ({ items }) => {
+const OrderTable: React.FC<IOrderTableProps> = ({
+  items,
+  selectedItem,
+  onRowClick,
+}) => {
   const payed: DropdownItem = {
     text: "Zapłacono",
     className: "font-bold text-green-600",
@@ -61,7 +67,10 @@ const OrderTable: React.FC<IOrderTableProps> = ({ items }) => {
         {items?.map((item, key) => (
           <TableRow
             key={key}
-            className={classNames({ "bg-slate-100": key % 2 === 0 })}
+            className={classNames("cursor-pointer", {
+              "bg-slate-200": item.id === selectedItem?.id,
+            })}
+            onClick={() => item && onRowClick?.(item)}
           >
             <TableCell>#{item.number}</TableCell>
             <TableCell>{item.name}</TableCell>
@@ -76,8 +85,8 @@ const OrderTable: React.FC<IOrderTableProps> = ({ items }) => {
             </TableCell>
             <TableCell>
               <Rectangles
-                amount={item.products.length}
-                current={item.products.filter((x) => x.checked).length}
+                amount={item.products?.length}
+                current={item.products?.filter((x) => x.checked).length}
               />
             </TableCell>
             <TableCell>

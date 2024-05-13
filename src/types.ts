@@ -14,7 +14,7 @@ export type OrderModel = {
   payed: boolean;
   onSitePickup: boolean;
   status: Status;
-  products: ProductModel[];
+  products?: ProductModel2[];
 };
 
 export type ProductModel = {
@@ -25,6 +25,14 @@ export type ProductModel = {
   productType: ProductType;
   parentNumber: number;
   checked?: boolean;
+};
+
+export type ProductModel2 = {
+  id: string;
+  name: string;
+  type: ProductType2;
+  price: number;
+  checked: boolean;
 };
 
 export enum SizeType {
@@ -41,4 +49,13 @@ export enum CakeType {
 export enum ProductType {
   Pizza,
   Drink,
+}
+
+export enum ProductType2 {
+  PizzaSmall,
+  PizzaMedium,
+  PizzaBig,
+  Drink,
+  Sauce,
+  Snack,
 }
