@@ -5,11 +5,13 @@ import App from "./App";
 import "./styles/global.css";
 import "./styles/theme.css";
 import { AppContextProvider } from "./context/AppContext";
+import { get } from "./apihelper";
 
 const router = createBrowserRouter([
   {
     element: <App />,
     path: "/",
+    loader: () => get("order"),
   },
 ]);
 

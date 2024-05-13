@@ -85,8 +85,8 @@ const OrderTable: React.FC<IOrderTableProps> = ({
             </TableCell>
             <TableCell>
               <Rectangles
-                amount={item.products?.length}
-                current={item.products?.filter((x) => x.checked).length}
+                amount={item.totalProducts}
+                current={item.completedProducts}
               />
             </TableCell>
             <TableCell>

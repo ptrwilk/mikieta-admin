@@ -6,27 +6,26 @@ import { useAppContext } from "@/context/AppContext";
 const ProductsView = () => {
   const [app, updateApp] = useAppContext();
 
-  const [selectedFilterIndex, setSelectedFilterIndex] = useState<
-    number | undefined
-  >();
+  const [status, setStatus] = useState<boolean | undefined>(undefined);
 
   return (
     <div className={styles["ProductsView"]}>
       <div className={styles["Header"]}>
         <h1>Produkty</h1>
         <StatusFilter
-          selectedIndex={selectedFilterIndex}
-          onClick={(index) =>
-            setSelectedFilterIndex((prev) =>
-              prev === index ? undefined : index
-            )
+          status={status}
+          onClick={(status) =>
+            setStatus((prev) => (prev === status ? undefined : status))
           }
         />
       </div>
-      <ProductTable
-        className={styles["Products"]}
-        items={app!.selectedOrder?.products}
-      />
+      <div className={styles["Products"]}>
+        <ProductTable
+          items={app!.selectedOrder?.products?.filter(
+            (x) => status === undefined || x.ready === status
+          )}
+        />
+      </div>
     </div>
   );
 };
