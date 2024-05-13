@@ -28,13 +28,14 @@ const ProductTable: React.FC<IProductTableProps> = ({ className, items }) => {
           <TableHead className="w-[100px]">Typ</TableHead>
           <TableHead className="w-[100px]">Rozmiar</TableHead>
           <TableHead className="w-[100px]">Cena</TableHead>
+          <TableHead className="w-[100px]">Ilość</TableHead>
           <TableHead className="w-[100px]">Gotowe</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
         {items?.map((item, key) => (
           <TableRow
-            className={classNames({ "bg-green-200": item.checked })}
+            className={classNames({ "bg-green-200": item.ready })}
             key={key}
           >
             <TableCell>
@@ -49,11 +50,15 @@ const ProductTable: React.FC<IProductTableProps> = ({ className, items }) => {
             <TableCell>
               <p>{productTypeToSize(item.type)}</p>
             </TableCell>
+
             <TableCell>
               <p>{item.price?.toFixed(2)} zł</p>
             </TableCell>
             <TableCell>
-              <Rectangle className="cursor-pointer" selected={item.checked} />
+              <p>{item.quantity}</p>
+            </TableCell>
+            <TableCell>
+              <Rectangle className="cursor-pointer" selected={item.ready} />
             </TableCell>
           </TableRow>
         ))}

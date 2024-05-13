@@ -1,8 +1,13 @@
-.OrderView{
+.OrderView {
 }
 
-.OrderView h1{
-    margin-left: 1rem;
-    margin-bottom: 1rem;
-    font-weight: 700;
+.OrderView .OrderTable {
+  height: 40vh;
+  overflow: auto;
+}
+
+.OrderView h1 {
+  margin-left: 1rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
 }

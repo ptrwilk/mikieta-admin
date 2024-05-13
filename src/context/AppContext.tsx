@@ -1,6 +1,5 @@
 import { OrderModel } from "@/types";
 import { createContext, useContext, useState } from "react";
-import ordersMock from "../data/ordersMock.json";
 
 type AppState = {
   orders: OrderModel[];
@@ -21,7 +20,7 @@ export const useAppContext = () => useContext(AppContext);
 
 export const AppContextProvider = ({ children }: { children: any }) => {
   const [state, setState] = useState<AppState>({
-    orders: ordersMock,
+    orders: [],
   });
 
   const updateState = <K extends keyof AppState>(

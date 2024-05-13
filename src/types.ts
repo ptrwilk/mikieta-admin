@@ -15,6 +15,8 @@ export type OrderModel = {
   onSitePickup: boolean;
   status: Status;
   products?: ProductModel2[];
+  totalProducts: number;
+  completedProducts: number;
 };
 
 export type ProductModel = {
@@ -32,7 +34,8 @@ export type ProductModel2 = {
   name: string;
   type: ProductType2;
   price: number;
-  checked: boolean;
+  quantity: number;
+  ready: boolean;
 };
 
 export enum SizeType {

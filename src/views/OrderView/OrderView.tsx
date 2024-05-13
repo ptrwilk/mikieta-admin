@@ -1,54 +1,37 @@
+import { get } from "@/apihelper";
 import styles from "./OrderView.module.css";
 import { OrderTable } from "@/components";
 import { useAppContext } from "@/context/AppContext";
-import { OrderModel, ProductType2 } from "@/types";
+import { OrderModel, ProductModel2 } from "@/types";
+import { useLoaderData } from "react-router-dom";
 
 const OrderView = () => {
   const [app, updateApp] = useAppContext();
 
-  const handleRowClick = (item: OrderModel) => {
+  const orders = useLoaderData() as OrderModel[];
+
+  const handleRowClick = async (item: OrderModel) => {
     if (item.id === app!.selectedOrder?.id) {
       return;
     }
 
-    const newItem = {
-      ...item,
-      products: [
-        {
-          name: "Pizza",
-          id: "1",
-          price: 20,
-          checked: false,
-          type: ProductType2.Drink,
-        },
-        {
-          name: "Super ekstra pizza i cos tam jeszcze",
-          id: "2",
-          price: 22,
-          checked: true,
-          type: ProductType2.PizzaBig,
-        },
-        {
-          name: "Super",
-          id: "3",
-          price: 22,
-          checked: false,
-          type: ProductType2.PizzaBig,
-        },
-      ],
-    };
+    const response = await get(`order/${item.id}`);
 
-    updateApp("selectedOrder", newItem);
+    const products = (await response.json()) as ProductModel2[];
+
+    updateApp("selectedOrder", { ...item, products });
   };
 
   return (
     <div className={styles["OrderView"]}>
       <h1>Zamówienia</h1>
-      <OrderTable
-        items={app?.orders}
-        selectedItem={app?.selectedOrder}
-        onRowClick={handleRowClick}
-      />
+      <div className={styles["OrderTable"]}>
+        <OrderTable
+          items={orders}
+          selectedItem={app?.selectedOrder}
+          onRowClick={handleRowClick}
+        />
+      </div>
     </div>
   );
 };
