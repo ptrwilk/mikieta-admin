@@ -13,18 +13,15 @@
       {
         "id": "1a",
         "name": "Margaritta",
-        "sizeType": 1,
-        "cakeType": 0,
-        "productType": 0,
-        "parentNumber": 1
+        "type": 1,
+        "price": 25,
+        "checked": false
       },
       {
         "id": "1b",
         "name": "Hawajska",
-        "sizeType": 0,
-        "cakeType": 1,
-        "productType": 0,
-        "parentNumber": 1,
+        "type": 0,
+        "price": 25,
         "checked": true
       }
     ]
@@ -41,18 +38,18 @@
     "status": 0,
     "products": [
       {
-        "id": "2a",
-        "name": "Margaritta",
-        "sizeType": 1,
-        "cakeType": 0,
-        "productType": 0,
-        "parentNumber": 2
+        "id": "1b",
+        "name": "Hawajska",
+        "type": 0,
+        "price": 25,
+        "checked": true
       },
       {
-        "id": "2b",
-        "name": "Piwo Warka 0.5L",
-        "productType": 1,
-        "parentNumber": 2
+        "id": "1b",
+        "name": "Hawajska",
+        "type": 0,
+        "price": 25,
+        "checked": true
       }
     ]
   }

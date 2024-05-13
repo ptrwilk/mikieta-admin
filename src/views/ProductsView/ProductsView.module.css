@@ -1,20 +1,17 @@
-.ProductsView{
-    margin: 0 1rem;
+.ProductsView {
+  margin: 0 1rem;
 }
 
-.ProductsView .Header{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.ProductsView .Header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.ProductsView h1{
-    font-weight: bold;
+.ProductsView h1 {
+  font-weight: bold;
 }
 
-.ProductsView .Products{
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    margin-top: 2rem;
+.ProductsView .Products {
+  margin-top: 2rem;
 }
