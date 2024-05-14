@@ -6,12 +6,18 @@ import "./styles/global.css";
 import "./styles/theme.css";
 import { AppContextProvider } from "./context/AppContext";
 import { get } from "./apihelper";
+import { OrderModel } from "./types";
 
 const router = createBrowserRouter([
   {
     element: <App />,
     path: "/",
-    loader: () => get("order"),
+    loader: () =>
+      get("order", (item: OrderModel) => ({
+        ...item,
+        createdAt: new Date(item.createdAt),
+        deliveryAt: new Date(item.deliveryAt),
+      })),
   },
 ]);
 

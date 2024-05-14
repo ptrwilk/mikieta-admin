@@ -15,9 +15,7 @@ const OrderView = () => {
       return;
     }
 
-    const response = await get(`order/${item.id}`);
-
-    const products = (await response.json()) as ProductModel2[];
+    const products = (await get(`order/${item.id}`)) as ProductModel2[];
 
     updateApp("selectedOrder", { ...item, products });
   };

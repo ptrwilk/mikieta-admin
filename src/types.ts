@@ -17,6 +17,8 @@ export type OrderModel = {
   products?: ProductModel2[];
   totalProducts: number;
   completedProducts: number;
+  deliveryAt: Date;
+  createdAt: Date;
 };
 
 export type ProductModel = {

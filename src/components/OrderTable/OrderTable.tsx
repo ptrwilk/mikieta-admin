@@ -10,7 +10,7 @@ import {
 } from "../ui/table";
 import styles from "./OrderTable.module.css";
 import classNames from "classnames";
-import { DropdownItem, DropdownSwitch, Rectangles } from "..";
+import { DateTimePicker, DropdownItem, DropdownSwitch, Rectangles } from "..";
 
 interface IOrderTableProps {
   items?: OrderModel[];
@@ -56,6 +56,8 @@ const OrderTable: React.FC<IOrderTableProps> = ({
           <TableHead className="w-[100px]">Imię</TableHead>
           <TableHead className="w-[200px]">Adres</TableHead>
           <TableHead className="w-[150px]">Telefon</TableHead>
+          <TableHead className="w-[150px]">Godzina zamówienia</TableHead>
+          <TableHead className="w-[150px]">Godzina dostawy</TableHead>
           <TableHead className="w-[100px]">Cena</TableHead>
           <TableHead className="w-[150px]">Płatność</TableHead>
           <TableHead className="w-[250px]">Klocki</TableHead>
@@ -76,6 +78,12 @@ const OrderTable: React.FC<IOrderTableProps> = ({
             <TableCell>{item.name}</TableCell>
             <TableCell>{item.address}</TableCell>
             <TableCell>{item.phone}</TableCell>
+            <TableCell>
+              <DateTimePicker readonly date={item.createdAt} />
+            </TableCell>
+            <TableCell>
+              <DateTimePicker date={item.deliveryAt} />
+            </TableCell>
             <TableCell>{item.cost} zł</TableCell>
             <TableCell>
               <DropdownSwitch
