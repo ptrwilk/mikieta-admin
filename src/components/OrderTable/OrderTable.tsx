@@ -10,42 +10,34 @@ import {
 } from "../ui/table";
 import styles from "./OrderTable.module.css";
 import classNames from "classnames";
-import { DateTimePicker, DropdownItem, DropdownSwitch, Rectangles } from "..";
+import { DateTimePicker, DropdownSwitch, Rectangles } from "..";
 
 interface IOrderTableProps {
   items?: OrderModel[];
   selectedItem?: OrderModel;
   onRowClick?: (item: OrderModel) => void;
+  onUpdate?: (item: OrderModel) => void;
 }
 
 const OrderTable: React.FC<IOrderTableProps> = ({
   items,
   selectedItem,
   onRowClick,
+  onUpdate,
 }) => {
-  const payed: DropdownItem = {
-    text: "Zapłacono",
-    className: "font-bold text-green-600",
-  };
-  const notPayed: DropdownItem = {
-    text: "Nie zapłacono",
-    className: "font-normal",
-  };
+  const payedOptions = [
+    { label: "Zapłacono", value: true },
+    { label: "Nie zapłacono", value: false },
+  ];
 
-  const waiting: DropdownItem = {
-    text: "Oczekujące",
-    className: "font-bold",
-  };
+  const statusOptions = [
+    { label: "Oczekujące", value: Status.Waiting },
+    { label: "W Przygotowaniu", value: Status.Preparing },
+    { label: "Gotowe", value: Status.Ready },
+  ];
 
-  const preparing: DropdownItem = {
-    text: "W Przygotowaniu",
-    className: "font-bold",
-  };
-
-  const ready: DropdownItem = {
-    text: "Gotowe",
-    className: "font-bold",
-  };
+  //TODO: jak conajmniej jeden produkt juz zostal
+  //dodany to nie mozna zmienic statusu na oczekujace
 
   return (
     <Table className={styles["OrderTable"]}>
@@ -82,13 +74,25 @@ const OrderTable: React.FC<IOrderTableProps> = ({
               <DateTimePicker readonly date={item.createdAt} />
             </TableCell>
             <TableCell>
-              <DateTimePicker date={item.deliveryAt} />
+              <DateTimePicker
+                date={item.deliveryAt}
+                onDateChange={(date) =>
+                  onUpdate?.({ ...item, deliveryAt: date! })
+                }
+              />
             </TableCell>
             <TableCell>{item.cost} zł</TableCell>
             <TableCell>
               <DropdownSwitch
-                items={[payed, notPayed]}
-                selectedItem={item.payed ? payed : notPayed}
+                className={classNames({
+                  "font-bold text-green-600": item.payed,
+                  "font-normal": !item.payed,
+                })}
+                options={payedOptions}
+                selectedValue={item.payed}
+                onSelectionClick={(z) =>
+                  onUpdate?.({ ...item, payed: z.value })
+                }
               />
             </TableCell>
             <TableCell>
@@ -102,20 +106,18 @@ const OrderTable: React.FC<IOrderTableProps> = ({
             </TableCell>
             <TableCell className="text-right">
               <DropdownSwitch
-                items={[waiting, preparing, ready]}
-                selectedItem={
+                className="font-bold"
+                options={statusOptions}
+                selectedValue={item.status}
+                excludedValues={
                   item.status === Status.Waiting
-                    ? waiting
+                    ? [Status.Ready]
                     : item.status === Status.Preparing
-                    ? preparing
-                    : ready
+                    ? [Status.Waiting, Status.Ready]
+                    : [Status.Waiting]
                 }
-                excludedItems={
-                  item.status === Status.Waiting
-                    ? [preparing]
-                    : item.status === Status.Ready
-                    ? [preparing]
-                    : []
+                onSelectionClick={(z) =>
+                  onUpdate?.({ ...item, status: z.value })
                 }
               />
             </TableCell>

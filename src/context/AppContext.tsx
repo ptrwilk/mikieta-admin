@@ -27,7 +27,7 @@ export const AppContextProvider = ({ children }: { children: any }) => {
     stateKey: K,
     newValue: AppState[K]
   ) => {
-    setState({ ...state, [stateKey]: newValue });
+    setState((prev) => ({ ...prev, [stateKey]: newValue }));
   };
 
   return (
