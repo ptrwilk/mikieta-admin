@@ -17,6 +17,8 @@ export const get = (path: string, convert?: (item: any) => any) => {
       });
 
       return newArray;
+    } else if (convert) {
+      return convert(res);
     }
 
     return res;
@@ -24,6 +26,7 @@ export const get = (path: string, convert?: (item: any) => any) => {
 };
 
 export const post = (path: string, body: any) => execute("POST", path, body);
+export const put = (path: string, body: any) => execute("PUT", path, body);
 
 const execute = (method: string, path: string, body: any, param?: string) => {
   const p = param ? `/${param}` : "";

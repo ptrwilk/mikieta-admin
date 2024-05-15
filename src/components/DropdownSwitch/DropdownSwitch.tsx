@@ -6,45 +6,49 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 
-export type DropdownItem = {
-  text: string;
-  className?: string;
+export type DropdownOption = {
+  value: any;
+  label: string;
 };
 
 interface IDropdownSwitchProps {
-  items?: DropdownItem[];
-  selectedItem?: DropdownItem;
-  excludedItems?: DropdownItem[];
-  onSelectionClick?: (item: DropdownItem) => void;
+  className?: string;
+  options?: DropdownOption[];
+  selectedValue?: any;
+  excludedValues?: any[];
+  onSelectionClick?: (item: DropdownOption) => void;
 }
 
 const DropdownSwitch: React.FC<IDropdownSwitchProps> = ({
-  items = [],
-  selectedItem,
-  excludedItems = [],
+  className,
+  options = [],
+  selectedValue,
+  excludedValues = [],
   onSelectionClick,
 }) => {
+  const label = options.find((x) => x.value === selectedValue)?.label;
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className={selectedItem?.className}>
-          {selectedItem?.text}
+        <Button variant="ghost" className={className}>
+          {label}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        {items
-          .filter((x) => x.text !== selectedItem?.text)
+        {options
+          .filter((x) => x.label !== label)
           .filter((x) =>
-            excludedItems.length === 0
+            excludedValues.length === 0
               ? x
-              : excludedItems?.some((y) => y.text === x.text)
+              : excludedValues?.some((y) => y !== x.value)
           )
-          .map((item, key) => (
+          .map((option, key) => (
             <DropdownMenuItem
               key={key}
-              onClick={() => onSelectionClick?.(item)}
+              onClick={() => onSelectionClick?.(option)}
             >
-              {item.text}
+              {option.label}
             </DropdownMenuItem>
           ))}
       </DropdownMenuContent>

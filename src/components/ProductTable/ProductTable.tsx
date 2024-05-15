@@ -15,9 +15,14 @@ import classNames from "classnames";
 interface IProductTableProps {
   className?: string;
   items?: ProductModel2[];
+  onUpdate?: (item: ProductModel2) => void;
 }
 
-const ProductTable: React.FC<IProductTableProps> = ({ className, items }) => {
+const ProductTable: React.FC<IProductTableProps> = ({
+  className,
+  items,
+  onUpdate,
+}) => {
   return (
     <Table className={classNames(className, styles["ProductTable"])}>
       <TableCaption>A list of your recent invoices.</TableCaption>
@@ -50,7 +55,6 @@ const ProductTable: React.FC<IProductTableProps> = ({ className, items }) => {
             <TableCell>
               <p>{productTypeToSize(item.type)}</p>
             </TableCell>
-
             <TableCell>
               <p>{item.price?.toFixed(2)} zł</p>
             </TableCell>
@@ -58,7 +62,11 @@ const ProductTable: React.FC<IProductTableProps> = ({ className, items }) => {
               <p>{item.quantity}</p>
             </TableCell>
             <TableCell>
-              <Rectangle className="cursor-pointer" selected={item.ready} />
+              <Rectangle
+                className="cursor-pointer"
+                selected={item.ready}
+                onClick={() => onUpdate?.({ ...item, ready: !item.ready })}
+              />
             </TableCell>
           </TableRow>
         ))}
