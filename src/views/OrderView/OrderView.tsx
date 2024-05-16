@@ -64,7 +64,7 @@ const OrderView = () => {
       <h1>Zamówienia</h1>
       <div className={styles["OrderTable"]}>
         <OrderTable
-          items={app?.orders}
+          items={app?.orders.filter((x) => x.status === app.selectedStatus)}
           selectedItem={app?.selectedOrder}
           onRowClick={handleRowClick}
           onUpdate={handleUpdate}
