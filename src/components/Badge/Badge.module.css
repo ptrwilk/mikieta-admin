@@ -1,0 +1,22 @@
+.Badge {
+  position: relative;
+}
+
+.Badge .Circle {
+  position: absolute;
+  top: -5px;
+  right: -24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgb(19, 150, 67);
+}
+
+.Badge .Circle p {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-white);
+}

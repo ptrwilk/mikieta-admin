@@ -3,17 +3,36 @@ import styles from "./OrderView.module.css";
 import { OrderTable } from "@/components";
 import { useAppContext } from "@/context/AppContext";
 import { OrderModel, ProductModel2 } from "@/types";
-import { useLoaderData } from "react-router-dom";
-import { useEffect } from "react";
+import { useToast } from "@/components/ui/use-toast";
+import { useSignalR } from "ptrwilk-packages";
 
 const OrderView = () => {
   const [app, updateApp] = useAppContext();
 
-  const data = useLoaderData() as OrderModel[];
+  const { toast } = useToast();
 
-  useEffect(() => {
-    updateApp("orders", data);
-  }, []);
+  useSignalR(
+    {
+      url: `${import.meta.env.VITE_API_URL}/messageHub`,
+    },
+    [
+      {
+        methodName: "OrderMade",
+        callback: () => {
+          toast({
+            title: "Nowe zamówienie",
+            description: "Nowe zamówienie znajduje się w sekcji oczekujące.",
+            open: true,
+          });
+
+          updateApp(
+            "newOrdersAmount",
+            (prev) => (prev.newOrdersAmount || 0) + 1
+          );
+        },
+      },
+    ]
+  );
 
   const handleRowClick = async (item: OrderModel) => {
     if (item.id === app!.selectedOrder?.id) {

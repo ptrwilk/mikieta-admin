@@ -1,5 +1,7 @@
 // const token = () => localStorage.getItem("token");
 
+import { OrderModel } from "./types";
+
 const url = import.meta.env.VITE_API_URL;
 
 export const get = (path: string, convert?: (item: any) => any) => {
@@ -38,6 +40,13 @@ const execute = (method: string, path: string, body: any, param?: string) => {
     body: JSON.stringify(body),
   });
 };
+
+export const getOrders = () =>
+  get("order", (item: OrderModel) => ({
+    ...item,
+    createdAt: new Date(item.createdAt),
+    deliveryAt: new Date(item.deliveryAt),
+  }));
 
 function isArray(value: any) {
   return value instanceof Array;
