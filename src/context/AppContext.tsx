@@ -4,6 +4,7 @@ import { createContext, useContext, useState } from "react";
 type AppState = {
   orders: OrderModel[];
   selectedOrder?: OrderModel;
+  newOrdersAmount?: number;
 };
 
 const AppContext = createContext<
@@ -11,7 +12,7 @@ const AppContext = createContext<
     AppState | null,
     updateState: <K extends keyof AppState>(
       stateKey: K,
-      newValue: AppState[K]
+      newValue: AppState[K] | ((state: AppState) => AppState[K])
     ) => void
   ]
 >([null, () => {}]);
@@ -25,9 +26,13 @@ export const AppContextProvider = ({ children }: { children: any }) => {
 
   const updateState = <K extends keyof AppState>(
     stateKey: K,
-    newValue: AppState[K]
+    newValue: AppState[K] | ((state: AppState) => AppState[K])
   ) => {
-    setState((prev) => ({ ...prev, [stateKey]: newValue }));
+    if (typeof newValue === "function" && newValue !== undefined) {
+      setState((prev) => ({ ...prev, [stateKey]: newValue(prev) }));
+    } else {
+      setState((prev) => ({ ...prev, [stateKey]: newValue }));
+    }
   };
 
   return (
