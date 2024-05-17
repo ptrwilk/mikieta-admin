@@ -1,0 +1,22 @@
+.FilterTextInput{
+    position: relative;
+}
+
+.FilterTextInput .Prompt{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    padding: 0.5rem;
+    height: 200px;
+    width: 100%;
+    background: white;
+    cursor: default;
+    overflow-y: auto;
+    border: 1.5px solid #d3d3d3;
+    border-top: 0;
+}
+
+.FilterTextInput .Prompt .Selected{
+    background: #d3d3d3;
+}

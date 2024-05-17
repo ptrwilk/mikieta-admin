@@ -8,7 +8,7 @@ export type OrderModel = {
   id: string;
   number: number;
   name: string;
-  address: string;
+  address: AddressModel;
   phone: string;
   cost: number;
   payed: boolean;
@@ -38,6 +38,15 @@ export type ProductModel2 = {
   price: number;
   quantity: number;
   ready: boolean;
+};
+
+export type AddressModel = {
+  city?: string;
+  homeNumber?: string;
+  street?: string;
+  flatNumber?: string;
+  floor?: string;
+  text?: string;
 };
 
 export enum SizeType {
