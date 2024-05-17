@@ -1,4 +1,4 @@
-import { get, put } from "@/apihelper";
+import { get, put, putOrder } from "@/apihelper";
 import styles from "./OrderView.module.css";
 import { OrderTable } from "@/components";
 import { useAppContext } from "@/context/AppContext";
@@ -50,12 +50,12 @@ const OrderView = () => {
     const index = app?.orders?.findIndex((x) => x.id === item.id);
 
     if (index !== undefined) {
+      const order = (await putOrder(item)) as OrderModel;
+
       const newOrders = [...app!.orders];
-      newOrders[index] = item;
+      newOrders[index] = order;
 
       updateApp("orders", newOrders);
-
-      await put("order", item);
     }
   };
 

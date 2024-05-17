@@ -8,3 +8,5 @@ export * from "./StatusFilter/StatusFilter";
 export * from "./ProductTable/ProductTable";
 export * from "./DateTimePicker/DateTimePicker";
 export * from "./Badge/Badge";
+export * from "./AddressDialog/AddressDialog";
+export * from "./TextInput/TextInput";
