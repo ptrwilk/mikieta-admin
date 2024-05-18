@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { TimePickerDemo } from "../ui/time-picker-demo";
 import styles from "./DateTimePicker.module.css";
 import classNames from "classnames";
+import { useState } from "react";
 
 interface IDateTimePickerProsp {
   caption?: string;
@@ -25,19 +26,39 @@ const DateTimePicker: React.FC<IDateTimePickerProsp> = ({
   readonly,
   onDateChange,
 }) => {
+  const [open, setOpen] = useState(false);
+  const [dateState, setDateState] = useState<Date | undefined>(date);
+
   const formatDate = (date: Date) =>
     date.getDate() === new Date().getDate()
       ? format(date, "HH:mm:ss")
       : format(date, "PPP HH:mm:ss");
 
+  const handleDateChange = (date?: Date) => {
+    setDateState(date);
+  };
+
+  const handleConfirm = () => {
+    onDateChange?.(dateState);
+    setOpen(false);
+  };
+
+  const handleOpenChange = (isOpen: boolean) => {
+    setOpen(isOpen);
+    setDateState(date);
+  };
+
   return (
     <>
       {readonly ? (
-        <p>{formatDate(date!)}</p>
+        <p>{formatDate(dateState!)}</p>
       ) : (
-        <Popover>
+        <Popover open={open} onOpenChange={handleOpenChange}>
           <PopoverTrigger asChild className={styles["DateTimePicker"]}>
-            <div className="flex flex-col items-start">
+            <div
+              className="flex flex-col items-start"
+              onClick={() => setOpen(true)}
+            >
               {caption && (
                 <p
                   className={classNames(styles["Caption"], {
@@ -51,11 +72,11 @@ const DateTimePicker: React.FC<IDateTimePickerProsp> = ({
                 variant={"outline"}
                 className={cn(
                   "w-full justify-start text-left font-normal",
-                  !date && "text-muted-foreground"
+                  !dateState && "text-muted-foreground"
                 )}
               >
                 {/* <CalendarIcon className="mr-2 h-4 w-4" /> */}
-                {date ? formatDate(date!) : <span>Pick a date</span>}
+                {dateState ? formatDate(dateState!) : <span>Pick a date</span>}
               </Button>
 
               {errorMessage && error && (
@@ -66,12 +87,26 @@ const DateTimePicker: React.FC<IDateTimePickerProsp> = ({
           <PopoverContent className="w-auto p-0">
             <Calendar
               mode="single"
-              selected={date}
-              onSelect={onDateChange}
+              selected={dateState}
+              onSelect={(e) =>
+                handleDateChange(
+                  new Date(
+                    e!.getFullYear(),
+                    e!.getMonth(),
+                    e!.getDate(),
+                    dateState!.getHours(),
+                    dateState!.getMinutes(),
+                    dateState!.getSeconds()
+                  )
+                )
+              }
               initialFocus
             />
-            <div className="p-3 border-t border-border">
-              <TimePickerDemo setDate={(e) => onDateChange?.(e)} date={date} />
+            <div className="flex justify-between p-3 border-t border-border">
+              <TimePickerDemo setDate={handleDateChange} date={dateState} />
+              <Button className="self-end" onClick={handleConfirm}>
+                OK
+              </Button>
             </div>
           </PopoverContent>
         </Popover>
