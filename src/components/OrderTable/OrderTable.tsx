@@ -1,4 +1,4 @@
-import { AddressModel, OrderModel, Status } from "@/types";
+import { AddressModel, DeliveryMethod, OrderModel, Status } from "@/types";
 import {
   Table,
   TableBody,
@@ -128,7 +128,11 @@ const OrderTable: React.FC<IOrderTableProps> = ({
                 />
               </TableCell>
               <TableCell>
-                {item.onSitePickup ? "Odbiór osobisty" : "Na wynos"}
+                {item.deliveryMethod === DeliveryMethod.Delivery
+                  ? "Na wynos"
+                  : item.deliveryMethod === DeliveryMethod.TakeAway
+                  ? "Odbiór osobisty"
+                  : "Na miejscu"}
               </TableCell>
               <TableCell className="text-right">
                 <DropdownSwitch
