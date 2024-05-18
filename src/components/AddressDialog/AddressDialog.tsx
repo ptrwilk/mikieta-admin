@@ -31,13 +31,13 @@ const AddressDialog: React.FC<IAddressDialog> = ({
         </DialogHeader>
         <ul className="flex flex-col gap-4 mt-4">
           <li>
+            <TextInput captionTop caption="Miasto" {...city} />
+          </li>
+          <li>
             <TextInput captionTop caption="Ulica" {...street} />
           </li>
           <li>
             <TextInput captionTop caption="Numer domu" {...homeNumber} />
-          </li>
-          <li>
-            <TextInput captionTop caption="Miasto" {...city} />
           </li>
           <li>
             <TextInput captionTop caption="Numer mieszkania" {...flatNumber} />
