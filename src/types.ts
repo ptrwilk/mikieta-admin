@@ -12,7 +12,7 @@ export type OrderModel = {
   phone: string;
   cost: number;
   payed: boolean;
-  onSitePickup: boolean;
+  deliveryMethod: DeliveryMethod;
   status: Status;
   products?: ProductModel2[];
   totalProducts: number;
@@ -48,6 +48,12 @@ export type AddressModel = {
   floor?: string;
   text?: string;
 };
+
+export enum DeliveryMethod {
+  Delivery,
+  TakeAway,
+  DinningIn,
+}
 
 export enum SizeType {
   Small,
