@@ -1,4 +1,3 @@
-import { CalendarIcon } from "lucide-react";
 import { Button } from "../ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Calendar } from "../ui/calendar";
@@ -7,7 +6,7 @@ import { cn } from "@/lib/utils";
 import { TimePickerDemo } from "../ui/time-picker-demo";
 import styles from "./DateTimePicker.module.css";
 import classNames from "classnames";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface IDateTimePickerProsp {
   caption?: string;
@@ -29,6 +28,10 @@ const DateTimePicker: React.FC<IDateTimePickerProsp> = ({
   const [open, setOpen] = useState(false);
   const [dateState, setDateState] = useState<Date | undefined>(date);
 
+  useEffect(() => {
+    setDateState(date);
+  }, [date]);
+
   const formatDate = (date: Date) =>
     date.getDate() === new Date().getDate()
       ? format(date, "HH:mm:ss")
@@ -44,8 +47,10 @@ const DateTimePicker: React.FC<IDateTimePickerProsp> = ({
   };
 
   const handleOpenChange = (isOpen: boolean) => {
-    setOpen(isOpen);
-    setDateState(date);
+    if (isOpen === false) {
+      setOpen(isOpen);
+      setDateState(date);
+    }
   };
 
   return (
