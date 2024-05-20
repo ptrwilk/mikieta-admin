@@ -4,8 +4,10 @@ export enum Status {
   Ready,
 }
 
+export type Guild = string;
+
 export type OrderModel = {
-  id: string;
+  id: Guild;
   number: number;
   name: string;
   address: AddressModel;
@@ -22,7 +24,7 @@ export type OrderModel = {
 };
 
 export type ProductModel = {
-  id: string;
+  id: Guild;
   name: string;
   sizeType?: SizeType;
   cakeType?: CakeType;
@@ -32,7 +34,7 @@ export type ProductModel = {
 };
 
 export type ProductModel2 = {
-  id: string;
+  id: Guild;
   name: string;
   type: ProductType2;
   price: number;
