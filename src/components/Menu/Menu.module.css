@@ -1,0 +1,11 @@
+.Menu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0 0.5rem;
+  border-right: 1.5px solid #e4e4e7;
+}
+
+.Menu li:first-child {
+  margin-top: 0.5rem;
+}

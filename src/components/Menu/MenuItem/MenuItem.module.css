@@ -1,0 +1,22 @@
+.MenuItem {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  color: black;
+}
+
+.MenuItem:hover {
+  background: #f0f0f0;
+}
+
+.MenuItem-Selected {
+  background: black;
+  color: white;
+}
+
+.MenuItem-Selected:hover {
+  background: #272727;
+}
