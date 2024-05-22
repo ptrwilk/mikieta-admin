@@ -1,7 +1,7 @@
 // const token = () => localStorage.getItem("token");
 
 import { create } from "domain";
-import { OrderModel } from "./types";
+import { OrderModel, ReservationModel } from "./types";
 
 const url = import.meta.env.VITE_API_URL;
 
@@ -73,9 +73,19 @@ const convertOrderModel = (item: OrderModel) => {
   };
 };
 
+const convertReservationModel = (item: ReservationModel) => {
+  return {
+    ...item,
+    reservationDate: new Date(item.reservationDate),
+  };
+};
+
 export const getOrders = () => get("order", convertOrderModel);
 export const putOrder = (item: OrderModel) =>
   put("order", item, convertOrderModel);
+
+export const getReservations = () =>
+  get("reservation", convertReservationModel);
 
 function isArray(value: any) {
   return value instanceof Array;
