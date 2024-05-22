@@ -5,13 +5,19 @@ import App from "./App";
 import "./styles/global.css";
 import "./styles/theme.css";
 import { AppContextProvider } from "./context/AppContext";
-import { getOrders } from "./apihelper";
+import { getOrders, getReservations } from "./apihelper";
+import { ReservationView } from "./views/ReservationView/ReservationView";
 
 const router = createBrowserRouter([
   {
     element: <App />,
     path: "/",
     loader: getOrders,
+  },
+  {
+    element: <ReservationView />,
+    path: "/rezerwacje",
+    loader: getReservations,
   },
 ]);
 

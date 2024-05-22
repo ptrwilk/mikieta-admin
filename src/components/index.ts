@@ -11,3 +11,6 @@ export * from "./Badge/Badge";
 export * from "./AddressDialog/AddressDialog";
 export * from "./TextInput/TextInput";
 export * from "./Menu/Menu";
+export * from "./ReservationTable/ReservationTable";
+export * from "./TruncateText/TruncateText";
+export * from "./TextDialog/TextDialog";

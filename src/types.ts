@@ -4,10 +4,10 @@ export enum Status {
   Ready,
 }
 
-export type Guild = string;
+export type Guid = string;
 
 export type OrderModel = {
-  id: Guild;
+  id: Guid;
   number: number;
   name: string;
   address: AddressModel;
@@ -24,7 +24,7 @@ export type OrderModel = {
 };
 
 export type ProductModel = {
-  id: Guild;
+  id: Guid;
   name: string;
   sizeType?: SizeType;
   cakeType?: CakeType;
@@ -34,7 +34,7 @@ export type ProductModel = {
 };
 
 export type ProductModel2 = {
-  id: Guild;
+  id: Guid;
   name: string;
   type: ProductType2;
   price: number;
@@ -49,6 +49,17 @@ export type AddressModel = {
   flatNumber?: string;
   floor?: string;
   text?: string;
+};
+
+export type ReservationModel = {
+  id: Guid;
+  number: number;
+  reservationDate: Date;
+  numberOfPeople: number;
+  phone: string;
+  email: string;
+  name: string;
+  comments: string;
 };
 
 export enum DeliveryMethod {

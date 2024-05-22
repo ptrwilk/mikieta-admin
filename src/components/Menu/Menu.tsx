@@ -1,25 +1,23 @@
 import classNames from "classnames";
 import styles from "./Menu.module.css";
 import { MenuItem } from "./MenuItem/MenuItem";
+import { useNavigate } from "react-router-dom";
 
 type MenuOption = {
   icon: any;
   label: string;
+  to: any;
 };
 
 interface IMenuProps {
   className?: string;
   options: MenuOption[];
   selectedOption?: number;
-  onSelectedOptionChange?: (index: number) => void;
 }
 
-const Menu: React.FC<IMenuProps> = ({
-  className,
-  options,
-  selectedOption,
-  onSelectedOptionChange,
-}) => {
+const Menu: React.FC<IMenuProps> = ({ className, options, selectedOption }) => {
+  const navigate = useNavigate();
+
   return (
     <ul className={classNames(styles["Menu"], className)}>
       {options.map((option, index) => (
@@ -27,7 +25,7 @@ const Menu: React.FC<IMenuProps> = ({
           <MenuItem
             selected={index === selectedOption}
             icon={option.icon}
-            onClick={() => onSelectedOptionChange?.(index)}
+            onClick={() => navigate(option.to)}
           >
             {option.label}
           </MenuItem>
