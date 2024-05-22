@@ -1,9 +1,15 @@
-import { OrderModel, ReservationStatus, Status } from "@/types";
+import {
+  OrderModel,
+  ReservationModel,
+  ReservationStatus,
+  Status,
+} from "@/types";
 import { createContext, useContext, useState } from "react";
 
 type AppState = {
   orders: OrderModel[];
   selectedOrder?: OrderModel;
+  reservations: ReservationModel[];
   newOrdersAmount?: number;
   selectedStatus: Status;
   selectedReservationStatus: ReservationStatus;
@@ -25,6 +31,7 @@ export const AppContextProvider = ({ children }: { children: any }) => {
   const [state, setState] = useState<AppState>({
     orders: [],
     selectedStatus: Status.Waiting,
+    reservations: [],
     selectedReservationStatus: ReservationStatus.Waiting,
   });
 
