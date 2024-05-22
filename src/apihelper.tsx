@@ -86,6 +86,8 @@ export const putOrder = (item: OrderModel) =>
 
 export const getReservations = () =>
   get("reservation", convertReservationModel);
+export const putReservation = (item: ReservationModel) =>
+  put("reservation", item, convertReservationModel);
 
 function isArray(value: any) {
   return value instanceof Array;
