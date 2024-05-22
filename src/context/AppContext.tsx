@@ -1,4 +1,4 @@
-import { OrderModel, Status } from "@/types";
+import { OrderModel, ReservationStatus, Status } from "@/types";
 import { createContext, useContext, useState } from "react";
 
 type AppState = {
@@ -6,6 +6,7 @@ type AppState = {
   selectedOrder?: OrderModel;
   newOrdersAmount?: number;
   selectedStatus: Status;
+  selectedReservationStatus: ReservationStatus;
 };
 
 const AppContext = createContext<
@@ -24,6 +25,7 @@ export const AppContextProvider = ({ children }: { children: any }) => {
   const [state, setState] = useState<AppState>({
     orders: [],
     selectedStatus: Status.Waiting,
+    selectedReservationStatus: ReservationStatus.Waiting,
   });
 
   const updateState = <K extends keyof AppState>(
