@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Badge, ButtonStatus } from "../../components";
 import styles from "./HeaderView.module.css";
 import { useAppContext } from "@/context/AppContext";

@@ -1,0 +1,13 @@
+.ReservationHeader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 64px;
+  background: #e4e6ea;
+}
+
+.ReservationHeader ul {
+  display: flex;
+  justify-content: space-between;
+  width: 1440px;
+}

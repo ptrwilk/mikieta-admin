@@ -1,9 +1,3 @@
-export enum Status {
-  Waiting,
-  Preparing,
-  Ready,
-}
-
 export type Guid = string;
 
 export type OrderModel = {
@@ -91,4 +85,17 @@ export enum ProductType2 {
   Drink,
   Sauce,
   Snack,
+}
+
+export enum Status {
+  Waiting,
+  Preparing,
+  Ready,
+}
+
+export enum ReservationStatus {
+  Cancelled,
+  Waiting,
+  Sent,
+  ConfirmedByPhone,
 }
