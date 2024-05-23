@@ -14,10 +14,14 @@ import { TruncateText } from "../TruncateText/TruncateText";
 import { TextDialog } from "../TextDialog/TextDialog";
 import { useState } from "react";
 import { DropdownSwitch } from "../DropdownSwitch/DropdownSwitch";
+import { MdEmail } from "react-icons/md";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
+import { SendEmailDialog } from "../SendEmailDialog/SendEmailDialog";
+import { put } from "@/apihelper";
 
 interface IReservationTableProps {
   items?: ReservationModel[];
-  onUpdate?: (item: ReservationModel) => void;
+  onUpdate?: (item: ReservationModel, callApi: boolean) => void;
 }
 
 const ReservationTable: React.FC<IReservationTableProps> = ({
@@ -25,6 +29,10 @@ const ReservationTable: React.FC<IReservationTableProps> = ({
   onUpdate,
 }) => {
   const [comments, setComments] = useState<string | undefined>(undefined);
+  const [emailDialogItem, setEmailDialogItem] = useState<
+    ReservationModel | undefined
+  >(undefined);
+  const [sendButtonDisabled, setSendButtonDisabled] = useState<boolean>(false);
 
   const statusOptions = [
     { label: "Anulowane", value: ReservationStatus.Cancelled },
@@ -35,6 +43,18 @@ const ReservationTable: React.FC<IReservationTableProps> = ({
       value: ReservationStatus.ConfirmedByPhone,
     },
   ];
+
+  const handleEmailSend = async (text?: string) => {
+    setSendButtonDisabled(true);
+    await put("reservation/sendEmail", {
+      reservationId: emailDialogItem?.id,
+      message: text,
+    });
+    setSendButtonDisabled(false);
+
+    onUpdate?.({ ...emailDialogItem!, emailSent: true }, false);
+    setEmailDialogItem(undefined);
+  };
 
   return (
     <>
@@ -61,7 +81,24 @@ const ReservationTable: React.FC<IReservationTableProps> = ({
               </TableCell>
               <TableCell>{item.numberOfPeople}</TableCell>
               <TableCell>{item.phone}</TableCell>
-              <TableCell>{item.email}</TableCell>
+              <TableCell>
+                <div className="flex items-center gap-4">
+                  <p>{item.email}</p>
+                  {item.emailSent === false && (
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <MdEmail
+                          size={20}
+                          onClick={() => setEmailDialogItem(item)}
+                        />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Wyślij wiadomość</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  )}
+                </div>
+              </TableCell>
               <TableCell>{item.name}</TableCell>
               <TableCell>
                 {item.comments && (
@@ -72,16 +109,20 @@ const ReservationTable: React.FC<IReservationTableProps> = ({
                   />
                 )}
               </TableCell>
+              <TableCell>{item.name}</TableCell>
               <TableCell className="text-right">
                 <DropdownSwitch
                   className="font-bold"
                   options={statusOptions}
                   selectedValue={item.status}
                   onSelectionClick={({ value }) =>
-                    onUpdate?.({
-                      ...item,
-                      status: value,
-                    })
+                    onUpdate?.(
+                      {
+                        ...item,
+                        status: value,
+                      },
+                      true
+                    )
                   }
                 />
               </TableCell>
@@ -94,6 +135,12 @@ const ReservationTable: React.FC<IReservationTableProps> = ({
         title="Uwagi"
         text={comments}
         onClose={() => setComments(undefined)}
+      />
+      <SendEmailDialog
+        open={!!emailDialogItem}
+        buttonDisabled={sendButtonDisabled}
+        onClose={() => setEmailDialogItem(undefined)}
+        onSend={handleEmailSend}
       />
     </>
   );

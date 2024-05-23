@@ -14,3 +14,5 @@ export * from "./Menu/Menu";
 export * from "./ReservationTable/ReservationTable";
 export * from "./TruncateText/TruncateText";
 export * from "./TextDialog/TextDialog";
+export * from "./SendEmailDialog/SendEmailDialog";
+export * from "./TextArea/TextArea";

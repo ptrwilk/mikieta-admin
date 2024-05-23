@@ -56,6 +56,7 @@ export type ReservationModel = {
   comments: string;
   status: ReservationStatus;
   createdAt: Date;
+  emailSent: boolean;
 };
 
 export enum DeliveryMethod {
