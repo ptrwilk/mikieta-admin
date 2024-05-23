@@ -2,6 +2,7 @@ import { ReservationStatus } from "@/types";
 import styles from "./ReservationHeader.module.css";
 import { Badge, ButtonStatus } from "@/components";
 import { useAppContext } from "@/context/AppContext";
+import { getReservations } from "@/apihelper";
 
 const ReservationHeader = () => {
   const [app, updateApp] = useAppContext();
@@ -18,6 +19,13 @@ const ReservationHeader = () => {
 
   const handleClick = async (status: ReservationStatus) => {
     updateApp("selectedReservationStatus", status);
+
+    if (app?.newReservationsAmount && status === ReservationStatus.Waiting) {
+      updateApp("newReservationsAmount", undefined);
+
+      const reservations = await getReservations();
+      updateApp("reservations", reservations);
+    }
   };
 
   return (
@@ -25,7 +33,7 @@ const ReservationHeader = () => {
       <ul>
         {statuses.map(({ status, text }, key) => (
           <li key={key}>
-            <Badge amount={0}>
+            <Badge amount={key === 1 ? app!.newReservationsAmount : 0}>
               <ButtonStatus
                 selected={status === app!.selectedReservationStatus}
                 text={text}

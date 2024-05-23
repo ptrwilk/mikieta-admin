@@ -11,6 +11,7 @@ type AppState = {
   selectedOrder?: OrderModel;
   reservations: ReservationModel[];
   newOrdersAmount?: number;
+  newReservationsAmount?: number;
   selectedStatus: Status;
   selectedReservationStatus: ReservationStatus;
 };
