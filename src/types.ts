@@ -36,6 +36,14 @@ export type ProductModel2 = {
   ready: boolean;
 };
 
+export type ProductModel3 = {
+  id: Guid;
+  name: string;
+  description?: string;
+  price: number;
+  productType: ProductType2;
+};
+
 export type AddressModel = {
   city?: string;
   homeNumber?: string;
