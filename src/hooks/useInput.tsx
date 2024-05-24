@@ -40,5 +40,6 @@ export const useInput = (
     onValueChange: handleValueChange,
     onErrorChange: handleErrorChange,
     checkError: checkError,
+    setValue: setValue,
   };
 };

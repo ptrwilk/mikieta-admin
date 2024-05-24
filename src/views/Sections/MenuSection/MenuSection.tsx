@@ -12,7 +12,8 @@ const MenuSection: React.FC<IMenuViewProps> = ({ className }) => {
 
   const { pathname } = useLocation();
 
-  const selectedOption = pathname === "/rezerwacje" ? 1 : 0;
+  const selectedOption =
+    pathname === "/rezerwacje" ? 1 : pathname === "/produkty" ? 2 : 0;
 
   return (
     <Menu
