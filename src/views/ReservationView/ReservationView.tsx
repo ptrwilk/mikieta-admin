@@ -1,12 +1,12 @@
 import { ReservationTable } from "@/components";
 import { ReservationModel } from "@/types";
 import { useLoaderData } from "react-router-dom";
-import { MenuView } from "../MenuView/MenuView";
 import { ReservationHeader } from "./Sections/ReservationHeader";
 import { useAppContext } from "@/context/AppContext";
 import { putReservation } from "@/apihelper";
 import { useEffect } from "react";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { MenuSection } from "../Sections/MenuSection/MenuSection";
 
 const ReservationView = () => {
   const [app, updateApp] = useAppContext();
@@ -39,7 +39,7 @@ const ReservationView = () => {
       <div className="flex flex-col">
         <ReservationHeader />
         <div className="flex">
-          <MenuView className="flex-shrink-0" />
+          <MenuSection className="flex-shrink-0" />
           <ReservationTable
             items={app!.reservations.filter(
               (x) => x.status === app!.selectedReservationStatus

@@ -1,12 +1,12 @@
-.OrderView {
+.OrderSection {
 }
 
-.OrderView .OrderTable {
+.OrderSection .OrderTable {
   height: 40vh;
   overflow: auto;
 }
 
-.OrderView h1 {
+.OrderSection h1 {
   margin-left: 1rem;
   margin-bottom: 1rem;
   font-weight: 700;

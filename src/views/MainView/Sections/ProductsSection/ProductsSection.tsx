@@ -1,11 +1,11 @@
 import { StatusFilter, ProductTable } from "@/components";
-import styles from "./ProductsView.module.css";
+import styles from "./ProductsSection.module.css";
 import { useState } from "react";
 import { useAppContext } from "@/context/AppContext";
 import { OrderModel, ProductModel2 } from "@/types";
 import { get, put } from "@/apihelper";
 
-const ProductsView = () => {
+const ProductsSection = () => {
   const [app, updateApp] = useAppContext();
 
   const [status, setStatus] = useState<boolean | undefined>(undefined);
@@ -45,7 +45,7 @@ const ProductsView = () => {
   };
 
   return (
-    <div className={styles["ProductsView"]}>
+    <div className={styles["ProductsSection"]}>
       <div className={styles["Header"]}>
         <h1>Produkty</h1>
         <StatusFilter
@@ -67,4 +67,4 @@ const ProductsView = () => {
   );
 };
 
-export { ProductsView };
+export { ProductsSection };

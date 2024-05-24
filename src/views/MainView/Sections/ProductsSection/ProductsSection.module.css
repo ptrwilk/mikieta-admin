@@ -1,17 +1,17 @@
-.ProductsView {
+.ProductsSection {
   margin: 0 1rem;
 }
 
-.ProductsView .Header {
+.ProductsSection .Header {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.ProductsView h1 {
+.ProductsSection h1 {
   font-weight: bold;
 }
 
-.ProductsView .Products {
+.ProductsSection .Products {
   margin-top: 2rem;
 }

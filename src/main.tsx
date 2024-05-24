@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import App from "./App";
 import "./styles/global.css";
 import "./styles/theme.css";
 import { AppContextProvider, useAppContext } from "./context/AppContext";
@@ -10,10 +9,11 @@ import { ReservationView } from "./views/ReservationView/ReservationView";
 import { useSignalR } from "ptrwilk-packages";
 import { toast } from "./components/ui/use-toast";
 import { Toaster } from "./components/ui/toaster";
+import { MainView } from "./views/MainView/MainView";
 
 const router = createBrowserRouter([
   {
-    element: <App />,
+    element: <MainView />,
     path: "/",
     loader: getOrders,
   },
@@ -21,6 +21,10 @@ const router = createBrowserRouter([
     element: <ReservationView />,
     path: "/rezerwacje",
     loader: getReservations,
+  },
+  {
+    element: <ReservationView />,
+    path: "/produkty",
   },
 ]);
 
