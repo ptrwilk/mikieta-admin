@@ -1,12 +1,12 @@
 import { useEffect } from "react";
-import { Badge, ButtonStatus } from "../../components";
-import styles from "./HeaderView.module.css";
+import { Badge, ButtonStatus } from "../../../../components";
+import styles from "./HeaderSection.module.css";
 import { useAppContext } from "@/context/AppContext";
 import { OrderModel, Status } from "@/types";
 import { useLoaderData } from "react-router-dom";
 import { getOrders } from "@/apihelper";
 
-const HeaderView = () => {
+const HeaderSection = () => {
   const [app, updateApp] = useAppContext();
 
   const data = useLoaderData() as OrderModel[];
@@ -33,7 +33,7 @@ const HeaderView = () => {
   };
 
   return (
-    <div className={styles["HeaderView"]}>
+    <div className={styles["HeaderSection"]}>
       <ul>
         {statuses.map(({ status, text }, key) => (
           <li key={key}>
@@ -52,4 +52,4 @@ const HeaderView = () => {
   );
 };
 
-export { HeaderView };
+export { HeaderSection };

@@ -1,10 +1,10 @@
 import { get, putOrder } from "@/apihelper";
-import styles from "./OrderView.module.css";
+import styles from "./OrderSection.module.css";
 import { OrderTable } from "@/components";
 import { useAppContext } from "@/context/AppContext";
 import { OrderModel, ProductModel2 } from "@/types";
 
-const OrderView = () => {
+const OrderSection = () => {
   const [app, updateApp] = useAppContext();
 
   const handleRowClick = async (item: OrderModel) => {
@@ -33,7 +33,7 @@ const OrderView = () => {
   };
 
   return (
-    <div className={styles["OrderView"]}>
+    <div className={styles["OrderSection"]}>
       <h1>Zamówienia</h1>
       <div className={styles["OrderTable"]}>
         <OrderTable
@@ -47,4 +47,4 @@ const OrderView = () => {
   );
 };
 
-export { OrderView };
+export { OrderSection };

@@ -1,13 +1,13 @@
 import { Menu } from "@/components";
 import { useAppContext } from "@/context/AppContext";
-import { FaCalendarCheck, FaShoppingCart } from "react-icons/fa";
+import { FaCalendarCheck, FaCarrot, FaShoppingCart } from "react-icons/fa";
 import { useLocation } from "react-router-dom";
 
 interface IMenuViewProps {
   className?: string;
 }
 
-const MenuView: React.FC<IMenuViewProps> = ({ className }) => {
+const MenuSection: React.FC<IMenuViewProps> = ({ className }) => {
   const [app] = useAppContext();
 
   const { pathname } = useLocation();
@@ -31,9 +31,14 @@ const MenuView: React.FC<IMenuViewProps> = ({ className }) => {
           to: "/rezerwacje",
           amount: selectedOption === 0 ? app?.newReservationsAmount : 0,
         },
+        {
+          icon: <FaCarrot />,
+          label: "Produkty",
+          to: "/produkty",
+        },
       ]}
     />
   );
 };
 
-export { MenuView };
+export { MenuSection };
