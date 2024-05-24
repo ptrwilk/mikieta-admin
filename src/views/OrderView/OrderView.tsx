@@ -1,4 +1,4 @@
-import { get, put, putOrder } from "@/apihelper";
+import { get, putOrder } from "@/apihelper";
 import styles from "./OrderView.module.css";
 import { OrderTable } from "@/components";
 import { useAppContext } from "@/context/AppContext";
