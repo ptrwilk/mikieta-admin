@@ -10,6 +10,7 @@ import { useSignalR } from "ptrwilk-packages";
 import { toast } from "./components/ui/use-toast";
 import { Toaster } from "./components/ui/toaster";
 import { MainView } from "./views/MainView/MainView";
+import { ProductsView } from "./views/ProductsView/ProductsView";
 
 const router = createBrowserRouter([
   {
@@ -23,7 +24,7 @@ const router = createBrowserRouter([
     loader: getReservations,
   },
   {
-    element: <ReservationView />,
+    element: <ProductsView />,
     path: "/produkty",
   },
 ]);
