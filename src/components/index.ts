@@ -17,3 +17,4 @@ export * from "./TextDialog/TextDialog";
 export * from "./SendEmailDialog/SendEmailDialog";
 export * from "./TextArea/TextArea";
 export * from "./ProductsTable/ProductsTable";
+export * from "./Multiselect/Multiselect";

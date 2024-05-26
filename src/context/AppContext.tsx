@@ -1,4 +1,5 @@
 import {
+  IngredientModel,
   OrderModel,
   ProductModel3,
   ReservationModel,
@@ -12,6 +13,7 @@ type AppState = {
   selectedOrder?: OrderModel;
   reservations: ReservationModel[];
   products: ProductModel3[];
+  ingredients: IngredientModel[];
   newOrdersAmount?: number;
   newReservationsAmount?: number;
   selectedStatus: Status;
@@ -36,6 +38,7 @@ export const AppContextProvider = ({ children }: { children: any }) => {
     selectedStatus: Status.Waiting,
     reservations: [],
     products: [],
+    ingredients: [],
     selectedReservationStatus: ReservationStatus.Waiting,
   });
 

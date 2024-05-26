@@ -18,6 +18,10 @@
   color: var(--color-black);
 }
 
+.TextInputShared input {
+  border: 0;
+}
+
 .TextInputShared .Star {
   color: var(--color-error);
 }

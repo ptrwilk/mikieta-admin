@@ -42,6 +42,12 @@ export type ProductModel3 = {
   description?: string;
   price: number;
   productType: ProductType2;
+  ingredients: IngredientModel[];
+};
+
+export type IngredientModel = {
+  id: Guid;
+  name: string;
 };
 
 export type AddressModel = {

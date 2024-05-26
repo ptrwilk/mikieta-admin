@@ -1,4 +1,4 @@
-import { ProductModel3, ProductType2 } from "@/types";
+import { IngredientModel, ProductModel3, ProductType2 } from "@/types";
 import {
   Table,
   TableBody,
@@ -20,16 +20,19 @@ import {
 import { Button } from "../ui/button";
 import { DropdownSwitch } from "../DropdownSwitch/DropdownSwitch";
 import { useState } from "react";
+import { Multiselect } from "../Multiselect/Multiselect";
 
 interface IProductsTableProps {
   className?: string;
   items?: ProductModel3[];
+  ingredients?: IngredientModel[];
   onUpdate?: (item: ProductModel3) => void;
 }
 
 const ProductsTable: React.FC<IProductsTableProps> = ({
   className,
   items,
+  ingredients,
   onUpdate,
 }) => {
   const [readonlyItem, setReadeonlyItem] = useState<ProductModel3 | undefined>(
@@ -40,6 +43,9 @@ const ProductsTable: React.FC<IProductsTableProps> = ({
   const description = useInput();
   const price = useInput();
   const [type, setType] = useState<ProductType2 | undefined>(undefined);
+  const [selectedIngredients, setSelectedIngredients] = useState<
+    IngredientModel[]
+  >([]);
 
   const options = [
     {
@@ -63,6 +69,7 @@ const ProductsTable: React.FC<IProductsTableProps> = ({
     description.setValue(item.description);
     price.setValue(item.price.toString());
     setType(item.productType);
+    setSelectedIngredients(item.ingredients);
 
     setReadeonlyItem(item);
   };
@@ -74,6 +81,7 @@ const ProductsTable: React.FC<IProductsTableProps> = ({
       description: description.value,
       price: parseFloat(price.value!),
       productType: type!,
+      ingredients: selectedIngredients,
     });
     setReadeonlyItem(undefined);
   };
@@ -84,10 +92,11 @@ const ProductsTable: React.FC<IProductsTableProps> = ({
       <TableHeader>
         <TableRow>
           <TableHead className="w-[50px]">Nr.</TableHead>
-          <TableHead className="w-[200px]">Nazwa</TableHead>
-          <TableHead className="w-[300px]">Opis</TableHead>
-          <TableHead className="w-[200px]">Cena</TableHead>
-          <TableHead className="w-[200px]">Typ</TableHead>
+          <TableHead>Nazwa</TableHead>
+          <TableHead>Opis</TableHead>
+          <TableHead>Cena</TableHead>
+          <TableHead>Typ</TableHead>
+          <TableHead>Składniki</TableHead>
           <TableHead className="text-right"></TableHead>
         </TableRow>
       </TableHeader>
@@ -129,6 +138,31 @@ const ProductsTable: React.FC<IProductsTableProps> = ({
               )}
             </TableCell>
             <TableCell>
+              {readonly(item) ? (
+                <p>{item.ingredients.map((x) => x.name).join(", ")}</p>
+              ) : (
+                <Multiselect
+                  selected={selectedIngredients.map((x) => x.id)}
+                  onSelect={(value) => {
+                    if (selectedIngredients.map((x) => x.id).includes(value)) {
+                      setSelectedIngredients(
+                        selectedIngredients.filter((x) => x.id !== value)
+                      );
+                    } else {
+                      setSelectedIngredients([
+                        ...selectedIngredients,
+                        ingredients!.find((x) => x.id === value)!,
+                      ]);
+                    }
+                  }}
+                  options={ingredients?.map((x) => ({
+                    label: x.name,
+                    value: x.id,
+                  }))}
+                />
+              )}
+            </TableCell>
+            <TableCell className="text-right">
               {!readonly(item) ? (
                 <div className="flex gap-4">
                   <Button
