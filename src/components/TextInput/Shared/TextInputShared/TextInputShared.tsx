@@ -15,6 +15,7 @@ interface ITextInputSharedProps {
   star?: boolean;
   numeric?: boolean;
   border?: boolean;
+  autoFocus?: boolean;
   onValueChange?: (value: string | undefined) => void;
   onBlur?: () => void;
   onFocus?: () => void;
@@ -33,6 +34,7 @@ const TextInputShared: React.FC<ITextInputSharedProps> = ({
   star,
   numeric,
   border,
+  autoFocus,
   onValueChange,
   onBlur,
   onFocus,
@@ -60,7 +62,8 @@ const TextInputShared: React.FC<ITextInputSharedProps> = ({
         </p>
       )}
       <Input
-        border={border}
+        autoFocus={autoFocus}
+        additional={{ border: border }}
         type={numeric ? "number" : "text"}
         value={value ?? ""}
         placeholder={placeholder}
