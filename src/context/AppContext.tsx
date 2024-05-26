@@ -2,6 +2,7 @@ import {
   IngredientModel,
   OrderModel,
   ProductModel3,
+  ProductStatus,
   ReservationModel,
   ReservationStatus,
   Status,
@@ -18,6 +19,7 @@ type AppState = {
   newReservationsAmount?: number;
   selectedStatus: Status;
   selectedReservationStatus: ReservationStatus;
+  selectedProductStatus: ProductStatus;
 };
 
 const AppContext = createContext<
@@ -40,6 +42,7 @@ export const AppContextProvider = ({ children }: { children: any }) => {
     products: [],
     ingredients: [],
     selectedReservationStatus: ReservationStatus.Waiting,
+    selectedProductStatus: ProductStatus.Product,
   });
 
   const updateState = <K extends keyof AppState>(

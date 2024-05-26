@@ -1,0 +1,13 @@
+.ProductsHeaderSection {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 64px;
+  background: #e4e6ea;
+}
+
+.ProductsHeaderSection ul {
+  display: flex;
+  justify-content: space-between;
+  width: 800px;
+}

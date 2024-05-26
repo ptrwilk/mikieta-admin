@@ -116,3 +116,8 @@ export enum ReservationStatus {
   Sent,
   ConfirmedByPhone,
 }
+
+export enum ProductStatus {
+  Product,
+  Ingredient,
+}
