@@ -1,10 +1,10 @@
 import { ProductsTable } from "@/components";
 import { MenuSection } from "../Sections/MenuSection/MenuSection";
 import { useLoaderData } from "react-router-dom";
-import { ProductModel3 } from "@/types";
+import { IngredientModel, ProductModel3 } from "@/types";
 import { useEffect } from "react";
 import { useAppContext } from "@/context/AppContext";
-import { put } from "@/apihelper";
+import { get, put } from "@/apihelper";
 
 const ProductsView = () => {
   const [app, updateApp] = useAppContext();
@@ -12,7 +12,12 @@ const ProductsView = () => {
   const data = useLoaderData() as ProductModel3[];
 
   useEffect(() => {
-    updateApp("products", data);
+    (async () => {
+      const ingredients = (await get("ingredient")) as IngredientModel[];
+
+      updateApp("products", data);
+      updateApp("ingredients", ingredients);
+    })();
   }, []);
 
   const handleUpdate = async (item: ProductModel3) => {
@@ -31,7 +36,11 @@ const ProductsView = () => {
   return (
     <div className="flex">
       <MenuSection />
-      <ProductsTable items={app!.products} onUpdate={handleUpdate} />
+      <ProductsTable
+        items={app!.products}
+        ingredients={app!.ingredients}
+        onUpdate={handleUpdate}
+      />
     </div>
   );
 };

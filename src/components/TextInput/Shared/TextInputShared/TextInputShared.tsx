@@ -14,6 +14,7 @@ interface ITextInputSharedProps {
   errorMessage?: string;
   star?: boolean;
   numeric?: boolean;
+  border?: boolean;
   onValueChange?: (value: string | undefined) => void;
   onBlur?: () => void;
   onFocus?: () => void;
@@ -31,6 +32,7 @@ const TextInputShared: React.FC<ITextInputSharedProps> = ({
   errorMessage,
   star,
   numeric,
+  border,
   onValueChange,
   onBlur,
   onFocus,
@@ -47,15 +49,18 @@ const TextInputShared: React.FC<ITextInputSharedProps> = ({
         [styles["TextInputShared-Top"]]: captionTop,
       })}
     >
-      <p
-        className={classNames(styles["Caption"], {
-          [styles["Caption-Error"]]: error,
-        })}
-      >
-        {caption}
-        {star && <span className={styles["Star"]}>*</span>}
-      </p>
+      {caption && (
+        <p
+          className={classNames(styles["Caption"], {
+            [styles["Caption-Error"]]: error,
+          })}
+        >
+          {caption}
+          {star && <span className={styles["Star"]}>*</span>}
+        </p>
+      )}
       <Input
+        border={border}
         type={numeric ? "number" : "text"}
         value={value ?? ""}
         placeholder={placeholder}
