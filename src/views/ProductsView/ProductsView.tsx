@@ -1,10 +1,11 @@
 import { ProductsTable } from "@/components";
 import { MenuSection } from "../Sections/MenuSection/MenuSection";
 import { useLoaderData } from "react-router-dom";
-import { IngredientModel, ProductModel3 } from "@/types";
+import { IngredientModel, ProductModel3, ProductStatus } from "@/types";
 import { useEffect } from "react";
 import { useAppContext } from "@/context/AppContext";
 import { get, put } from "@/apihelper";
+import { ProductsHeaderSection } from "./Sections/HeaderSection/HeaderSection";
 
 const ProductsView = () => {
   const [app, updateApp] = useAppContext();
@@ -34,13 +35,20 @@ const ProductsView = () => {
   };
 
   return (
-    <div className="flex">
-      <MenuSection />
-      <ProductsTable
-        items={app!.products}
-        ingredients={app!.ingredients}
-        onUpdate={handleUpdate}
-      />
+    <div className="flex flex-col">
+      <ProductsHeaderSection />
+      <div className="flex">
+        <MenuSection />
+        {app!.selectedProductStatus === ProductStatus.Product ? (
+          <ProductsTable
+            items={app!.products}
+            ingredients={app!.ingredients}
+            onUpdate={handleUpdate}
+          />
+        ) : (
+          <p>Ingredients</p>
+        )}
+      </div>
     </div>
   );
 };
