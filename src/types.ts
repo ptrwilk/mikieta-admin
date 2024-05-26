@@ -37,7 +37,7 @@ export type ProductModel2 = {
 };
 
 export type ProductModel3 = {
-  id: Guid;
+  id?: Guid;
   name: string;
   description?: string;
   price: number;

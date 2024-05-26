@@ -7,9 +7,10 @@ export interface InputProps
 
 const Input = React.forwardRef<
   HTMLInputElement,
-  InputProps & { border?: boolean }
+  InputProps & { additional?: { border?: boolean } }
 >(({ className, type, ...props }, ref) => {
-  const border = props.border === undefined ? true : props.border;
+  const border =
+    props.additional?.border === undefined ? true : props.additional.border;
 
   return (
     <input

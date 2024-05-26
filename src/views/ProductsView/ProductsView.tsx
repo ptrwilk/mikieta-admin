@@ -21,17 +21,20 @@ const ProductsView = () => {
     })();
   }, []);
 
-  const handleUpdate = async (item: ProductModel3) => {
+  const handleAddOrUpdate = async (item: ProductModel3) => {
     const index = app?.products?.findIndex((x) => x.id === item.id);
 
-    if (index !== undefined) {
-      const product = (await put("products", item)) as ProductModel3;
+    const product = (await put("products", item)) as ProductModel3;
 
-      const newProducts = [...app!.products];
+    const newProducts = [...app!.products];
+    console.log(index);
+    if (index !== undefined && index !== -1) {
       newProducts[index] = product;
-
-      updateApp("products", newProducts);
+    } else {
+      newProducts.push(product);
     }
+
+    updateApp("products", newProducts);
   };
 
   return (
@@ -41,9 +44,10 @@ const ProductsView = () => {
         <MenuSection />
         {app!.selectedProductStatus === ProductStatus.Product ? (
           <ProductsTable
+            className="w-full"
             items={app!.products}
             ingredients={app!.ingredients}
-            onUpdate={handleUpdate}
+            onAddOrUpdate={handleAddOrUpdate}
           />
         ) : (
           <p>Ingredients</p>
