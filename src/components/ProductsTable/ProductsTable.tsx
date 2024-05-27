@@ -27,6 +27,7 @@ interface IProductsTableProps {
   items?: ProductModel3[];
   ingredients?: IngredientModel[];
   onAddOrUpdate?: (item: ProductModel3) => void;
+  onDelete?: (item: ProductModel3) => void;
 }
 
 const ProductsTable: React.FC<IProductsTableProps> = ({
@@ -34,6 +35,7 @@ const ProductsTable: React.FC<IProductsTableProps> = ({
   items,
   ingredients,
   onAddOrUpdate,
+  onDelete,
 }) => {
   const [readonlyItem, setReadeonlyItem] = useState<ProductModel3 | undefined>(
     undefined
@@ -215,7 +217,9 @@ const ProductsTable: React.FC<IProductsTableProps> = ({
                         <DropdownMenuItem onClick={() => onEdit(item)}>
                           Edytuj
                         </DropdownMenuItem>
-                        <DropdownMenuItem>Usuń</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => onDelete?.(item)}>
+                          Usuń
+                        </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
                   )}

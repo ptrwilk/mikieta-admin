@@ -32,6 +32,7 @@ export const post = (path: string, body: any, convert?: (item: any) => any) =>
   execute("POST", path, body, convert);
 export const put = (path: string, body: any, convert?: (item: any) => any) =>
   execute("PUT", path, body, convert);
+export const del = (path: string) => execute("DELETE", path, null, undefined);
 
 const execute = (
   method: string,
