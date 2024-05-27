@@ -4,7 +4,7 @@ import { useLoaderData } from "react-router-dom";
 import { IngredientModel, ProductModel3, ProductStatus } from "@/types";
 import { useEffect } from "react";
 import { useAppContext } from "@/context/AppContext";
-import { get, put } from "@/apihelper";
+import { del, get, put } from "@/apihelper";
 import { ProductsHeaderSection } from "./Sections/HeaderSection/HeaderSection";
 
 const ProductsView = () => {
@@ -37,6 +37,14 @@ const ProductsView = () => {
     updateApp("products", newProducts);
   };
 
+  const handleDelete = async (item: ProductModel3) => {
+    await del(`products/${item.id}`);
+
+    const newProducts = app!.products.filter((x) => x.id !== item.id);
+
+    updateApp("products", newProducts);
+  };
+
   return (
     <div className="flex flex-col">
       <ProductsHeaderSection />
@@ -48,6 +56,7 @@ const ProductsView = () => {
             items={app!.products}
             ingredients={app!.ingredients}
             onAddOrUpdate={handleAddOrUpdate}
+            onDelete={handleDelete}
           />
         ) : (
           <p>Ingredients</p>
