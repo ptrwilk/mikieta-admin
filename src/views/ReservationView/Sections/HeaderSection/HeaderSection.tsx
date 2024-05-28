@@ -1,10 +1,10 @@
 import { ReservationStatus } from "@/types";
-import styles from "./ReservationHeader.module.css";
+import styles from "./HeaderSection.module.css";
 import { Badge, ButtonStatus } from "@/components";
 import { useAppContext } from "@/context/AppContext";
 import { getReservations } from "@/apihelper";
 
-const ReservationHeader = () => {
+const ReservationHeaderSection = () => {
   const [app, updateApp] = useAppContext();
 
   const statuses = [
@@ -29,7 +29,7 @@ const ReservationHeader = () => {
   };
 
   return (
-    <div className={styles["ReservationHeader"]}>
+    <div className={styles["ReservationHeaderSection"]}>
       <ul>
         {statuses.map(({ status, text }, key) => (
           <li key={key}>
@@ -47,4 +47,4 @@ const ReservationHeader = () => {
   );
 };
 
-export { ReservationHeader };
+export { ReservationHeaderSection };

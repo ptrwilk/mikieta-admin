@@ -1,49 +1,12 @@
-import { ProductsTable } from "@/components";
 import { MenuSection } from "../Sections/MenuSection/MenuSection";
-import { useLoaderData } from "react-router-dom";
-import { IngredientModel, ProductModel3, ProductStatus } from "@/types";
-import { useEffect } from "react";
+import { ProductStatus } from "@/types";
 import { useAppContext } from "@/context/AppContext";
-import { del, get, put } from "@/apihelper";
 import { ProductsHeaderSection } from "./Sections/HeaderSection/HeaderSection";
+import { ProductsSection } from "./Sections/ProductsSection/ProductsSection";
+import { IngredientsSection } from "./Sections/IngredientsSection/IngredientsSection";
 
 const ProductsView = () => {
-  const [app, updateApp] = useAppContext();
-
-  const data = useLoaderData() as ProductModel3[];
-
-  useEffect(() => {
-    (async () => {
-      const ingredients = (await get("ingredient")) as IngredientModel[];
-
-      updateApp("products", data);
-      updateApp("ingredients", ingredients);
-    })();
-  }, []);
-
-  const handleAddOrUpdate = async (item: ProductModel3) => {
-    const index = app?.products?.findIndex((x) => x.id === item.id);
-
-    const product = (await put("products", item)) as ProductModel3;
-
-    const newProducts = [...app!.products];
-    console.log(index);
-    if (index !== undefined && index !== -1) {
-      newProducts[index] = product;
-    } else {
-      newProducts.push(product);
-    }
-
-    updateApp("products", newProducts);
-  };
-
-  const handleDelete = async (item: ProductModel3) => {
-    await del(`products/${item.id}`);
-
-    const newProducts = app!.products.filter((x) => x.id !== item.id);
-
-    updateApp("products", newProducts);
-  };
+  const [app, _] = useAppContext();
 
   return (
     <div className="flex flex-col">
@@ -51,15 +14,9 @@ const ProductsView = () => {
       <div className="flex">
         <MenuSection />
         {app!.selectedProductStatus === ProductStatus.Product ? (
-          <ProductsTable
-            className="w-full"
-            items={app!.products}
-            ingredients={app!.ingredients}
-            onAddOrUpdate={handleAddOrUpdate}
-            onDelete={handleDelete}
-          />
+          <ProductsSection />
         ) : (
-          <p>Ingredients</p>
+          <IngredientsSection />
         )}
       </div>
     </div>

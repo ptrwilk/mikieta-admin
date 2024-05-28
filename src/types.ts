@@ -46,7 +46,7 @@ export type ProductModel3 = {
 };
 
 export type IngredientModel = {
-  id: Guid;
+  id?: Guid;
   name: string;
 };
 
