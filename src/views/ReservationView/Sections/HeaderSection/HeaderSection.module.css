@@ -1,4 +1,4 @@
-.ReservationHeader {
+.ReservationHeaderSection {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -6,7 +6,7 @@
   background: #e4e6ea;
 }
 
-.ReservationHeader ul {
+.ReservationHeaderSection ul {
   display: flex;
   justify-content: space-between;
   width: 1440px;

@@ -170,7 +170,7 @@ const ProductsTable: React.FC<IProductsTableProps> = ({
                     <p>{item.ingredients.map((x) => x.name).join(", ")}</p>
                   ) : (
                     <Multiselect
-                      selected={selectedIngredients.map((x) => x.id)}
+                      selected={selectedIngredients.map((x) => x.id!)}
                       onSelect={(value) => {
                         if (
                           selectedIngredients.map((x) => x.id).includes(value)
@@ -187,7 +187,7 @@ const ProductsTable: React.FC<IProductsTableProps> = ({
                       }}
                       options={ingredients?.map((x) => ({
                         label: x.name,
-                        value: x.id,
+                        value: x.id!,
                       }))}
                     />
                   )}
