@@ -19,6 +19,7 @@ import {
 } from "../ui/dropdown-menu";
 import { SlOptions } from "react-icons/sl";
 import { Separator } from "../ui/separator";
+import { ConfirmationDialog } from "../ConfirmationDialog/ConfirmationDialog";
 
 interface IIngredientsTableProps {
   className?: string;
@@ -42,6 +43,9 @@ const IngredientsTable: React.FC<IIngredientsTableProps> = ({
   const [newItem, setNewItem] = useState<IngredientModel | undefined>(
     undefined
   );
+  const [confirmationDialogItem, setConfirmationDialogItem] = useState<
+    IngredientModel | undefined
+  >(undefined);
 
   const readonly = (item: IngredientModel) => readonlyItem?.id !== item.id;
 
@@ -123,7 +127,9 @@ const IngredientsTable: React.FC<IIngredientsTableProps> = ({
                         <DropdownMenuItem onClick={() => onEdit(item)}>
                           Edytuj
                         </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => onDelete?.(item)}>
+                        <DropdownMenuItem
+                          onClick={() => setConfirmationDialogItem(item)}
+                        >
                           Usuń
                         </DropdownMenuItem>
                       </DropdownMenuContent>
@@ -143,6 +149,18 @@ const IngredientsTable: React.FC<IIngredientsTableProps> = ({
             </p>
           </div>
         </div>
+      )}
+      {confirmationDialogItem !== undefined && (
+        <ConfirmationDialog
+          title="Usuwanie składnika"
+          description="Czy na pewno chcesz usunąć składnik?"
+          open
+          onClose={() => setConfirmationDialogItem(undefined)}
+          onConfirm={() => {
+            onDelete?.(confirmationDialogItem);
+            setConfirmationDialogItem(undefined);
+          }}
+        />
       )}
     </div>
   );
