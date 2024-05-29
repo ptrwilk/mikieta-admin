@@ -22,3 +22,5 @@ export function groupBy<T extends Groupable>(
 export const merge = <T,>(array: T[][]) => {
   return [].concat.apply([], array as any) as T[];
 };
+
+export const isNill = (value: any) => value === undefined || value === null;

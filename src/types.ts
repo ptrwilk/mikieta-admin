@@ -43,6 +43,8 @@ export type ProductModel3 = {
   price: number;
   productType: ProductType2;
   ingredients: IngredientModel[];
+  imageId?: Guid;
+  imageUrl?: string;
 };
 
 export type IngredientModel = {

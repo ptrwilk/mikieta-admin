@@ -40,12 +40,16 @@ const execute = (
   body: any,
   convert?: (item: any) => any
 ) => {
+  var isFormData = body instanceof FormData;
+
   return fetch(`${url}/${path}`, {
     method: method,
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(body),
+    headers: isFormData
+      ? undefined
+      : {
+          "Content-Type": "application/json",
+        },
+    body: isFormData ? body : JSON.stringify(body),
   }).then(async (response) => {
     const res = await response.json();
 
