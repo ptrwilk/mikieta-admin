@@ -21,12 +21,14 @@ import { DropdownSwitch } from "../DropdownSwitch/DropdownSwitch";
 import { useState } from "react";
 import { Multiselect } from "../Multiselect/Multiselect";
 import { Separator } from "../ui/separator";
+import { ImagePopover } from "../ImagePopover/ImagePopover";
+import { ImageFormPopover } from "../ImageFormPopover/ImageFormPopover";
 
 interface IProductsTableProps {
   className?: string;
   items?: ProductModel3[];
   ingredients?: IngredientModel[];
-  onAddOrUpdate?: (item: ProductModel3) => void;
+  onAddOrUpdate?: (item: ProductModel3, image?: any) => void;
   onDelete?: (item: ProductModel3) => void;
 }
 
@@ -48,6 +50,8 @@ const ProductsTable: React.FC<IProductsTableProps> = ({
   const [selectedIngredients, setSelectedIngredients] = useState<
     IngredientModel[]
   >([]);
+  const [selectedImage, setSelectedImage] = useState<any>(undefined);
+  const [imagePopoverOpen, setImagePopoverOpen] = useState(false);
 
   const [newItem, setNewItem] = useState<ProductModel3 | undefined>(undefined);
 
@@ -79,20 +83,24 @@ const ProductsTable: React.FC<IProductsTableProps> = ({
   };
 
   const onConfirm = () => {
-    onAddOrUpdate?.({
-      ...readonlyItem!,
-      name: name.value!,
-      description: description.value,
-      price: parseFloat(price.value!),
-      productType: type!,
-      ingredients: selectedIngredients,
-    });
+    onAddOrUpdate?.(
+      {
+        ...readonlyItem!,
+        name: name.value!,
+        description: description.value,
+        price: parseFloat(price.value!),
+        productType: type!,
+        ingredients: selectedIngredients,
+      },
+      selectedImage
+    );
     onCancel();
   };
 
   const onCancel = () => {
     setReadeonlyItem(undefined);
     setNewItem(undefined);
+    setSelectedImage(undefined);
   };
 
   const onAddNewItemClick = () => {
@@ -118,6 +126,7 @@ const ProductsTable: React.FC<IProductsTableProps> = ({
             <TableHead>Opis</TableHead>
             <TableHead className="min-w-[100px]">Cena</TableHead>
             <TableHead>Typ</TableHead>
+            <TableHead>Zdjęcie</TableHead>
             <TableHead>Składniki</TableHead>
             <TableHead className="text-right"></TableHead>
           </TableRow>
@@ -162,6 +171,25 @@ const ProductsTable: React.FC<IProductsTableProps> = ({
                       options={options}
                       selectedValue={type}
                       onSelectionClick={(item) => setType(item.value)}
+                    />
+                  )}
+                </TableCell>
+                <TableCell>
+                  {readonly(item) ? (
+                    <ImagePopover src={item.imageUrl} />
+                  ) : (
+                    <ImageFormPopover
+                      open={imagePopoverOpen}
+                      defaultImageUrl={item.imageUrl}
+                      onOpen={() => setImagePopoverOpen(true)}
+                      onClose={(selectedImage: any) => {
+                        setImagePopoverOpen(false);
+                        setSelectedImage(selectedImage);
+                      }}
+                      onDelete={() => {
+                        setImagePopoverOpen(false);
+                        setSelectedImage(undefined);
+                      }}
                     />
                   )}
                 </TableCell>

@@ -1,7 +1,7 @@
-import { del, get, put } from "@/apihelper";
+import { del, get, post, put } from "@/apihelper";
 import { ProductsTable } from "@/components";
 import { useAppContext } from "@/context/AppContext";
-import { IngredientModel, ProductModel3 } from "@/types";
+import { Guid, IngredientModel, ProductModel3 } from "@/types";
 import { useEffect } from "react";
 import { useLoaderData } from "react-router-dom";
 
@@ -19,10 +19,22 @@ const ProductsSection = () => {
     })();
   }, []);
 
-  const handleAddOrUpdate = async (item: ProductModel3) => {
+  const handleAddOrUpdate = async (item: ProductModel3, image?: any) => {
+    let imageId: Guid | undefined = undefined;
+    if (image) {
+      const formData = new FormData();
+
+      formData.append("file", image);
+
+      imageId = await post("image", formData);
+    }
+
     const index = app?.products?.findIndex((x) => x.id === item.id);
 
-    const product = (await put("products", item)) as ProductModel3;
+    const product = (await put("products", {
+      ...item,
+      imageId,
+    })) as ProductModel3;
 
     const newProducts = [...app!.products];
 
