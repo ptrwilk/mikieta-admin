@@ -23,6 +23,7 @@ import { Multiselect } from "../Multiselect/Multiselect";
 import { Separator } from "../ui/separator";
 import { ImagePopover } from "../ImagePopover/ImagePopover";
 import { ImageFormPopover } from "../ImageFormPopover/ImageFormPopover";
+import { ConfirmationDialog } from "../ConfirmationDialog/ConfirmationDialog";
 
 interface IProductsTableProps {
   className?: string;
@@ -54,6 +55,9 @@ const ProductsTable: React.FC<IProductsTableProps> = ({
   const [imagePopoverOpen, setImagePopoverOpen] = useState(false);
 
   const [newItem, setNewItem] = useState<ProductModel3 | undefined>(undefined);
+  const [confirmationDialogItem, setConfirmationDialogItem] = useState<
+    ProductModel3 | undefined
+  >(undefined);
 
   const options = [
     {
@@ -245,7 +249,9 @@ const ProductsTable: React.FC<IProductsTableProps> = ({
                         <DropdownMenuItem onClick={() => onEdit(item)}>
                           Edytuj
                         </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => onDelete?.(item)}>
+                        <DropdownMenuItem
+                          onClick={() => setConfirmationDialogItem(item)}
+                        >
                           Usuń
                         </DropdownMenuItem>
                       </DropdownMenuContent>
@@ -265,6 +271,18 @@ const ProductsTable: React.FC<IProductsTableProps> = ({
             </p>
           </div>
         </div>
+      )}
+      {confirmationDialogItem !== undefined && (
+        <ConfirmationDialog
+          title="Usuwanie produktu"
+          description="Czy na pewno chcesz usunąć produkt?"
+          open
+          onClose={() => setConfirmationDialogItem(undefined)}
+          onConfirm={() => {
+            onDelete?.(confirmationDialogItem);
+            setConfirmationDialogItem(undefined);
+          }}
+        />
       )}
     </div>
   );
