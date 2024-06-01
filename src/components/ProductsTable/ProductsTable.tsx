@@ -1,4 +1,9 @@
-import { IngredientModel, ProductModel3, ProductType2 } from "@/types";
+import {
+  IngredientModel,
+  PizzaType,
+  ProductModel3,
+  ProductType2,
+} from "@/types";
 import {
   Table,
   TableBody,
@@ -17,7 +22,10 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { Button } from "../ui/button";
-import { DropdownSwitch } from "../DropdownSwitch/DropdownSwitch";
+import {
+  DropdownOption,
+  DropdownSwitch,
+} from "../DropdownSwitch/DropdownSwitch";
 import { useState } from "react";
 import { Multiselect } from "../Multiselect/Multiselect";
 import { Separator } from "../ui/separator";
@@ -33,6 +41,11 @@ interface IProductsTableProps {
   onDelete?: (item: ProductModel3) => void;
 }
 
+type ProductPizzaType = {
+  productType: ProductType2;
+  pizzaType: PizzaType | null;
+};
+
 const ProductsTable: React.FC<IProductsTableProps> = ({
   className,
   items,
@@ -47,7 +60,7 @@ const ProductsTable: React.FC<IProductsTableProps> = ({
   const name = useInput();
   const description = useInput();
   const price = useInput();
-  const [type, setType] = useState<ProductType2 | undefined>(undefined);
+  const [type, setType] = useState<ProductPizzaType | undefined>(undefined);
   const [selectedIngredients, setSelectedIngredients] = useState<
     IngredientModel[]
   >([]);
@@ -62,16 +75,46 @@ const ProductsTable: React.FC<IProductsTableProps> = ({
   const options = [
     {
       label: "Pizza 32 CM.",
-      value: ProductType2.PizzaSmall,
+      value: {
+        productType: ProductType2.Pizza,
+        pizzaType: PizzaType.Small,
+      } as ProductPizzaType,
     },
     {
       label: "Pizza 40 CM.",
-      value: ProductType2.PizzaMedium,
+      value: {
+        productType: ProductType2.Pizza,
+        pizzaType: PizzaType.Medium,
+      } as ProductPizzaType,
     },
-    { label: "Pizza 50 CM.", value: ProductType2.PizzaBig },
-    { label: "Sosy do pizzy", value: ProductType2.Sauce },
-    { label: "Napoje", value: ProductType2.Drink },
-    { label: "Przekąski", value: ProductType2.Snack },
+    {
+      label: "Pizza 50 CM.",
+      value: {
+        productType: ProductType2.Pizza,
+        pizzaType: PizzaType.Large,
+      } as ProductPizzaType,
+    },
+    {
+      label: "Sosy do pizzy",
+      value: {
+        productType: ProductType2.Sauce,
+        pizzaType: null,
+      } as ProductPizzaType,
+    },
+    {
+      label: "Napoje",
+      value: {
+        productType: ProductType2.Drink,
+        pizzaType: null,
+      } as ProductPizzaType,
+    },
+    {
+      label: "Przekąski",
+      value: {
+        productType: ProductType2.Snack,
+        pizzaType: null,
+      } as ProductPizzaType,
+    },
   ];
 
   const readonly = (item: ProductModel3) => readonlyItem?.id !== item.id;
@@ -80,7 +123,7 @@ const ProductsTable: React.FC<IProductsTableProps> = ({
     name.setValue(item.name);
     description.setValue(item.description);
     price.setValue(item.price.toString());
-    setType(item.productType);
+    setType({ productType: item.productType, pizzaType: item.pizzaType });
     setSelectedIngredients(item.ingredients);
 
     setReadeonlyItem(item);
@@ -93,7 +136,8 @@ const ProductsTable: React.FC<IProductsTableProps> = ({
         name: name.value!,
         description: description.value,
         price: parseFloat(price.value!),
-        productType: type!,
+        productType: type?.productType!,
+        pizzaType: type?.pizzaType ?? null,
         ingredients: selectedIngredients,
       },
       selectedImage
@@ -112,7 +156,8 @@ const ProductsTable: React.FC<IProductsTableProps> = ({
       name: "",
       description: "",
       price: 0,
-      productType: ProductType2.PizzaSmall,
+      productType: ProductType2.Pizza,
+      pizzaType: PizzaType.Small,
       ingredients: [],
     };
     setNewItem(item);
@@ -167,7 +212,13 @@ const ProductsTable: React.FC<IProductsTableProps> = ({
                 <TableCell>
                   {readonly(item) ? (
                     <p>
-                      {options.find((x) => x.value === item.productType)?.label}
+                      {
+                        options.find(
+                          (x) =>
+                            x.value.productType === item.productType &&
+                            x.value.pizzaType === item.pizzaType
+                        )?.label
+                      }
                     </p>
                   ) : (
                     <DropdownSwitch
@@ -175,6 +226,13 @@ const ProductsTable: React.FC<IProductsTableProps> = ({
                       options={options}
                       selectedValue={type}
                       onSelectionClick={(item) => setType(item.value)}
+                      equalityComparison={(
+                        { value }: DropdownOption,
+                        selectedValue?: ProductPizzaType
+                      ) =>
+                        value.productType === selectedValue?.productType &&
+                        value.pizzaType === selectedValue?.pizzaType
+                      }
                     />
                   )}
                 </TableCell>

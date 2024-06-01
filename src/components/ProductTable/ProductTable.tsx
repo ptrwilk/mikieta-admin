@@ -1,4 +1,4 @@
-import { ProductModel2, ProductType2 } from "@/types";
+import { PizzaType, ProductModel2, ProductType2 } from "@/types";
 import { Rectangle } from "../Rectangle/Rectangle";
 import {
   Table,
@@ -50,10 +50,10 @@ const ProductTable: React.FC<IProductTableProps> = ({
               <p>{item.name}</p>
             </TableCell>
             <TableCell>
-              <p>{productTypeToType(item.type)}</p>
+              <p>{productTypeToType(item.productType)}</p>
             </TableCell>
             <TableCell>
-              <p>{productTypeToSize(item.type)}</p>
+              <p>{productTypeToSize(item.pizzaType)}</p>
             </TableCell>
             <TableCell>
               <p>{item.price?.toFixed(2)} zł</p>
@@ -75,32 +75,28 @@ const ProductTable: React.FC<IProductTableProps> = ({
   );
 };
 
-const productTypeToType = (type: ProductType2) => {
-  switch (type) {
+const productTypeToType = (productType: ProductType2) => {
+  switch (productType) {
+    case ProductType2.Pizza:
+      return "Pizza";
     case ProductType2.Drink:
       return "Napój";
-    case ProductType2.PizzaBig:
-      return "Pizza";
-    case ProductType2.PizzaMedium:
-      return "Pizza";
-    case ProductType2.PizzaSmall:
-      return "Pizza";
     case ProductType2.Sauce:
       return "Sos";
     case ProductType2.Snack:
       return "Przekąska";
     default:
-      throw new Error(`Type ${type} not defined`);
+      throw new Error(`Product type ${productType} not defined`);
   }
 };
 
-const productTypeToSize = (type: ProductType2) => {
+const productTypeToSize = (type?: PizzaType | null) => {
   switch (type) {
-    case ProductType2.PizzaBig:
+    case PizzaType.Large:
       return "Duża";
-    case ProductType2.PizzaMedium:
+    case PizzaType.Medium:
       return "Średnia";
-    case ProductType2.PizzaSmall:
+    case PizzaType.Small:
       return "Mała";
     default:
       return "-";
