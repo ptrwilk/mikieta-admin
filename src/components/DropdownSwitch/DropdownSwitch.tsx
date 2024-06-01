@@ -17,6 +17,7 @@ interface IDropdownSwitchProps {
   selectedValue?: any;
   excludedValues?: any[];
   onSelectionClick?: (item: DropdownOption) => void;
+  equalityComparison?: (option: DropdownOption, selectedValue: any) => boolean;
 }
 
 const DropdownSwitch: React.FC<IDropdownSwitchProps> = ({
@@ -25,8 +26,11 @@ const DropdownSwitch: React.FC<IDropdownSwitchProps> = ({
   selectedValue,
   excludedValues = [],
   onSelectionClick,
+  equalityComparison,
 }) => {
-  const label = options.find((x) => x.value === selectedValue)?.label;
+  const label = options.find(
+    (x) => equalityComparison?.(x, selectedValue) ?? x.value === selectedValue
+  )?.label;
 
   return (
     <DropdownMenu>

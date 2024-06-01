@@ -30,7 +30,8 @@ export type ProductModel = {
 export type ProductModel2 = {
   id: Guid;
   name: string;
-  type: ProductType2;
+  productType: ProductType2;
+  pizzaType?: PizzaType | null;
   price: number;
   quantity: number;
   ready: boolean;
@@ -42,6 +43,7 @@ export type ProductModel3 = {
   description?: string;
   price: number;
   productType: ProductType2;
+  pizzaType: PizzaType | null;
   ingredients: IngredientModel[];
   imageId?: Guid;
   imageUrl?: string;
@@ -75,6 +77,12 @@ export type ReservationModel = {
   emailSent: boolean;
 };
 
+export enum PizzaType {
+  Small,
+  Medium,
+  Large,
+}
+
 export enum DeliveryMethod {
   Delivery,
   TakeAway,
@@ -98,9 +106,7 @@ export enum ProductType {
 }
 
 export enum ProductType2 {
-  PizzaSmall,
-  PizzaMedium,
-  PizzaBig,
+  Pizza,
   Drink,
   Sauce,
   Snack,
