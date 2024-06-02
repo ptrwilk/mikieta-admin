@@ -1,4 +1,9 @@
-import { PizzaType, ProductModel2, ProductType2 } from "@/types";
+import {
+  PizzaType,
+  ProductModel2,
+  ProductType2,
+  productTypeToSize,
+} from "@/types";
 import { Rectangle } from "../Rectangle/Rectangle";
 import {
   Table,
@@ -87,19 +92,6 @@ const productTypeToType = (productType: ProductType2) => {
       return "Przekąska";
     default:
       throw new Error(`Product type ${productType} not defined`);
-  }
-};
-
-const productTypeToSize = (type?: PizzaType | null) => {
-  switch (type) {
-    case PizzaType.Large:
-      return "Duża";
-    case PizzaType.Medium:
-      return "Średnia";
-    case PizzaType.Small:
-      return "Mała";
-    default:
-      return "-";
   }
 };
 
