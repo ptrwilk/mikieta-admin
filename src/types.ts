@@ -52,6 +52,9 @@ export type ProductModel3 = {
 export type IngredientModel = {
   id?: Guid;
   name: string;
+  priceSmall: number;
+  priceMedium: number;
+  priceLarge: number;
 };
 
 export type AddressModel = {
@@ -129,3 +132,16 @@ export enum ProductStatus {
   Product,
   Ingredient,
 }
+
+export const productTypeToSize = (type?: PizzaType | null) => {
+  switch (type) {
+    case PizzaType.Large:
+      return "Duża";
+    case PizzaType.Medium:
+      return "Średnia";
+    case PizzaType.Small:
+      return "Mała";
+    default:
+      return "-";
+  }
+};

@@ -204,7 +204,7 @@ const ProductsTable: React.FC<IProductsTableProps> = ({
                 </TableCell>
                 <TableCell>
                   {readonly(item) ? (
-                    <p>{item.price}</p>
+                    <p>{item.price} zł</p>
                   ) : (
                     <TextInput {...price} numeric />
                   )}
@@ -271,7 +271,7 @@ const ProductsTable: React.FC<IProductsTableProps> = ({
                         } else {
                           setSelectedIngredients([
                             ...selectedIngredients,
-                            ingredients!.find((x) => x.id === value)!,
+                            ingredients?.find((x) => x.id === value)!,
                           ]);
                         }
                       }}

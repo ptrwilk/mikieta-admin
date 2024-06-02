@@ -1,4 +1,4 @@
-import { IngredientModel } from "@/types";
+import { IngredientModel, PizzaType, productTypeToSize } from "@/types";
 import {
   Table,
   TableBody,
@@ -20,6 +20,7 @@ import {
 import { SlOptions } from "react-icons/sl";
 import { Separator } from "../ui/separator";
 import { ConfirmationDialog } from "../ConfirmationDialog/ConfirmationDialog";
+import { DropdownSwitch } from "../DropdownSwitch/DropdownSwitch";
 
 interface IIngredientsTableProps {
   className?: string;
@@ -35,6 +36,9 @@ const IngredientsTable: React.FC<IIngredientsTableProps> = ({
   onDelete,
 }) => {
   const name = useInput();
+  const priceSmall = useInput();
+  const priceMedium = useInput();
+  const priceLarge = useInput();
 
   const [readonlyItem, setReadeonlyItem] = useState<
     IngredientModel | undefined
@@ -51,6 +55,9 @@ const IngredientsTable: React.FC<IIngredientsTableProps> = ({
 
   const onEdit = (item: IngredientModel) => {
     name.setValue(item.name);
+    priceSmall.setValue(item.priceSmall.toString());
+    priceMedium.setValue(item.priceMedium.toString());
+    priceLarge.setValue(item.priceLarge.toString());
 
     setReadeonlyItem(item);
   };
@@ -59,6 +66,9 @@ const IngredientsTable: React.FC<IIngredientsTableProps> = ({
     onAddOrUpdate?.({
       ...readonlyItem!,
       name: name.value!,
+      priceSmall: +priceSmall.value!,
+      priceMedium: +priceMedium.value!,
+      priceLarge: +priceLarge.value!,
     });
     onCancel();
   };
@@ -71,7 +81,11 @@ const IngredientsTable: React.FC<IIngredientsTableProps> = ({
   const onAddNewItemClick = () => {
     const item = {
       name: "",
-    };
+      pizzaType: PizzaType.Small,
+      priceSmall: 0,
+      priceMedium: 0,
+      priceLarge: 0,
+    } as IngredientModel;
     setNewItem(item);
 
     onEdit(item);
@@ -84,6 +98,9 @@ const IngredientsTable: React.FC<IIngredientsTableProps> = ({
           <TableRow>
             <TableHead className="w-[50px]">Nr.</TableHead>
             <TableHead>Nazwa</TableHead>
+            <TableHead>Mała cena</TableHead>
+            <TableHead>Średnia cena</TableHead>
+            <TableHead>Duża cena</TableHead>
             <TableHead className="text-right"></TableHead>
           </TableRow>
         </TableHeader>
@@ -95,13 +112,26 @@ const IngredientsTable: React.FC<IIngredientsTableProps> = ({
                 <TableCell>
                   <p>{key + 1}</p>
                 </TableCell>
-                <TableCell>
-                  {readonly(item) ? (
-                    <p>{item.name}</p>
-                  ) : (
-                    <TextInput {...name} autoFocus />
-                  )}
-                </TableCell>
+                <EditableCell
+                  readonly={readonly(item)}
+                  read={<p>{item.name}</p>}
+                  edit={<TextInput {...name} autoFocus />}
+                />
+                <EditableCell
+                  readonly={readonly(item)}
+                  read={<p>{item.priceSmall} zł</p>}
+                  edit={<TextInput {...priceSmall} numeric />}
+                />
+                <EditableCell
+                  readonly={readonly(item)}
+                  read={<p>{item.priceMedium} zł</p>}
+                  edit={<TextInput {...priceMedium} numeric />}
+                />
+                <EditableCell
+                  readonly={readonly(item)}
+                  read={<p>{item.priceLarge} zł</p>}
+                  edit={<TextInput {...priceLarge} numeric />}
+                />
                 <TableCell className="text-right">
                   {!readonly(item) ? (
                     <div className="flex justify-end gap-4">
@@ -164,6 +194,18 @@ const IngredientsTable: React.FC<IIngredientsTableProps> = ({
       )}
     </div>
   );
+};
+
+const EditableCell = ({
+  readonly,
+  read,
+  edit,
+}: {
+  readonly: boolean;
+  read: any;
+  edit: any;
+}) => {
+  return <TableCell>{readonly ? read : edit}</TableCell>;
 };
 
 export { IngredientsTable };
