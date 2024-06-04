@@ -34,12 +34,13 @@ const ProductTable: React.FC<IProductTableProps> = ({
       <TableHeader>
         <TableRow>
           <TableHead className="w-[50px]">Nr.</TableHead>
-          <TableHead className="w-[100px]">Nazwa</TableHead>
-          <TableHead className="w-[100px]">Typ</TableHead>
-          <TableHead className="w-[100px]">Rozmiar</TableHead>
-          <TableHead className="w-[100px]">Cena</TableHead>
-          <TableHead className="w-[100px]">Ilość</TableHead>
-          <TableHead className="w-[100px]">Gotowe</TableHead>
+          <TableHead>Nazwa</TableHead>
+          <TableHead>Typ</TableHead>
+          <TableHead>Rozmiar</TableHead>
+          <TableHead>Cena</TableHead>
+          <TableHead>Ilość</TableHead>
+          <TableHead>Dodatkowe składniki</TableHead>
+          <TableHead>Gotowe</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -65,6 +66,17 @@ const ProductTable: React.FC<IProductTableProps> = ({
             </TableCell>
             <TableCell>
               <p>{item.quantity}</p>
+            </TableCell>
+            <TableCell>
+              <ul>
+                {item.additionalIngredients.map(({ name, quantity }, key) => (
+                  <li>
+                    <p>
+                      {name} {quantity > 1 ? `x${quantity}` : ""}
+                    </p>
+                  </li>
+                ))}
+              </ul>
             </TableCell>
             <TableCell>
               <Rectangle

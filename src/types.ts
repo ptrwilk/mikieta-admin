@@ -1,3 +1,4 @@
+import { AdditionalIngredientModel } from "./types";
 export type Guid = string;
 
 export type OrderModel = {
@@ -35,6 +36,7 @@ export type ProductModel2 = {
   price: number;
   quantity: number;
   ready: boolean;
+  additionalIngredients: AdditionalIngredientModel[];
 };
 
 export type ProductModel3 = {
@@ -55,6 +57,12 @@ export type IngredientModel = {
   priceSmall: number;
   priceMedium: number;
   priceLarge: number;
+};
+
+export type AdditionalIngredientModel = {
+  ingredientId: Guid;
+  name: string;
+  quantity: number;
 };
 
 export type AddressModel = {
