@@ -39,7 +39,9 @@ const ProductTable: React.FC<IProductTableProps> = ({
           <TableHead>Rozmiar</TableHead>
           <TableHead>Cena</TableHead>
           <TableHead>Ilość</TableHead>
+          <TableHead>Usunięte składniki</TableHead>
           <TableHead>Dodatkowe składniki</TableHead>
+          <TableHead>Zamienione składniki</TableHead>
           <TableHead>Gotowe</TableHead>
         </TableRow>
       </TableHeader>
@@ -69,11 +71,33 @@ const ProductTable: React.FC<IProductTableProps> = ({
             </TableCell>
             <TableCell>
               <ul>
+                {item.removedIngredients.map(({ name }, key) => (
+                  <li key={key}>
+                    <p className="line-through">{name}</p>
+                  </li>
+                ))}
+              </ul>
+            </TableCell>
+            <TableCell>
+              <ul>
                 {item.additionalIngredients.map(({ name, quantity }, key) => (
-                  <li>
+                  <li key={key}>
                     <p>
                       {name} {quantity > 1 ? `x${quantity}` : ""}
                     </p>
+                  </li>
+                ))}
+              </ul>
+            </TableCell>
+            <TableCell>
+              <ul>
+                {item.replacedIngredients.map(({ fromName, toName }, key) => (
+                  <li key={key}>
+                    <div className="flex">
+                      <p>{fromName}</p>
+                      <p className="px-1">{"->"}</p>
+                      <p>{toName}</p>
+                    </div>
                   </li>
                 ))}
               </ul>
