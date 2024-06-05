@@ -37,6 +37,8 @@ export type ProductModel2 = {
   quantity: number;
   ready: boolean;
   additionalIngredients: AdditionalIngredientModel[];
+  removedIngredients: RemovedIngredientModel[];
+  replacedIngredients: ReplacedIngredientModel[];
 };
 
 export type ProductModel3 = {
@@ -63,6 +65,18 @@ export type AdditionalIngredientModel = {
   ingredientId: Guid;
   name: string;
   quantity: number;
+};
+
+export type RemovedIngredientModel = {
+  ingredientId: Guid;
+  name: string;
+};
+
+export type ReplacedIngredientModel = {
+  fromIngredientId: Guid;
+  fromName: string;
+  toIngredientId: Guid;
+  toName: string;
 };
 
 export type AddressModel = {
