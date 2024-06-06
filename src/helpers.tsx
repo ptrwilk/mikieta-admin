@@ -24,3 +24,31 @@ export const merge = <T,>(array: T[][]) => {
 };
 
 export const isNill = (value: any) => value === undefined || value === null;
+
+export const isNumber = (value: any) => Number.isFinite(value);
+
+export const orderBy = <T,>(
+  array: T[],
+  prop: string,
+  direction: "asc" | "desc"
+) => {
+  const asString = (value: any) => (isNill(value) ? "" : value).toString();
+
+  const getValue = (obj: any, path: any) => {
+    return path?.split(".").reduce((acc: any, key: any) => acc[key], obj);
+  };
+
+  if (direction === "asc") {
+    return [...array].sort((a, b) =>
+      isNumber(getValue(a, prop)) && isNumber(getValue(b, prop))
+        ? (getValue(a, prop) as number) - (getValue(b, prop) as number)
+        : asString(getValue(a, prop)).localeCompare(getValue(b, prop))
+    );
+  }
+
+  return [...array].sort((a, b) =>
+    isNumber(getValue(a, prop)) && isNumber(getValue(b, prop))
+      ? (getValue(b, prop) as number) - (getValue(a, prop) as number)
+      : asString(getValue(b, prop)).localeCompare(asString(getValue(a, prop)))
+  );
+};

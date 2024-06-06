@@ -21,3 +21,4 @@ export * from "./Multiselect/Multiselect";
 export * from "./ImagePopover/ImagePopover";
 export * from "./ImageFormPopover/ImageFormPopover";
 export * from "./ConfirmationDialog/ConfirmationDialog";
+export * from "./OrderableTableHead/OrderableTableHead";

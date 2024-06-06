@@ -10,8 +10,16 @@ import {
 } from "../ui/table";
 import styles from "./OrderTable.module.css";
 import classNames from "classnames";
-import { AddressDialog, DateTimePicker, DropdownSwitch, Rectangles } from "..";
+import {
+  AddressDialog,
+  DateTimePicker,
+  DropdownSwitch,
+  OrderableTableHead,
+  Rectangles,
+} from "..";
 import { useState } from "react";
+import { useOrder } from "@/hooks/useOrder";
+import { orderBy } from "@/helpers";
 
 interface IOrderTableProps {
   items?: OrderModel[];
@@ -21,7 +29,7 @@ interface IOrderTableProps {
 }
 
 const OrderTable: React.FC<IOrderTableProps> = ({
-  items,
+  items = [],
   selectedItem,
   onRowClick,
   onUpdate,
@@ -29,6 +37,8 @@ const OrderTable: React.FC<IOrderTableProps> = ({
   const [selectedAddressId, setSelectedAddressId] = useState<
     string | undefined
   >(undefined);
+
+  const order = useOrder<OrderModel>();
 
   const payedOptions = [
     { label: "Zapłacono", value: true },
@@ -63,21 +73,44 @@ const OrderTable: React.FC<IOrderTableProps> = ({
         <TableCaption>A list of your recent invoices.</TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[100px]">Numer</TableHead>
-            <TableHead className="w-[100px]">Imię</TableHead>
-            <TableHead className="w-[200px]">Adres</TableHead>
-            <TableHead className="w-[150px]">Telefon</TableHead>
-            <TableHead className="w-[150px]">Godzina zamówienia</TableHead>
-            <TableHead className="w-[150px]">Godzina dostawy</TableHead>
-            <TableHead className="w-[100px]">Cena</TableHead>
-            <TableHead className="w-[150px]">Płatność</TableHead>
-            <TableHead className="w-[250px]">Klocki</TableHead>
-            <TableHead className="w-[150px]">Odbiór</TableHead>
+            <OrderableTableHead property="number" {...order}>
+              Numer
+            </OrderableTableHead>
+            <OrderableTableHead property="name" {...order}>
+              Imię
+            </OrderableTableHead>
+            <OrderableTableHead property="address.city" {...order}>
+              Adres
+            </OrderableTableHead>
+            <OrderableTableHead property="phone" {...order}>
+              Telefon
+            </OrderableTableHead>
+            <OrderableTableHead property="createdAt" {...order}>
+              Godzina zamówienia
+            </OrderableTableHead>
+            <OrderableTableHead property="deliveryAt" {...order}>
+              Godzina dostawy
+            </OrderableTableHead>
+            <OrderableTableHead property="cost" {...order}>
+              Cena
+            </OrderableTableHead>
+            <OrderableTableHead property="payed" {...order}>
+              Płatność
+            </OrderableTableHead>
+            <OrderableTableHead property="completedProducts" {...order}>
+              Klocki
+            </OrderableTableHead>
+            <OrderableTableHead property="deliveryMethod" {...order}>
+              Odbiór
+            </OrderableTableHead>
             <TableHead className="text-right">Status</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {items?.map((item, key) => (
+          {(order
+            ? orderBy(items, order.prop as any, order.direction!)
+            : items
+          )?.map((item, key) => (
             <TableRow
               key={key}
               className={classNames("cursor-pointer", {

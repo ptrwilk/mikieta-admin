@@ -32,6 +32,9 @@ import { Separator } from "../ui/separator";
 import { ImagePopover } from "../ImagePopover/ImagePopover";
 import { ImageFormPopover } from "../ImageFormPopover/ImageFormPopover";
 import { ConfirmationDialog } from "../ConfirmationDialog/ConfirmationDialog";
+import { orderBy } from "@/helpers";
+import { OrderableTableHead } from "../OrderableTableHead/OrderableTableHead";
+import { useOrder } from "@/hooks/useOrder";
 
 interface IProductsTableProps {
   className?: string;
@@ -71,6 +74,10 @@ const ProductsTable: React.FC<IProductsTableProps> = ({
   const [confirmationDialogItem, setConfirmationDialogItem] = useState<
     ProductModel3 | undefined
   >(undefined);
+
+  const order = useOrder<ProductModel3>();
+
+  const products = [...(items ?? []), newItem!];
 
   const options = [
     {
@@ -171,17 +178,36 @@ const ProductsTable: React.FC<IProductsTableProps> = ({
         <TableHeader>
           <TableRow>
             <TableHead className="w-[50px]">Nr.</TableHead>
-            <TableHead>Nazwa</TableHead>
-            <TableHead>Opis</TableHead>
-            <TableHead className="min-w-[100px]">Cena</TableHead>
-            <TableHead>Typ</TableHead>
-            <TableHead>Zdjęcie</TableHead>
-            <TableHead>Składniki</TableHead>
+            <OrderableTableHead property="name" {...order}>
+              Nazwa
+            </OrderableTableHead>
+            <OrderableTableHead property="description" {...order}>
+              Opis
+            </OrderableTableHead>
+            <OrderableTableHead
+              className="min-w-[100px]"
+              property="price"
+              {...order}
+            >
+              Cena
+            </OrderableTableHead>
+            <OrderableTableHead property="pizzaType" {...order}>
+              Typ
+            </OrderableTableHead>
+            <OrderableTableHead property="imageUrl" {...order}>
+              Zdjęcie
+            </OrderableTableHead>
+            <OrderableTableHead property="ingredients" {...order}>
+              Składniki
+            </OrderableTableHead>
             <TableHead className="text-right"></TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {[...(items ?? []), newItem!]
+          {(order
+            ? orderBy(products, order.prop as any, order.direction!)
+            : products
+          )
             .filter((x) => x !== undefined)
             .map((item, key) => (
               <TableRow key={key}>
