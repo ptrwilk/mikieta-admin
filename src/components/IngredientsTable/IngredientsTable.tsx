@@ -1,4 +1,4 @@
-import { IngredientModel, PizzaType, productTypeToSize } from "@/types";
+import { IngredientModel, PizzaType } from "@/types";
 import {
   Table,
   TableBody,
@@ -20,7 +20,9 @@ import {
 import { SlOptions } from "react-icons/sl";
 import { Separator } from "../ui/separator";
 import { ConfirmationDialog } from "../ConfirmationDialog/ConfirmationDialog";
-import { DropdownSwitch } from "../DropdownSwitch/DropdownSwitch";
+import { orderBy } from "@/helpers";
+import { useOrder } from "@/hooks/useOrder";
+import { OrderableTableHead } from "../OrderableTableHead/OrderableTableHead";
 
 interface IIngredientsTableProps {
   className?: string;
@@ -50,6 +52,10 @@ const IngredientsTable: React.FC<IIngredientsTableProps> = ({
   const [confirmationDialogItem, setConfirmationDialogItem] = useState<
     IngredientModel | undefined
   >(undefined);
+
+  const order = useOrder<IngredientModel>();
+
+  const products = [...(items ?? []), newItem!];
 
   const readonly = (item: IngredientModel) => readonlyItem?.id !== item.id;
 
@@ -97,15 +103,26 @@ const IngredientsTable: React.FC<IIngredientsTableProps> = ({
         <TableHeader>
           <TableRow>
             <TableHead className="w-[50px]">Nr.</TableHead>
-            <TableHead>Nazwa</TableHead>
-            <TableHead>Mała cena</TableHead>
-            <TableHead>Średnia cena</TableHead>
-            <TableHead>Duża cena</TableHead>
+            <OrderableTableHead property="name" {...order}>
+              Nazwa
+            </OrderableTableHead>
+            <OrderableTableHead property="priceSmall" {...order}>
+              Mała cena
+            </OrderableTableHead>
+            <OrderableTableHead property="priceMedium" {...order}>
+              Średnia cena
+            </OrderableTableHead>
+            <OrderableTableHead property="priceLarge" {...order}>
+              Duża cena
+            </OrderableTableHead>
             <TableHead className="text-right"></TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {[...(items ?? []), newItem!]
+          {(order
+            ? orderBy(products, order.prop as any, order.direction!)
+            : products
+          )
             .filter((x) => x !== undefined)
             .map((item, key) => (
               <TableRow key={key}>

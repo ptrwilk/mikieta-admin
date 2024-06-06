@@ -16,6 +16,9 @@ import {
 } from "../ui/table";
 import styles from "./ProductTable.module.css";
 import classNames from "classnames";
+import { useOrder } from "@/hooks/useOrder";
+import { isNumber, orderBy } from "@/helpers";
+import { OrderableTableHead } from "../OrderableTableHead/OrderableTableHead";
 
 interface IProductTableProps {
   className?: string;
@@ -25,28 +28,45 @@ interface IProductTableProps {
 
 const ProductTable: React.FC<IProductTableProps> = ({
   className,
-  items,
+  items = [],
   onUpdate,
 }) => {
+  const order = useOrder<ProductModel2>();
+
   return (
     <Table className={classNames(className, styles["ProductTable"])}>
       <TableCaption>A list of your recent invoices.</TableCaption>
       <TableHeader>
         <TableRow>
           <TableHead className="w-[50px]">Nr.</TableHead>
-          <TableHead>Nazwa</TableHead>
-          <TableHead>Typ</TableHead>
-          <TableHead>Rozmiar</TableHead>
-          <TableHead>Cena</TableHead>
-          <TableHead>Ilość</TableHead>
+          <OrderableTableHead property="name" {...order}>
+            Nazwa
+          </OrderableTableHead>
+          <OrderableTableHead property="productType" {...order}>
+            Typ
+          </OrderableTableHead>
+          <OrderableTableHead property="pizzaType" {...order}>
+            Rozmiar
+          </OrderableTableHead>
+          <OrderableTableHead property="price" {...order}>
+            Cena
+          </OrderableTableHead>
+          <OrderableTableHead property="quantity" {...order}>
+            Ilość
+          </OrderableTableHead>
           <TableHead>Usunięte składniki</TableHead>
           <TableHead>Dodatkowe składniki</TableHead>
           <TableHead>Zamienione składniki</TableHead>
-          <TableHead>Gotowe</TableHead>
+          <OrderableTableHead property="ready" {...order}>
+            Gotowe
+          </OrderableTableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
-        {items?.map((item, key) => (
+        {(order
+          ? orderBy(items, order.prop as any, order.direction!)
+          : items
+        )?.map((item, key) => (
           <TableRow
             className={classNames({ "bg-green-200": item.ready })}
             key={key}

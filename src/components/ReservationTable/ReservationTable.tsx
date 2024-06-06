@@ -18,6 +18,9 @@ import { MdEmail } from "react-icons/md";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 import { SendEmailDialog } from "../SendEmailDialog/SendEmailDialog";
 import { put } from "@/apihelper";
+import { useOrder } from "@/hooks/useOrder";
+import { orderBy } from "@/helpers";
+import { OrderableTableHead } from "../OrderableTableHead/OrderableTableHead";
 
 interface IReservationTableProps {
   items?: ReservationModel[];
@@ -25,7 +28,7 @@ interface IReservationTableProps {
 }
 
 const ReservationTable: React.FC<IReservationTableProps> = ({
-  items,
+  items = [],
   onUpdate,
 }) => {
   const [comments, setComments] = useState<string | undefined>(undefined);
@@ -33,6 +36,8 @@ const ReservationTable: React.FC<IReservationTableProps> = ({
     ReservationModel | undefined
   >(undefined);
   const [sendButtonDisabled, setSendButtonDisabled] = useState<boolean>(false);
+
+  const order = useOrder<ReservationModel>();
 
   const statusOptions = [
     { label: "Anulowane", value: ReservationStatus.Cancelled },
@@ -62,18 +67,35 @@ const ReservationTable: React.FC<IReservationTableProps> = ({
         <TableCaption>A list of your recent invoices.</TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[100px]">Numer</TableHead>
-            <TableHead className="w-[150px]">Data rezerwacji</TableHead>
-            <TableHead className="w-[200px]">Liczba osób</TableHead>
-            <TableHead className="w-[150px]">Telefon</TableHead>
-            <TableHead className="w-[150px]">Email</TableHead>
-            <TableHead className="w-[150px]">Imię i nazwisko</TableHead>
-            <TableHead className="w-[50px]">Uwagi</TableHead>
+            <OrderableTableHead property="number" {...order}>
+              Numer
+            </OrderableTableHead>
+            <OrderableTableHead property="reservationDate" {...order}>
+              Data rezerwacji
+            </OrderableTableHead>
+            <OrderableTableHead property="numberOfPeople" {...order}>
+              Liczba osób
+            </OrderableTableHead>
+            <OrderableTableHead property="phone" {...order}>
+              Telefon
+            </OrderableTableHead>
+            <OrderableTableHead property="email" {...order}>
+              Email
+            </OrderableTableHead>
+            <OrderableTableHead property="name" {...order}>
+              Imię i nazwisko
+            </OrderableTableHead>
+            <OrderableTableHead property="comments" {...order}>
+              Uwagi
+            </OrderableTableHead>
             <TableHead className="text-right">Status</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {items?.map((item, key) => (
+          {(order
+            ? orderBy(items, order.prop as any, order.direction!)
+            : items
+          )?.map((item, key) => (
             <TableRow key={key}>
               <TableCell>#{item.number}</TableCell>
               <TableCell>
@@ -109,7 +131,6 @@ const ReservationTable: React.FC<IReservationTableProps> = ({
                   />
                 )}
               </TableCell>
-              <TableCell>{item.name}</TableCell>
               <TableCell className="text-right">
                 <DropdownSwitch
                   className="font-bold"

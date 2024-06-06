@@ -1,4 +1,3 @@
-import { AdditionalIngredientModel } from "./types";
 export type Guid = string;
 
 export type OrderModel = {
