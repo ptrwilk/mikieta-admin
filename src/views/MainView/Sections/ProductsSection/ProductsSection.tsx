@@ -55,7 +55,7 @@ const ProductsSection = () => {
           }
         />
       </div>
-      <div className={styles["Products"]}>
+      <div className="w-full overflow-auto">
         <ProductTable
           items={app!.selectedOrder?.products?.filter(
             (x) => status === undefined || x.ready === status

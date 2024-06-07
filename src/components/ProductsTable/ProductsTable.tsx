@@ -347,7 +347,7 @@ const ProductsTable: React.FC<IProductsTableProps> = ({
         </TableBody>
       </Table>
       {newItem === undefined && (
-        <div className="h-[70px]">
+        <div className="h-[70px] overflow-hidden">
           <Separator />
           <div className="flex justify-center items-center italic hover:bg-gray-50 h-full">
             <p className="cursor-pointer" onClick={onAddNewItemClick}>
