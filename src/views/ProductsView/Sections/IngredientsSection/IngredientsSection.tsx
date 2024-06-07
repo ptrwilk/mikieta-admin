@@ -32,7 +32,7 @@ const IngredientsSection = () => {
 
   return (
     <IngredientsTable
-      className="w-full"
+      className="w-full overflow-auto"
       items={app!.ingredients}
       onAddOrUpdate={handleAddOrUpdate}
       onDelete={handleDelete}

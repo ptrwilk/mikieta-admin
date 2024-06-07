@@ -57,7 +57,7 @@ const ProductsSection = () => {
 
   return (
     <ProductsTable
-      className="w-full"
+      className="w-full overflow-auto"
       items={app!.products}
       ingredients={app!.ingredients}
       onAddOrUpdate={handleAddOrUpdate}

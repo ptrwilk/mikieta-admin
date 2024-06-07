@@ -1,5 +1,4 @@
 import { get, putOrder } from "@/apihelper";
-import styles from "./OrderSection.module.css";
 import { OrderTable } from "@/components";
 import { useAppContext } from "@/context/AppContext";
 import { OrderModel, ProductModel2 } from "@/types";
@@ -33,16 +32,13 @@ const OrderSection = () => {
   };
 
   return (
-    <div className={styles["OrderSection"]}>
-      <h1>Zamówienia</h1>
-      <div className={styles["OrderTable"]}>
-        <OrderTable
-          items={app?.orders.filter((x) => x.status === app.selectedStatus)}
-          selectedItem={app?.selectedOrder}
-          onRowClick={handleRowClick}
-          onUpdate={handleUpdate}
-        />
-      </div>
+    <div className="h-[500px] w-full overflow-auto">
+      <OrderTable
+        items={app?.orders.filter((x) => x.status === app.selectedStatus)}
+        selectedItem={app?.selectedOrder}
+        onRowClick={handleRowClick}
+        onUpdate={handleUpdate}
+      />
     </div>
   );
 };

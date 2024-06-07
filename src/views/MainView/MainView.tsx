@@ -5,11 +5,11 @@ import { MenuSection } from "../Sections/MenuSection/MenuSection";
 
 const MainView = () => {
   return (
-    <div className="flex flex-col">
+    <div>
       <HeaderSection />
       <div className="flex">
         <MenuSection className="flex-shrink-0" />
-        <div className="mt-12 flex-grow">
+        <div className="flex flex-col gap-4 overflow-auto w-full">
           <OrderSection />
           <ProductsSection />
         </div>

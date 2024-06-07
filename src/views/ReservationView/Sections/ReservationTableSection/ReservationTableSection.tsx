@@ -33,12 +33,14 @@ const ReservationTableSection = () => {
   };
 
   return (
-    <ReservationTable
-      items={app!.reservations.filter(
-        (x) => x.status === app!.selectedReservationStatus
-      )}
-      onUpdate={handleUpdate}
-    ></ReservationTable>
+    <div className="w-full overflow-auto">
+      <ReservationTable
+        items={app!.reservations.filter(
+          (x) => x.status === app!.selectedReservationStatus
+        )}
+        onUpdate={handleUpdate}
+      />
+    </div>
   );
 };
 
