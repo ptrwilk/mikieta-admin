@@ -20,6 +20,12 @@ import {
 import { useState } from "react";
 import { useOrder } from "@/hooks/useOrder";
 import { orderBy } from "@/helpers";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "../ui/tooltip";
 
 interface IOrderTableProps {
   items?: OrderModel[];
@@ -92,7 +98,10 @@ const OrderTable: React.FC<IOrderTableProps> = ({
               Godzina dostawy
             </OrderableTableHead>
             <OrderableTableHead property="cost" {...order}>
-              Cena
+              Całkowity koszt
+            </OrderableTableHead>
+            <OrderableTableHead property="deliveryPrice" {...order}>
+              Cena dostawy
             </OrderableTableHead>
             <OrderableTableHead property="payed" {...order}>
               Płatność
@@ -141,6 +150,7 @@ const OrderTable: React.FC<IOrderTableProps> = ({
                 />
               </TableCell>
               <TableCell>{item.cost} zł</TableCell>
+              <TableCell>{item.deliveryPrice ?? 0} zł</TableCell>
               <TableCell>
                 <DropdownSwitch
                   className={classNames({
