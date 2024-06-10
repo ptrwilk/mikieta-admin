@@ -1,3 +1,13 @@
-.DropdownSwitch{
-    
+.DropdownSwitch {
+}
+
+.DropdownSwitch.DropdownSwitch-WidthFull {
+  width: 100%;
+}
+
+.DropdownSwitch .Caption {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: var(--color-black);
 }

@@ -11,6 +11,7 @@ import { toast } from "./components/ui/use-toast";
 import { Toaster } from "./components/ui/toaster";
 import { MainView } from "./views/MainView/MainView";
 import { ProductsView } from "./views/ProductsView/ProductsView";
+import { OptionsView } from "./views/OptionsView/OptionsView";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,11 @@ const router = createBrowserRouter([
     element: <ProductsView />,
     path: "/produkty",
     loader: () => get("products"),
+  },
+  {
+    element: <OptionsView />,
+    path: "/ustawienia",
+    loader: () => get("setting"),
   },
 ]);
 

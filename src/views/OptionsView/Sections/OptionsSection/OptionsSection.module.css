@@ -1,0 +1,19 @@
+.OptionsSection {
+}
+
+.OptionsSection .Items {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+}
+
+.OptionsSection .Hours {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.OptionsSection .Hours .To {
+  grid-column: 3;
+}

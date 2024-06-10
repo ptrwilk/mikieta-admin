@@ -5,6 +5,7 @@ import {
   ProductStatus,
   ReservationModel,
   ReservationStatus,
+  SettingModel,
   Status,
 } from "@/types";
 import { createContext, useContext, useState } from "react";
@@ -20,6 +21,7 @@ type AppState = {
   selectedStatus: Status;
   selectedReservationStatus: ReservationStatus;
   selectedProductStatus: ProductStatus;
+  settings?: SettingModel;
 };
 
 const AppContext = createContext<
