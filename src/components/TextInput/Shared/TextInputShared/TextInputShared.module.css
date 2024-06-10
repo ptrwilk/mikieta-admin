@@ -18,8 +18,12 @@
   color: var(--color-black);
 }
 
-.TextInputShared input {
+.TextInputShared-NoBorder input {
   border: 0;
+}
+
+.TextInputShared-Readonly input {
+  cursor: default;
 }
 
 .TextInputShared .Star {

@@ -13,6 +13,7 @@ interface ITextInputProps {
   numeric?: boolean;
   border?: boolean;
   autoFocus?: boolean;
+  readonly?: boolean;
   onValueChange?: (value: string | undefined) => void;
   onErrorChange?: (error: boolean) => void;
 }

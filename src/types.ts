@@ -1,5 +1,22 @@
 export type Guid = string;
 
+export type SettingModel = {
+  street?: string;
+  city?: string;
+  zipCode?: string;
+  phone?: string;
+  facebook?: string;
+  deliveryPrice?: number;
+  deliveryRange?: number;
+  openingHours: SettingHoursModel[];
+  deliveryHours: SettingHoursModel[];
+};
+
+export type SettingHoursModel = {
+  from: string;
+  to: string;
+};
+
 export type OrderModel = {
   id: Guid;
   number: number;

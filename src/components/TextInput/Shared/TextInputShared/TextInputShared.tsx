@@ -16,6 +16,7 @@ interface ITextInputSharedProps {
   numeric?: boolean;
   border?: boolean;
   autoFocus?: boolean;
+  readonly?: boolean;
   onValueChange?: (value: string | undefined) => void;
   onBlur?: () => void;
   onFocus?: () => void;
@@ -33,8 +34,9 @@ const TextInputShared: React.FC<ITextInputSharedProps> = ({
   errorMessage,
   star,
   numeric,
-  border,
+  border = true,
   autoFocus,
+  readonly,
   onValueChange,
   onBlur,
   onFocus,
@@ -49,6 +51,8 @@ const TextInputShared: React.FC<ITextInputSharedProps> = ({
     <div
       className={classNames(className, styles["TextInputShared"], {
         [styles["TextInputShared-Top"]]: captionTop,
+        [styles["TextInputShared-NoBorder"]]: !border,
+        [styles["TextInputShared-Readonly"]]: readonly,
       })}
     >
       {caption && (
@@ -62,12 +66,13 @@ const TextInputShared: React.FC<ITextInputSharedProps> = ({
         </p>
       )}
       <Input
+        readOnly={readonly}
         autoFocus={autoFocus}
-        additional={{ border: border }}
+        additional={{ border: border && !readonly }}
         type={numeric ? "number" : "text"}
         value={value ?? ""}
         placeholder={placeholder}
-        onChange={(e) => onValueChange?.(e.target.value as string)}
+        onChange={(e) => !readonly && onValueChange?.(e.target.value as string)}
         onBlur={onBlur}
         onFocus={onFocus}
         onKeyDown={onKeyDown}

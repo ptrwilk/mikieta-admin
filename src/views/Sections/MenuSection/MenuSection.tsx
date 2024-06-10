@@ -2,6 +2,7 @@ import { Menu } from "@/components";
 import { useAppContext } from "@/context/AppContext";
 import { FaCalendarCheck, FaCarrot, FaShoppingCart } from "react-icons/fa";
 import { useLocation } from "react-router-dom";
+import { IoMdSettings } from "react-icons/io";
 
 interface IMenuViewProps {
   className?: string;
@@ -13,7 +14,13 @@ const MenuSection: React.FC<IMenuViewProps> = ({ className }) => {
   const { pathname } = useLocation();
 
   const selectedOption =
-    pathname === "/rezerwacje" ? 1 : pathname === "/produkty" ? 2 : 0;
+    pathname === "/rezerwacje"
+      ? 1
+      : pathname === "/produkty"
+      ? 2
+      : pathname === "/ustawienia"
+      ? 3
+      : 0;
 
   return (
     <Menu
@@ -36,6 +43,11 @@ const MenuSection: React.FC<IMenuViewProps> = ({ className }) => {
           icon: <FaCarrot />,
           label: "Produkty",
           to: "/produkty",
+        },
+        {
+          icon: <IoMdSettings />,
+          label: "Ustawienia",
+          to: "/ustawienia",
         },
       ]}
     />
