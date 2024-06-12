@@ -1,6 +1,5 @@
-// const token = () => localStorage.getItem("token");
+const token = () => `Bearer ${localStorage.getItem("token")}` ?? "";
 
-import { create } from "domain";
 import { OrderModel, ReservationModel } from "./types";
 
 const url = import.meta.env.VITE_API_URL;
@@ -8,6 +7,9 @@ const url = import.meta.env.VITE_API_URL;
 export const get = (path: string, convert?: (item: any) => any) => {
   return fetch(`${url}/${path}`, {
     method: "GET",
+    headers: {
+      Authorization: token(),
+    },
   }).then(async (response) => {
     const res = await response.json();
 
@@ -45,9 +47,12 @@ const execute = (
   return fetch(`${url}/${path}`, {
     method: method,
     headers: isFormData
-      ? undefined
+      ? {
+          Authorization: token(),
+        }
       : {
           "Content-Type": "application/json",
+          Authorization: token(),
         },
     body: isFormData ? body : JSON.stringify(body),
   }).then(async (response) => {
