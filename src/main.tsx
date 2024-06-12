@@ -12,25 +12,51 @@ import { Toaster } from "./components/ui/toaster";
 import { MainView } from "./views/MainView/MainView";
 import { ProductsView } from "./views/ProductsView/ProductsView";
 import { OptionsView } from "./views/OptionsView/OptionsView";
+import { LoginView } from "./views/LoginView/LoginView";
+import { Authenticated } from "./views/Authenticated";
 
 const router = createBrowserRouter([
   {
-    element: <MainView />,
+    element: (
+      <Authenticated>
+        <LoginView />
+      </Authenticated>
+    ),
+    path: "/logowanie",
+  },
+  {
+    element: (
+      <Authenticated>
+        <MainView />
+      </Authenticated>
+    ),
     path: "/",
     loader: getOrders,
   },
   {
-    element: <ReservationView />,
+    element: (
+      <Authenticated>
+        <ReservationView />
+      </Authenticated>
+    ),
     path: "/rezerwacje",
     loader: getReservations,
   },
   {
-    element: <ProductsView />,
+    element: (
+      <Authenticated>
+        <ProductsView />
+      </Authenticated>
+    ),
     path: "/produkty",
     loader: () => get("products"),
   },
   {
-    element: <OptionsView />,
+    element: (
+      <Authenticated>
+        <OptionsView />
+      </Authenticated>
+    ),
     path: "/ustawienia",
     loader: () => get("setting"),
   },

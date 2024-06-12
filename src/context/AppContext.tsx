@@ -22,6 +22,7 @@ type AppState = {
   selectedReservationStatus: ReservationStatus;
   selectedProductStatus: ProductStatus;
   settings?: SettingModel;
+  authenticated: boolean;
 };
 
 const AppContext = createContext<
@@ -45,6 +46,7 @@ export const AppContextProvider = ({ children }: { children: any }) => {
     ingredients: [],
     selectedReservationStatus: ReservationStatus.Waiting,
     selectedProductStatus: ProductStatus.Product,
+    authenticated: false,
   });
 
   const updateState = <K extends keyof AppState>(
