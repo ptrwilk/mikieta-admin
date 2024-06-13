@@ -20,6 +20,7 @@ const OptionsSection = () => {
   const facebook = useInput([], data.facebook);
   const deliveryRange = useInput([], data.deliveryRange?.toString());
   const deliveryPrice = useInput([], data.deliveryPrice?.toString());
+  const email = useInput([], data.email);
 
   const days = [
     "Poniedziałek",
@@ -76,6 +77,7 @@ const OptionsSection = () => {
       zipCode: zipCode.value,
       phone: phone.value,
       facebook: facebook.value,
+      email: email.value,
       deliveryPrice: parseFloat(deliveryPrice.value!),
       deliveryRange: parseFloat(deliveryRange.value!),
       openingHours: openingHours.hours.map((hour) => ({
@@ -101,6 +103,7 @@ const OptionsSection = () => {
     zipCode.setValue(app!.settings!.zipCode);
     phone.setValue(app!.settings!.phone);
     facebook.setValue(app!.settings!.facebook);
+    email.setValue(app!.settings!.email);
     deliveryPrice.setValue(app!.settings!.deliveryPrice?.toString());
     deliveryRange.setValue(app!.settings!.deliveryRange?.toString());
 
@@ -156,6 +159,14 @@ const OptionsSection = () => {
               captionTop
               caption="Telefon"
               {...phone}
+              readonly={!isEdit}
+            />
+          </li>
+          <li>
+            <TextInput
+              captionTop
+              caption="Email"
+              {...email}
               readonly={!isEdit}
             />
           </li>
