@@ -8,6 +8,7 @@ export type SettingModel = {
   facebook?: string;
   deliveryPrice?: number;
   deliveryRange?: number;
+  email?: string;
   openingHours: SettingHoursModel[];
   deliveryHours: SettingHoursModel[];
 };
