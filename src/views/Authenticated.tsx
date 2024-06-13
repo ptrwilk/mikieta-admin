@@ -36,7 +36,9 @@ const Authenticated: React.FC<IAuthenticatedProps> = ({ children }) => {
 
   return (
     <>
-      {(!authenticated && isLogginPage) || (authenticated && !isLogginPage) ? (
+      {authenticated === undefined ||
+      (!authenticated && isLogginPage) ||
+      (authenticated && !isLogginPage) ? (
         children
       ) : authenticated && isLogginPage ? (
         <Navigate to="/" />

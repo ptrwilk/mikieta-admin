@@ -31,7 +31,13 @@ const router = createBrowserRouter([
       </Authenticated>
     ),
     path: "/",
-    loader: getOrders,
+    loader: async () => {
+      try {
+        return await getOrders();
+      } catch (e) {
+        return [];
+      }
+    },
   },
   {
     element: (
@@ -40,7 +46,13 @@ const router = createBrowserRouter([
       </Authenticated>
     ),
     path: "/rezerwacje",
-    loader: getReservations,
+    loader: async () => {
+      try {
+        return await getReservations();
+      } catch (e) {
+        return [];
+      }
+    },
   },
   {
     element: (
@@ -49,7 +61,13 @@ const router = createBrowserRouter([
       </Authenticated>
     ),
     path: "/produkty",
-    loader: () => get("products"),
+    loader: async () => {
+      try {
+        return await get("products");
+      } catch (e) {
+        return [];
+      }
+    },
   },
   {
     element: (
@@ -58,7 +76,13 @@ const router = createBrowserRouter([
       </Authenticated>
     ),
     path: "/ustawienia",
-    loader: () => get("setting"),
+    loader: async () => {
+      try {
+        return await get("setting");
+      } catch (e) {
+        return [];
+      }
+    },
   },
 ]);
 

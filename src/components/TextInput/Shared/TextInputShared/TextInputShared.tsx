@@ -17,6 +17,7 @@ interface ITextInputSharedProps {
   border?: boolean;
   autoFocus?: boolean;
   readonly?: boolean;
+  password?: boolean;
   onValueChange?: (value: string | undefined) => void;
   onBlur?: () => void;
   onFocus?: () => void;
@@ -37,6 +38,7 @@ const TextInputShared: React.FC<ITextInputSharedProps> = ({
   border = true,
   autoFocus,
   readonly,
+  password,
   onValueChange,
   onBlur,
   onFocus,
@@ -69,7 +71,7 @@ const TextInputShared: React.FC<ITextInputSharedProps> = ({
         readOnly={readonly}
         autoFocus={autoFocus}
         additional={{ border: border && !readonly }}
-        type={numeric ? "number" : "text"}
+        type={numeric ? "number" : password ? "password" : "text"}
         value={value ?? ""}
         placeholder={placeholder}
         onChange={(e) => !readonly && onValueChange?.(e.target.value as string)}
