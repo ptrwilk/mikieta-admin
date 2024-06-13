@@ -14,6 +14,7 @@ interface ITextInputProps {
   border?: boolean;
   autoFocus?: boolean;
   readonly?: boolean;
+  password?: boolean;
   onValueChange?: (value: string | undefined) => void;
   onErrorChange?: (error: boolean) => void;
 }

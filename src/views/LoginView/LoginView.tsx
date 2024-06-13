@@ -3,10 +3,12 @@ import { TextInput } from "@/components";
 import { Button } from "@/components/ui/button";
 import { useAppContext } from "@/context/AppContext";
 import { useInput } from "@/hooks";
+import { useState } from "react";
 
 const LoginView = () => {
   const [_, updateApp] = useAppContext();
 
+  const [error, setError] = useState(false);
   const login = useInput();
   const password = useInput();
 
@@ -21,6 +23,7 @@ const LoginView = () => {
       updateApp("authenticated", true);
     } catch (e) {
       password.setValue("");
+      setError(true);
     }
   };
 
@@ -31,8 +34,10 @@ const LoginView = () => {
           Logowanie do Panelu Restauratora
         </p>
         <TextInput captionTop caption="Login" {...login} />
-        <TextInput captionTop caption="Hasło" {...password} />
-        <p className="text-sm text-red-600">Niepoprawny login lub hasło</p>
+        <TextInput captionTop caption="Hasło" {...password} password />
+        {error && (
+          <p className="text-sm text-red-600">Niepoprawny login lub hasło</p>
+        )}
         <Button
           className="mt-4"
           onClick={handleLogin}
