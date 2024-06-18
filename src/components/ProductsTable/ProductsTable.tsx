@@ -1,9 +1,4 @@
-import {
-  IngredientModel,
-  PizzaType,
-  ProductModel3,
-  ProductType2,
-} from "@/types";
+import { IngredientModel, PizzaType, ProductModel, ProductType } from "@/types";
 import {
   Table,
   TableBody,
@@ -38,14 +33,14 @@ import { useOrder } from "@/hooks/useOrder";
 
 interface IProductsTableProps {
   className?: string;
-  items?: ProductModel3[];
+  items?: ProductModel[];
   ingredients?: IngredientModel[];
-  onAddOrUpdate?: (item: ProductModel3, image?: any) => void;
-  onDelete?: (item: ProductModel3) => void;
+  onAddOrUpdate?: (item: ProductModel, image?: any) => void;
+  onDelete?: (item: ProductModel) => void;
 }
 
 type ProductPizzaType = {
-  productType: ProductType2;
+  productType: ProductType;
   pizzaType: PizzaType | null;
 };
 
@@ -56,7 +51,7 @@ const ProductsTable: React.FC<IProductsTableProps> = ({
   onAddOrUpdate,
   onDelete,
 }) => {
-  const [readonlyItem, setReadeonlyItem] = useState<ProductModel3 | undefined>(
+  const [readonlyItem, setReadeonlyItem] = useState<ProductModel | undefined>(
     undefined
   );
 
@@ -70,12 +65,12 @@ const ProductsTable: React.FC<IProductsTableProps> = ({
   const [selectedImage, setSelectedImage] = useState<any>(undefined);
   const [imagePopoverOpen, setImagePopoverOpen] = useState(false);
 
-  const [newItem, setNewItem] = useState<ProductModel3 | undefined>(undefined);
+  const [newItem, setNewItem] = useState<ProductModel | undefined>(undefined);
   const [confirmationDialogItem, setConfirmationDialogItem] = useState<
-    ProductModel3 | undefined
+    ProductModel | undefined
   >(undefined);
 
-  const order = useOrder<ProductModel3>();
+  const order = useOrder<ProductModel>();
 
   const products = [...(items ?? []), newItem!];
 
@@ -83,50 +78,50 @@ const ProductsTable: React.FC<IProductsTableProps> = ({
     {
       label: "Pizza 32 CM.",
       value: {
-        productType: ProductType2.Pizza,
+        productType: ProductType.Pizza,
         pizzaType: PizzaType.Small,
       } as ProductPizzaType,
     },
     {
       label: "Pizza 40 CM.",
       value: {
-        productType: ProductType2.Pizza,
+        productType: ProductType.Pizza,
         pizzaType: PizzaType.Medium,
       } as ProductPizzaType,
     },
     {
       label: "Pizza 50 CM.",
       value: {
-        productType: ProductType2.Pizza,
+        productType: ProductType.Pizza,
         pizzaType: PizzaType.Large,
       } as ProductPizzaType,
     },
     {
       label: "Sosy do pizzy",
       value: {
-        productType: ProductType2.Sauce,
+        productType: ProductType.Sauce,
         pizzaType: null,
       } as ProductPizzaType,
     },
     {
       label: "Napoje",
       value: {
-        productType: ProductType2.Drink,
+        productType: ProductType.Drink,
         pizzaType: null,
       } as ProductPizzaType,
     },
     {
       label: "Przekąski",
       value: {
-        productType: ProductType2.Snack,
+        productType: ProductType.Snack,
         pizzaType: null,
       } as ProductPizzaType,
     },
   ];
 
-  const readonly = (item: ProductModel3) => readonlyItem?.id !== item.id;
+  const readonly = (item: ProductModel) => readonlyItem?.id !== item.id;
 
-  const onEdit = (item: ProductModel3) => {
+  const onEdit = (item: ProductModel) => {
     name.setValue(item.name);
     description.setValue(item.description);
     price.setValue(item.price.toString());
@@ -163,7 +158,7 @@ const ProductsTable: React.FC<IProductsTableProps> = ({
       name: "",
       description: "",
       price: 0,
-      productType: ProductType2.Pizza,
+      productType: ProductType.Pizza,
       pizzaType: PizzaType.Small,
       ingredients: [],
     };

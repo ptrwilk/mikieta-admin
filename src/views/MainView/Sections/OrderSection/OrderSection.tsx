@@ -1,7 +1,7 @@
 import { get, putOrder } from "@/apihelper";
 import { OrderTable } from "@/components";
 import { useAppContext } from "@/context/AppContext";
-import { OrderModel, ProductModel2 } from "@/types";
+import { OrderModel, OrderedProductModel } from "@/types";
 
 const OrderSection = () => {
   const [app, updateApp] = useAppContext();
@@ -13,7 +13,7 @@ const OrderSection = () => {
 
     const products = (await get(
       `order/${item.id}/products`
-    )) as ProductModel2[];
+    )) as OrderedProductModel[];
 
     updateApp("selectedOrder", { ...item, products });
   };

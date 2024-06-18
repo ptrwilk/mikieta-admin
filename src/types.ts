@@ -29,27 +29,17 @@ export type OrderModel = {
   payed: boolean;
   deliveryMethod: DeliveryMethod;
   status: Status;
-  products?: ProductModel2[];
+  products?: OrderedProductModel[];
   totalProducts: number;
   completedProducts: number;
   deliveryAt: Date;
   createdAt: Date;
 };
 
-export type ProductModel = {
+export type OrderedProductModel = {
   id: Guid;
   name: string;
-  sizeType?: SizeType;
-  cakeType?: CakeType;
   productType: ProductType;
-  parentNumber: number;
-  checked?: boolean;
-};
-
-export type ProductModel2 = {
-  id: Guid;
-  name: string;
-  productType: ProductType2;
   pizzaType?: PizzaType | null;
   price: number;
   quantity: number;
@@ -59,12 +49,12 @@ export type ProductModel2 = {
   replacedIngredients: ReplacedIngredientModel[];
 };
 
-export type ProductModel3 = {
+export type ProductModel = {
   id?: Guid;
   name: string;
   description?: string;
   price: number;
-  productType: ProductType2;
+  productType: ProductType;
   pizzaType: PizzaType | null;
   ingredients: IngredientModel[];
   imageId?: Guid;
@@ -121,56 +111,51 @@ export type ReservationModel = {
 };
 
 export enum PizzaType {
-  Small,
-  Medium,
-  Large,
+  Small = "Small",
+  Medium = "Medium",
+  Large = "Large",
 }
 
 export enum DeliveryMethod {
-  Delivery,
-  TakeAway,
-  DinningIn,
+  Delivery = "Delivery",
+  TakeAway = "TakeAway",
+  DinningIn = "DinningIn",
 }
 
 export enum SizeType {
-  Small,
-  Medium,
-  Big,
+  Small = "Small",
+  Medium = "Medium",
+  Big = "Big",
 }
 
 export enum CakeType {
-  Thin,
-  Thick,
+  Thin = "Thin",
+  Thick = "Thick",
 }
 
 export enum ProductType {
-  Pizza,
-  Drink,
-}
-
-export enum ProductType2 {
-  Pizza,
-  Drink,
-  Sauce,
-  Snack,
+  Pizza = "Pizza",
+  Drink = "Drink",
+  Sauce = "Sauce",
+  Snack = "Snack",
 }
 
 export enum Status {
-  Waiting,
-  Preparing,
-  Ready,
+  Waiting = "Waiting",
+  Preparing = "Preparing",
+  Ready = "Ready",
 }
 
 export enum ReservationStatus {
-  Cancelled,
-  Waiting,
-  Sent,
-  ConfirmedByPhone,
+  Cancelled = "Cancelled",
+  Waiting = "Waiting",
+  Sent = "Sent",
+  ConfirmedByPhone = "ConfirmedByPhone",
 }
 
 export enum ProductStatus {
-  Product,
-  Ingredient,
+  Product = "Product",
+  Ingredient = "Ingredient",
 }
 
 export const productTypeToSize = (type?: PizzaType | null) => {

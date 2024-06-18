@@ -1,7 +1,7 @@
 import {
   PizzaType,
-  ProductModel2,
-  ProductType2,
+  OrderedProductModel,
+  ProductType,
   productTypeToSize,
 } from "@/types";
 import { Rectangle } from "../Rectangle/Rectangle";
@@ -22,8 +22,8 @@ import { OrderableTableHead } from "../OrderableTableHead/OrderableTableHead";
 
 interface IProductTableProps {
   className?: string;
-  items?: ProductModel2[];
-  onUpdate?: (item: ProductModel2) => void;
+  items?: OrderedProductModel[];
+  onUpdate?: (item: OrderedProductModel) => void;
 }
 
 const ProductTable: React.FC<IProductTableProps> = ({
@@ -31,7 +31,7 @@ const ProductTable: React.FC<IProductTableProps> = ({
   items = [],
   onUpdate,
 }) => {
-  const order = useOrder<ProductModel2>();
+  const order = useOrder<OrderedProductModel>();
 
   return (
     <Table className={classNames(className, styles["ProductTable"])}>
@@ -136,15 +136,15 @@ const ProductTable: React.FC<IProductTableProps> = ({
   );
 };
 
-const productTypeToType = (productType: ProductType2) => {
+const productTypeToType = (productType: ProductType) => {
   switch (productType) {
-    case ProductType2.Pizza:
+    case ProductType.Pizza:
       return "Pizza";
-    case ProductType2.Drink:
+    case ProductType.Drink:
       return "Napój";
-    case ProductType2.Sauce:
+    case ProductType.Sauce:
       return "Sos";
-    case ProductType2.Snack:
+    case ProductType.Snack:
       return "Przekąska";
     default:
       throw new Error(`Product type ${productType} not defined`);

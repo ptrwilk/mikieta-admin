@@ -1,14 +1,14 @@
 import { del, get, post, put } from "@/apihelper";
 import { ProductsTable } from "@/components";
 import { useAppContext } from "@/context/AppContext";
-import { Guid, IngredientModel, ProductModel3 } from "@/types";
+import { Guid, IngredientModel, ProductModel } from "@/types";
 import { useEffect } from "react";
 import { useLoaderData } from "react-router-dom";
 
 const ProductsSection = () => {
   const [app, updateApp] = useAppContext();
 
-  const data = useLoaderData() as ProductModel3[];
+  const data = useLoaderData() as ProductModel[];
 
   useEffect(() => {
     (async () => {
@@ -19,7 +19,7 @@ const ProductsSection = () => {
     })();
   }, []);
 
-  const handleAddOrUpdate = async (item: ProductModel3, image?: any) => {
+  const handleAddOrUpdate = async (item: ProductModel, image?: any) => {
     let imageId: Guid | undefined = undefined;
     if (image) {
       const formData = new FormData();
@@ -34,7 +34,7 @@ const ProductsSection = () => {
     const product = (await put("products", {
       ...item,
       imageId,
-    })) as ProductModel3;
+    })) as ProductModel;
 
     const newProducts = [...app!.products];
 
@@ -47,7 +47,7 @@ const ProductsSection = () => {
     updateApp("products", newProducts);
   };
 
-  const handleDelete = async (item: ProductModel3) => {
+  const handleDelete = async (item: ProductModel) => {
     await del(`products/${item.id}`);
 
     const newProducts = app!.products.filter((x) => x.id !== item.id);
