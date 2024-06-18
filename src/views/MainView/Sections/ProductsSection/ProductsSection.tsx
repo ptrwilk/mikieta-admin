@@ -2,7 +2,7 @@ import { StatusFilter, ProductTable } from "@/components";
 import styles from "./ProductsSection.module.css";
 import { useState } from "react";
 import { useAppContext } from "@/context/AppContext";
-import { OrderModel, ProductModel2 } from "@/types";
+import { OrderModel, OrderedProductModel } from "@/types";
 import { get, put } from "@/apihelper";
 
 const ProductsSection = () => {
@@ -10,7 +10,7 @@ const ProductsSection = () => {
 
   const [status, setStatus] = useState<boolean | undefined>(undefined);
 
-  const handleUpdate = async (item: ProductModel2) => {
+  const handleUpdate = async (item: OrderedProductModel) => {
     const index = app?.selectedOrder?.products?.findIndex(
       (x) => x.id === item.id
     );

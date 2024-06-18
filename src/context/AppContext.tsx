@@ -1,7 +1,7 @@
 import {
   IngredientModel,
   OrderModel,
-  ProductModel3,
+  ProductModel,
   ProductStatus,
   ReservationModel,
   ReservationStatus,
@@ -14,7 +14,7 @@ type AppState = {
   orders: OrderModel[];
   selectedOrder?: OrderModel;
   reservations: ReservationModel[];
-  products: ProductModel3[];
+  products: ProductModel[];
   ingredients: IngredientModel[];
   newOrdersAmount?: number;
   newReservationsAmount?: number;
