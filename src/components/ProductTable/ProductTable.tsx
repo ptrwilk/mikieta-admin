@@ -1,9 +1,4 @@
-import {
-  PizzaType,
-  OrderedProductModel,
-  ProductType,
-  productTypeToSize,
-} from "@/types";
+import { OrderedProductModel, ProductType, productTypeToSize } from "@/types";
 import { Rectangle } from "../Rectangle/Rectangle";
 import {
   Table,
@@ -17,7 +12,7 @@ import {
 import styles from "./ProductTable.module.css";
 import classNames from "classnames";
 import { useOrder } from "@/hooks/useOrder";
-import { isNumber, orderBy } from "@/helpers";
+import { orderBy } from "@/helpers";
 import { OrderableTableHead } from "../OrderableTableHead/OrderableTableHead";
 
 interface IProductTableProps {

@@ -20,12 +20,6 @@ import {
 import { useState } from "react";
 import { useOrder } from "@/hooks/useOrder";
 import { orderBy } from "@/helpers";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "../ui/tooltip";
 
 interface IOrderTableProps {
   items?: OrderModel[];

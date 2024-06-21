@@ -1,4 +1,3 @@
-import classNames from "classnames";
 import styles from "./Rectangles.module.css";
 import { Rectangle } from "..";
 
