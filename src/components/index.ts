@@ -23,3 +23,4 @@ export * from "./ImageFormPopover/ImageFormPopover";
 export * from "./ConfirmationDialog/ConfirmationDialog";
 export * from "./OrderableTableHead/OrderableTableHead";
 export * from "./HoursRange/HoursRange";
+export * from "./Border/Border";
