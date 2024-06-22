@@ -1,6 +1,6 @@
 import { ReservationStatus } from "@/types";
 import styles from "./HeaderSection.module.css";
-import { Badge, ButtonStatus } from "@/components";
+import { Badge, Border, ButtonStatus } from "@/components";
 import { useAppContext } from "@/context/AppContext";
 import { getReservations } from "@/apihelper";
 
@@ -29,21 +29,23 @@ const ReservationHeaderSection = () => {
   };
 
   return (
-    <div className={styles["ReservationHeaderSection"]}>
-      <ul>
-        {statuses.map(({ status, text }, key) => (
-          <li key={key}>
-            <Badge amount={key === 1 ? app!.newReservationsAmount : 0}>
-              <ButtonStatus
-                selected={status === app!.selectedReservationStatus}
-                text={text}
-                onClick={() => handleClick(status)}
-              />
-            </Badge>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <Border>
+      <div className={styles["ReservationHeaderSection"]}>
+        <ul>
+          {statuses.map(({ status, text }, key) => (
+            <li key={key}>
+              <Badge amount={key === 1 ? app!.newReservationsAmount : 0}>
+                <ButtonStatus
+                  selected={status === app!.selectedReservationStatus}
+                  text={text}
+                  onClick={() => handleClick(status)}
+                />
+              </Badge>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </Border>
   );
 };
 
