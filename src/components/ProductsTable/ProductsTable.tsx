@@ -1,4 +1,10 @@
-import { IngredientModel, PizzaType, ProductModel, ProductType } from "@/types";
+import {
+  IngredientModel,
+  PizzaSizePrice,
+  PizzaType,
+  ProductModel,
+  ProductType,
+} from "@/types";
 import {
   Table,
   TableBody,
@@ -27,7 +33,7 @@ import { Separator } from "../ui/separator";
 import { ImagePopover } from "../ImagePopover/ImagePopover";
 import { ImageFormPopover } from "../ImageFormPopover/ImageFormPopover";
 import { ConfirmationDialog } from "../ConfirmationDialog/ConfirmationDialog";
-import { orderBy } from "@/helpers";
+import { isNill, orderBy } from "@/helpers";
 import { OrderableTableHead } from "../OrderableTableHead/OrderableTableHead";
 import { useOrder } from "@/hooks/useOrder";
 
@@ -38,11 +44,6 @@ interface IProductsTableProps {
   onAddOrUpdate?: (item: ProductModel, image?: any) => void;
   onDelete?: (item: ProductModel) => void;
 }
-
-type ProductPizzaType = {
-  productType: ProductType;
-  pizzaType: PizzaType | null;
-};
 
 const ProductsTable: React.FC<IProductsTableProps> = ({
   className,
@@ -58,7 +59,7 @@ const ProductsTable: React.FC<IProductsTableProps> = ({
   const name = useInput();
   const description = useInput();
   const price = useInput();
-  const [type, setType] = useState<ProductPizzaType | undefined>(undefined);
+  const [type, setType] = useState<ProductType | undefined>(undefined);
   const [selectedIngredients, setSelectedIngredients] = useState<
     IngredientModel[]
   >([]);
@@ -69,6 +70,9 @@ const ProductsTable: React.FC<IProductsTableProps> = ({
   const [confirmationDialogItem, setConfirmationDialogItem] = useState<
     ProductModel | undefined
   >(undefined);
+  const [pizzaSizePrice, setPizzaSizePrice] = useState<
+    PizzaSizePrice | undefined
+  >(undefined);
 
   const order = useOrder<ProductModel>();
 
@@ -76,46 +80,20 @@ const ProductsTable: React.FC<IProductsTableProps> = ({
 
   const options = [
     {
-      label: "Pizza 32 CM.",
-      value: {
-        productType: ProductType.Pizza,
-        pizzaType: PizzaType.Small,
-      } as ProductPizzaType,
-    },
-    {
-      label: "Pizza 40 CM.",
-      value: {
-        productType: ProductType.Pizza,
-        pizzaType: PizzaType.Medium,
-      } as ProductPizzaType,
-    },
-    {
-      label: "Pizza 50 CM.",
-      value: {
-        productType: ProductType.Pizza,
-        pizzaType: PizzaType.Large,
-      } as ProductPizzaType,
+      label: "Pizza",
+      value: ProductType.Pizza,
     },
     {
       label: "Sosy do pizzy",
-      value: {
-        productType: ProductType.Sauce,
-        pizzaType: null,
-      } as ProductPizzaType,
+      value: ProductType.Sauce,
     },
     {
       label: "Napoje",
-      value: {
-        productType: ProductType.Drink,
-        pizzaType: null,
-      } as ProductPizzaType,
+      value: ProductType.Drink,
     },
     {
       label: "Przekąski",
-      value: {
-        productType: ProductType.Snack,
-        pizzaType: null,
-      } as ProductPizzaType,
+      value: ProductType.Snack,
     },
   ];
 
@@ -125,8 +103,9 @@ const ProductsTable: React.FC<IProductsTableProps> = ({
     name.setValue(item.name);
     description.setValue(item.description);
     price.setValue(item.price.toString());
-    setType({ productType: item.productType, pizzaType: item.pizzaType });
+    setType(item.productType);
     setSelectedIngredients(item.ingredients);
+    setPizzaSizePrice(item.pizzaSizePrice);
 
     setReadeonlyItem(item);
   };
@@ -138,9 +117,9 @@ const ProductsTable: React.FC<IProductsTableProps> = ({
         name: name.value!,
         description: description.value,
         price: parseFloat(price.value!),
-        productType: type?.productType!,
-        pizzaType: type?.pizzaType ?? null,
+        productType: type!,
         ingredients: selectedIngredients,
+        pizzaSizePrice: pizzaSizePrice!,
       },
       selectedImage
     );
@@ -161,7 +140,12 @@ const ProductsTable: React.FC<IProductsTableProps> = ({
       productType: ProductType.Pizza,
       pizzaType: PizzaType.Small,
       ingredients: [],
-    };
+      pizzaSizePrice: {
+        Large: 0,
+        Medium: 0,
+        Small: 0,
+      },
+    } as ProductModel;
     setNewItem(item);
 
     onEdit(item);
@@ -225,35 +209,50 @@ const ProductsTable: React.FC<IProductsTableProps> = ({
                 </TableCell>
                 <TableCell>
                   {readonly(item) ? (
-                    <p>{item.price} zł</p>
+                    <>
+                      {item.productType === ProductType.Pizza ? (
+                        <ReadOnlyPrices item={item} />
+                      ) : (
+                        <p>{item.price} zł</p>
+                      )}
+                    </>
                   ) : (
-                    <TextInput {...price} numeric />
+                    <>
+                      {type === ProductType.Pizza ? (
+                        <EditPrices
+                          item={pizzaSizePrice!}
+                          onPizzaSizePriceChange={(item) =>
+                            setPizzaSizePrice(item)
+                          }
+                        />
+                      ) : (
+                        <TextInput {...price} numeric />
+                      )}
+                    </>
                   )}
                 </TableCell>
                 <TableCell>
                   {readonly(item) ? (
                     <p>
-                      {
-                        options.find(
-                          (x) =>
-                            x.value.productType === item.productType &&
-                            x.value.pizzaType === item.pizzaType
-                        )?.label
-                      }
+                      {options.find((x) => x.value === item.productType)?.label}
                     </p>
                   ) : (
                     <DropdownSwitch
                       className="font-normal"
                       options={options}
                       selectedValue={type}
-                      onSelectionClick={(item) => setType(item.value)}
-                      equalityComparison={(
-                        { value }: DropdownOption,
-                        selectedValue?: ProductPizzaType
-                      ) =>
-                        value.productType === selectedValue?.productType &&
-                        value.pizzaType === selectedValue?.pizzaType
-                      }
+                      onSelectionClick={(item) => {
+                        const type = item.value as ProductType;
+
+                        if (type === ProductType.Pizza) {
+                          setPizzaSizePrice({
+                            Large: 0,
+                            Medium: 0,
+                            Small: 0,
+                          });
+                        }
+                        setType(item.value);
+                      }}
                     />
                   )}
                 </TableCell>
@@ -364,6 +363,57 @@ const ProductsTable: React.FC<IProductsTableProps> = ({
         />
       )}
     </div>
+  );
+};
+
+const ReadOnlyPrices = ({ item }: { item: ProductModel }) => {
+  return (
+    <ul className="flex flex-col gap-1">
+      {Object.keys(PizzaType).map((type, key) => (
+        <li key={key}>
+          <p>{item.pizzaSizePrice[type as PizzaType].toFixed(2)} zł</p>
+        </li>
+      ))}
+    </ul>
+  );
+};
+
+const EditPrices = ({
+  item,
+  onPizzaSizePriceChange,
+}: {
+  item: PizzaSizePrice;
+  onPizzaSizePriceChange: (item: PizzaSizePrice) => void;
+}) => {
+  const update = (value: string | undefined, type: PizzaType) => {
+    onPizzaSizePriceChange({
+      ...item,
+      [type]: parseFloat(isNill(value) ? "0" : value!),
+    });
+  };
+
+  const small = useInput([], item[PizzaType.Small].toString(), (value) =>
+    update(value, PizzaType.Small)
+  );
+  const medium = useInput([], item[PizzaType.Medium].toString(), (value) =>
+    update(value, PizzaType.Medium)
+  );
+  const large = useInput([], item[PizzaType.Large].toString(), (value) =>
+    update(value, PizzaType.Large)
+  );
+
+  return (
+    <ul className="flex flex-col gap-2 w-[150px]">
+      <li>
+        <TextInput caption={"Mała"} numeric {...small} />
+      </li>
+      <li>
+        <TextInput caption={"Średnia"} numeric {...medium} />
+      </li>
+      <li>
+        <TextInput caption={"Duża"} numeric {...large} />
+      </li>
+    </ul>
   );
 };
 

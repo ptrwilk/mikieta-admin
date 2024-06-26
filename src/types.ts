@@ -49,6 +49,8 @@ export type OrderedProductModel = {
   replacedIngredients: ReplacedIngredientModel[];
 };
 
+export type PizzaSizePrice = { [key in PizzaType]: number };
+
 export type ProductModel = {
   id?: Guid;
   name: string;
@@ -59,6 +61,7 @@ export type ProductModel = {
   ingredients: IngredientModel[];
   imageId?: Guid;
   imageUrl?: string;
+  pizzaSizePrice: PizzaSizePrice;
 };
 
 export type IngredientModel = {
