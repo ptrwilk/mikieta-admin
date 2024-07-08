@@ -148,7 +148,8 @@ const EditContent: React.FC<IEditContentProps> = ({
   return (
     <div className="flex flex-col gap-6">
       <img
-        className={`w-[${IMG_WIDTH}px] h-[${IMG_WIDTH}px] object-fill self-center`}
+        className={"object-fill self-center"}
+        style={{ width: `${IMG_WIDTH}px`, height: `${IMG_WIDTH}px` }}
         src={isBlob ? URL.createObjectURL(src) : src}
       />
       <div className="flex gap-4">

@@ -17,7 +17,8 @@ const ImagePopover: React.FC<IImagePopoverProps> = ({ src }) => {
           </PopoverTrigger>
           <PopoverContent className="w-fit">
             <img
-              className={`w-[${IMG_WIDTH}px] h-[${IMG_WIDTH}px] object-fill`}
+              className={"object-fill"}
+              style={{ width: `${IMG_WIDTH}px`, height: `${IMG_WIDTH}px` }}
               src={src}
             />
           </PopoverContent>
