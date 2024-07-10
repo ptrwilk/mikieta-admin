@@ -25,6 +25,8 @@ export type OrderModel = {
   address: AddressModel;
   phone: string;
   cost: number;
+  costIncludingFee: number;
+  fee: number;
   deliveryPrice?: number;
   payed: boolean;
   deliveryMethod: DeliveryMethod;
