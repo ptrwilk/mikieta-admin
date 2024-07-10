@@ -92,10 +92,16 @@ const OrderTable: React.FC<IOrderTableProps> = ({
               Godzina dostawy
             </OrderableTableHead>
             <OrderableTableHead property="cost" {...order}>
-              Całkowity koszt
+              Koszt całkowity
+            </OrderableTableHead>
+            <OrderableTableHead property="costIncludingFee" {...order}>
+              Przychód
+            </OrderableTableHead>
+            <OrderableTableHead property="fee" {...order}>
+              Prowizja
             </OrderableTableHead>
             <OrderableTableHead property="deliveryPrice" {...order}>
-              Cena dostawy
+              Koszt dostawy
             </OrderableTableHead>
             <OrderableTableHead property="payed" {...order}>
               Płatność
@@ -144,6 +150,8 @@ const OrderTable: React.FC<IOrderTableProps> = ({
                 />
               </TableCell>
               <TableCell>{item.cost} zł</TableCell>
+              <TableCell>{item.costIncludingFee} zł</TableCell>
+              <TableCell>{item.fee} zł</TableCell>
               <TableCell>{item.deliveryPrice ?? 0} zł</TableCell>
               <TableCell>
                 <DropdownSwitch
