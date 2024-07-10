@@ -20,7 +20,7 @@ const ProductsSection = () => {
   }, []);
 
   const handleAddOrUpdate = async (item: ProductModel, image?: any) => {
-    let imageId: Guid | undefined = undefined;
+    let imageId: Guid | undefined = item.imageId;
     if (image) {
       const formData = new FormData();
 
