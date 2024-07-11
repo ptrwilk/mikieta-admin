@@ -1,25 +1,17 @@
-import { useEffect } from "react";
 import { Badge, Border, ButtonStatus } from "../../../../components";
 import styles from "./HeaderSection.module.css";
 import { useAppContext } from "@/context/AppContext";
-import { OrderModel, Status } from "@/types";
-import { useLoaderData } from "react-router-dom";
+import { Status } from "@/types";
 import { getOrders } from "@/apihelper";
 
 const HeaderSection = () => {
   const [app, updateApp] = useAppContext();
-
-  const data = useLoaderData() as OrderModel[];
 
   const statuses = [
     { text: "Oczukujące", status: Status.Waiting },
     { text: "W Przygotowaniu", status: Status.Preparing },
     { text: "Gotowe", status: Status.Ready },
   ];
-
-  useEffect(() => {
-    updateApp("orders", data);
-  }, []);
 
   const handleClick = async (status: Status) => {
     updateApp("selectedStatus", status);

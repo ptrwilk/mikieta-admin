@@ -23,6 +23,24 @@ export type SettingHoursModel = {
   to: string;
 };
 
+export type PagedResult<T> = {
+  data: T[];
+  maxPageCount: number;
+  maxRowCount: number;
+};
+
+export type AdminOrderModelQuery = {
+  limit?: number;
+  page?: number;
+  orderStatus?: Status;
+};
+
+export type ReservationModelQuery = {
+  limit?: number;
+  page?: number;
+  reservationStatus?: ReservationStatus;
+};
+
 export type OrderModel = {
   id: Guid;
   number: number;

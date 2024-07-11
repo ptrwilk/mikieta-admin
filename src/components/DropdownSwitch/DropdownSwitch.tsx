@@ -55,7 +55,7 @@ const DropdownSwitch: React.FC<IDropdownSwitchProps> = ({
           <Button
             variant={border ? "outline" : "ghost"}
             className={className}
-            disabled={readonly}
+            disabled={readonly || options.length === 1}
           >
             {label}
           </Button>

@@ -35,12 +35,16 @@ const ProductsSection = () => {
         })
       );
 
-      const orderIndex = app?.orders?.findIndex((x) => x.id === order.id);
-      const newOrders = [...app!.orders];
+      const orderIndex = app!.orders!.data.findIndex((x) => x.id === order.id);
+      const newOrders = [...app!.orders.data];
 
       newOrders[orderIndex!] = order;
 
-      updateApp("orders", newOrders);
+      updateApp("orders", {
+        data: newOrders,
+        maxPageCount: app!.orders!.maxPageCount,
+        maxRowCount: app!.orders!.maxRowCount,
+      });
     }
   };
 

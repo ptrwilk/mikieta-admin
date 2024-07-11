@@ -1,6 +1,12 @@
 const token = () => `Bearer ${localStorage.getItem("token")}` ?? "";
 
-import { OrderModel, ReservationModel } from "./types";
+import {
+  AdminOrderModelQuery,
+  OrderModel,
+  PagedResult,
+  ReservationModel,
+  ReservationModelQuery,
+} from "./types";
 
 const url = import.meta.env.VITE_API_URL;
 
@@ -83,6 +89,13 @@ const convertOrderModel = (item: OrderModel) => {
   };
 };
 
+const convertPagedOrderModel = (item: PagedResult<OrderModel>) => {
+  return {
+    ...item,
+    data: item.data.map((x) => convertOrderModel(x)),
+  };
+};
+
 const convertReservationModel = (item: ReservationModel) => {
   return {
     ...item,
@@ -90,15 +103,34 @@ const convertReservationModel = (item: ReservationModel) => {
   };
 };
 
-export const getOrders = () => get("order", convertOrderModel);
+const convertPagedReservationModel = (item: PagedResult<ReservationModel>) => {
+  return {
+    ...item,
+    data: item.data.map((x) => convertReservationModel(x)),
+  };
+};
+
+export const getOrders = (query?: AdminOrderModelQuery) =>
+  get(`order${toQuery(query)}`, convertPagedOrderModel);
 export const putOrder = (item: OrderModel) =>
   put("order", item, convertOrderModel);
 
-export const getReservations = () =>
-  get("reservation", convertReservationModel);
+export const getReservations = (query?: ReservationModelQuery) =>
+  get(`reservation${toQuery(query)}`, convertPagedReservationModel);
 export const putReservation = (item: ReservationModel) =>
   put("reservation", item, convertReservationModel);
 
 function isArray(value: any) {
   return value instanceof Array;
 }
+
+const toQuery = (query?: any) => {
+  if (query === undefined) return "";
+
+  let res = "?";
+  for (var i = 0; i < Object.keys(query).length; i++) {
+    res += `${Object.keys(query)[i]}=${Object.values(query)[i]}&`;
+  }
+
+  return res;
+};
