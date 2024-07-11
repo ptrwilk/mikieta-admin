@@ -4,7 +4,7 @@ import { HoursRange, TextInput } from "@/components";
 import { Button } from "@/components/ui/button";
 import { useAppContext } from "@/context/AppContext";
 import { useInput, useMultipleHoursRange } from "@/hooks";
-import { SettingModel } from "@/types";
+import { DayOfTheWeek, SettingModel } from "@/types";
 import classNames from "classnames";
 import { useEffect, useState } from "react";
 import { useLoaderData } from "react-router-dom";
@@ -21,26 +21,30 @@ const OptionsSection = () => {
   const deliveryRange = useInput([], data.deliveryRange?.toString());
   const deliveryPrice = useInput([], data.deliveryPrice?.toString());
   const email = useInput([], data.email);
+  const [closures, setClosures] = useState<DayOfTheWeek[]>(
+    data.closures.map((x) => x.closedOn)
+  );
 
-  const days = [
-    "Poniedziałek",
-    "Wtorek",
-    "Środa",
-    "Czwartek",
-    "Piątek",
-    "Sobota",
-    "Niedziela",
-  ];
+  const days: { [key in DayOfTheWeek]: string } = {
+    Monday: "Poniedziałek",
+    Tuesday: "Wtorek",
+    Wednesday: "Środa",
+    Thursday: "Czwartek",
+    Friday: "Piątek",
+    Saturday: "Sobota",
+    Sunday: "Niedziela",
+  };
+
   const openingHours = useMultipleHoursRange(
-    days.map((day, i) => ({
-      title: day,
+    Object.keys(days).map((day, i) => ({
+      title: days[day as DayOfTheWeek],
       from: data.openingHours[i].from,
       to: data.openingHours[i].to,
     }))
   );
   const deliveryHours = useMultipleHoursRange(
-    days.map((day, i) => ({
-      title: day,
+    Object.keys(days).map((day, i) => ({
+      title: days[day as DayOfTheWeek],
       from: data.deliveryHours[i].from,
       to: data.deliveryHours[i].to,
     }))
@@ -88,6 +92,7 @@ const OptionsSection = () => {
         from: hour.from,
         to: hour.to,
       })),
+      closures: closures.map((x) => ({ closedOn: x })),
     };
 
     const res = await put("setting", settings);
@@ -106,18 +111,19 @@ const OptionsSection = () => {
     email.setValue(app!.settings!.email);
     deliveryPrice.setValue(app!.settings!.deliveryPrice?.toString());
     deliveryRange.setValue(app!.settings!.deliveryRange?.toString());
+    setClosures(app!.settings!.closures.map((x) => x.closedOn));
 
     openingHours.setValues(
-      days.map((day, i) => ({
-        title: day,
+      Object.keys(days).map((day, i) => ({
+        title: days[day as DayOfTheWeek],
         from: app!.settings!.openingHours[i].from,
         to: app!.settings!.openingHours[i].to,
       }))
     );
 
     deliveryHours.setValues(
-      days.map((day, i) => ({
-        title: day,
+      Object.keys(days).map((day, i) => ({
+        title: days[day as DayOfTheWeek],
         from: app!.settings!.deliveryHours[i].from,
         to: app!.settings!.deliveryHours[i].to,
       }))
@@ -245,6 +251,32 @@ const OptionsSection = () => {
             </div>
           </li>
         </ul>
+        <div className="mt-4">
+          <p className="text-sm font-medium">Nieczynne</p>
+          <ul className="flex gap-4 mt-4">
+            {Object.keys(days).map((day, key) => (
+              <li key={key}>
+                <Button
+                  disabled={!isEdit}
+                  variant={
+                    closures.some((x) => x === day) ? "default" : "outline"
+                  }
+                  onClick={() => {
+                    if (closures.some((x) => x === day)) {
+                      setClosures(
+                        closures.filter((x) => x !== (day as DayOfTheWeek))
+                      );
+                    } else {
+                      setClosures([...closures, day as DayOfTheWeek]);
+                    }
+                  }}
+                >
+                  {days[day as DayOfTheWeek]}
+                </Button>
+              </li>
+            ))}
+          </ul>
+        </div>
         <div className="flex gap-4 mt-8">
           {isEdit ? (
             <>

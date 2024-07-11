@@ -1,5 +1,9 @@
 export type Guid = string;
 
+export type ClosureModel = {
+  closedOn: DayOfTheWeek;
+};
+
 export type SettingModel = {
   street?: string;
   city?: string;
@@ -11,6 +15,7 @@ export type SettingModel = {
   email?: string;
   openingHours: SettingHoursModel[];
   deliveryHours: SettingHoursModel[];
+  closures: ClosureModel[];
 };
 
 export type SettingHoursModel = {
@@ -114,6 +119,16 @@ export type ReservationModel = {
   createdAt: Date;
   emailSent: boolean;
 };
+
+export enum DayOfTheWeek {
+  Monday = "Monday",
+  Tuesday = "Tuesday",
+  Wednesday = "Wednesday",
+  Thursday = "Thursday",
+  Friday = "Friday",
+  Saturday = "Saturday",
+  Sunday = "Sunday",
+}
 
 export enum PizzaType {
   Small = "Small",
