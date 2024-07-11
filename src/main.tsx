@@ -31,13 +31,6 @@ const router = createBrowserRouter([
       </Authenticated>
     ),
     path: "/",
-    loader: async () => {
-      try {
-        return await getOrders();
-      } catch (e) {
-        return [];
-      }
-    },
   },
   {
     element: (
@@ -46,13 +39,6 @@ const router = createBrowserRouter([
       </Authenticated>
     ),
     path: "/rezerwacje",
-    loader: async () => {
-      try {
-        return await getReservations();
-      } catch (e) {
-        return [];
-      }
-    },
   },
   {
     element: (

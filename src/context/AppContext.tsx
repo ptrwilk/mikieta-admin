@@ -1,6 +1,7 @@
 import {
   IngredientModel,
   OrderModel,
+  PagedResult,
   ProductModel,
   ProductStatus,
   ReservationModel,
@@ -11,9 +12,9 @@ import {
 import { createContext, useContext, useState } from "react";
 
 type AppState = {
-  orders: OrderModel[];
+  orders: PagedResult<OrderModel>;
   selectedOrder?: OrderModel;
-  reservations: ReservationModel[];
+  reservations: PagedResult<ReservationModel>;
   products: ProductModel[];
   ingredients: IngredientModel[];
   newOrdersAmount?: number;
@@ -39,9 +40,9 @@ export const useAppContext = () => useContext(AppContext);
 
 export const AppContextProvider = ({ children }: { children: any }) => {
   const [state, setState] = useState<AppState>({
-    orders: [],
+    orders: { data: [], maxPageCount: 0, maxRowCount: 0 },
     selectedStatus: Status.Waiting,
-    reservations: [],
+    reservations: { data: [], maxPageCount: 0, maxRowCount: 0 },
     products: [],
     ingredients: [],
     selectedReservationStatus: ReservationStatus.Waiting,

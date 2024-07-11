@@ -2,7 +2,6 @@ import { AddressModel, DeliveryMethod, OrderModel, Status } from "@/types";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -14,7 +13,9 @@ import {
   AddressDialog,
   DateTimePicker,
   DropdownSwitch,
+  IPagingProps,
   OrderableTableHead,
+  Paging,
   Rectangles,
 } from "..";
 import { useState } from "react";
@@ -24,6 +25,7 @@ import { orderBy } from "@/helpers";
 interface IOrderTableProps {
   items?: OrderModel[];
   selectedItem?: OrderModel;
+  paging?: IPagingProps;
   onRowClick?: (item: OrderModel) => void;
   onUpdate?: (item: OrderModel) => void;
 }
@@ -31,6 +33,7 @@ interface IOrderTableProps {
 const OrderTable: React.FC<IOrderTableProps> = ({
   items = [],
   selectedItem,
+  paging,
   onRowClick,
   onUpdate,
 }) => {
@@ -68,9 +71,8 @@ const OrderTable: React.FC<IOrderTableProps> = ({
   //dodany to nie mozna zmienic statusu na oczekujace
 
   return (
-    <>
+    <div className="h-[500px] w-full overflow-auto overflow-x-scroll flex flex-col">
       <Table className={styles["OrderTable"]}>
-        <TableCaption>A list of your recent invoices.</TableCaption>
         <TableHeader>
           <TableRow>
             <OrderableTableHead property="number" {...order}>
@@ -107,7 +109,7 @@ const OrderTable: React.FC<IOrderTableProps> = ({
               Płatność
             </OrderableTableHead>
             <OrderableTableHead property="completedProducts" {...order}>
-              Klocki
+              Gotowe
             </OrderableTableHead>
             <OrderableTableHead property="deliveryMethod" {...order}>
               Odbiór
@@ -200,6 +202,10 @@ const OrderTable: React.FC<IOrderTableProps> = ({
           ))}
         </TableBody>
       </Table>
+      <Paging
+        className="sticky left-0 bottom-0 mt-auto p-4 bg-white w-full"
+        {...paging}
+      />
       {selectedAddressId !== undefined && (
         <AddressDialog
           open={selectedAddressId !== undefined}
@@ -208,7 +214,7 @@ const OrderTable: React.FC<IOrderTableProps> = ({
           defaultValue={items?.find((x) => x.id === selectedAddressId)?.address}
         />
       )}
-    </>
+    </div>
   );
 };
 

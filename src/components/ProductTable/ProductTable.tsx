@@ -3,7 +3,6 @@ import { Rectangle } from "../Rectangle/Rectangle";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -30,7 +29,6 @@ const ProductTable: React.FC<IProductTableProps> = ({
 
   return (
     <Table className={classNames(className, styles["ProductTable"])}>
-      <TableCaption>A list of your recent invoices.</TableCaption>
       <TableHeader>
         <TableRow>
           <TableHead className="w-[50px]">Nr.</TableHead>

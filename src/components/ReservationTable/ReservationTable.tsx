@@ -2,7 +2,6 @@ import { ReservationModel, ReservationStatus } from "@/types";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -21,13 +20,16 @@ import { put } from "@/apihelper";
 import { useOrder } from "@/hooks/useOrder";
 import { orderBy } from "@/helpers";
 import { OrderableTableHead } from "../OrderableTableHead/OrderableTableHead";
+import { IPagingProps, Paging } from "../Paging/Paging";
 
 interface IReservationTableProps {
+  paging?: IPagingProps;
   items?: ReservationModel[];
   onUpdate?: (item: ReservationModel, callApi: boolean) => void;
 }
 
 const ReservationTable: React.FC<IReservationTableProps> = ({
+  paging,
   items = [],
   onUpdate,
 }) => {
@@ -62,9 +64,8 @@ const ReservationTable: React.FC<IReservationTableProps> = ({
   };
 
   return (
-    <>
+    <div className="min-h-[500px] w-full overflow-auto overflow-x-scroll flex flex-col">
       <Table className={styles["ReservationTable"]}>
-        <TableCaption>A list of your recent invoices.</TableCaption>
         <TableHeader>
           <TableRow>
             <OrderableTableHead property="number" {...order}>
@@ -151,6 +152,10 @@ const ReservationTable: React.FC<IReservationTableProps> = ({
           ))}
         </TableBody>
       </Table>
+      <Paging
+        className="sticky left-0 bottom-0 mt-auto p-4 bg-white w-full"
+        {...paging}
+      />
       <TextDialog
         open={!!comments}
         title="Uwagi"
@@ -163,7 +168,7 @@ const ReservationTable: React.FC<IReservationTableProps> = ({
         onClose={() => setEmailDialogItem(undefined)}
         onSend={handleEmailSend}
       />
-    </>
+    </div>
   );
 };
 
