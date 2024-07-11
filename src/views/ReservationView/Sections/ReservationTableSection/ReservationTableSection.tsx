@@ -3,12 +3,9 @@ import { PagingOption, ReservationTable } from "@/components";
 import { useAppContext } from "@/context/AppContext";
 import { PagedResult, ReservationModel } from "@/types";
 import { useEffect, useState } from "react";
-import { useLoaderData } from "react-router-dom";
 
 const ReservationTableSection = () => {
   const [app, updateApp] = useAppContext();
-
-  const data = useLoaderData() as PagedResult<ReservationModel>;
 
   const [selectedRow, setSelectedRow] = useState<PagingOption>({
     label: "10",

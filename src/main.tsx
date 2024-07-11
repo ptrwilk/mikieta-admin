@@ -4,7 +4,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import "./styles/global.css";
 import "./styles/theme.css";
 import { AppContextProvider, useAppContext } from "./context/AppContext";
-import { get, getOrders, getReservations } from "./apihelper";
+import { get } from "./apihelper";
 import { ReservationView } from "./views/ReservationView/ReservationView";
 import { useSignalR } from "ptrwilk-packages";
 import { toast } from "./components/ui/use-toast";
