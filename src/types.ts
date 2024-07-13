@@ -178,6 +178,7 @@ export enum ProductType {
 }
 
 export enum Status {
+  Cancelled = "Cancelled",
   Waiting = "Waiting",
   Preparing = "Preparing",
   Ready = "Ready",
