@@ -13,119 +13,146 @@ import classNames from "classnames";
 import { useOrder } from "@/hooks/useOrder";
 import { orderBy } from "@/helpers";
 import { OrderableTableHead } from "../OrderableTableHead/OrderableTableHead";
+import { TooltipProvider } from "../ui/tooltip";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 
 interface IProductTableProps {
   className?: string;
   items?: OrderedProductModel[];
   onUpdate?: (item: OrderedProductModel) => void;
+  canUpdate?: boolean;
 }
 
 const ProductTable: React.FC<IProductTableProps> = ({
   className,
   items = [],
   onUpdate,
+  canUpdate,
 }) => {
   const order = useOrder<OrderedProductModel>();
 
+  const Ready = ({ item }: { item: OrderedProductModel }) => {
+    return (
+      <Rectangle
+        className="cursor-pointer"
+        selected={item.ready}
+        onClick={() => canUpdate && onUpdate?.({ ...item, ready: !item.ready })}
+      />
+    );
+  };
+
   return (
-    <Table className={classNames(className, styles["ProductTable"])}>
-      <TableHeader>
-        <TableRow>
-          <TableHead className="w-[50px]">Nr.</TableHead>
-          <OrderableTableHead property="name" {...order}>
-            Nazwa
-          </OrderableTableHead>
-          <OrderableTableHead property="productType" {...order}>
-            Typ
-          </OrderableTableHead>
-          <OrderableTableHead property="pizzaType" {...order}>
-            Rozmiar
-          </OrderableTableHead>
-          <OrderableTableHead property="price" {...order}>
-            Cena
-          </OrderableTableHead>
-          <OrderableTableHead property="quantity" {...order}>
-            Ilość
-          </OrderableTableHead>
-          <TableHead>Usunięte składniki</TableHead>
-          <TableHead>Dodatkowe składniki</TableHead>
-          <TableHead>Zamienione składniki</TableHead>
-          <OrderableTableHead property="ready" {...order}>
-            Gotowe
-          </OrderableTableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {(order
-          ? orderBy(items, order.prop as any, order.direction!)
-          : items
-        )?.map((item, key) => (
-          <TableRow
-            className={classNames({ "bg-green-200": item.ready })}
-            key={key}
-          >
-            <TableCell>
-              <p>{key + 1}</p>
-            </TableCell>
-            <TableCell>
-              <p>{item.name}</p>
-            </TableCell>
-            <TableCell>
-              <p>{productTypeToType(item.productType)}</p>
-            </TableCell>
-            <TableCell>
-              <p>{productTypeToSize(item.pizzaType)}</p>
-            </TableCell>
-            <TableCell>
-              <p>{item.price?.toFixed(2)} zł</p>
-            </TableCell>
-            <TableCell>
-              <p>{item.quantity}</p>
-            </TableCell>
-            <TableCell>
-              <ul>
-                {item.removedIngredients.map(({ name }, key) => (
-                  <li key={key}>
-                    <p className="line-through">{name}</p>
-                  </li>
-                ))}
-              </ul>
-            </TableCell>
-            <TableCell>
-              <ul>
-                {item.additionalIngredients.map(({ name, quantity }, key) => (
-                  <li key={key}>
-                    <p>
-                      {name} {quantity > 1 ? `x${quantity}` : ""}
-                    </p>
-                  </li>
-                ))}
-              </ul>
-            </TableCell>
-            <TableCell>
-              <ul>
-                {item.replacedIngredients.map(({ fromName, toName }, key) => (
-                  <li key={key}>
-                    <div className="flex">
-                      <p>{fromName}</p>
-                      <p className="px-1">{"->"}</p>
-                      <p>{toName}</p>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </TableCell>
-            <TableCell>
-              <Rectangle
-                className="cursor-pointer"
-                selected={item.ready}
-                onClick={() => onUpdate?.({ ...item, ready: !item.ready })}
-              />
-            </TableCell>
+    <TooltipProvider>
+      <Table className={classNames(className, styles["ProductTable"])}>
+        <TableHeader>
+          <TableRow>
+            <TableHead className="w-[50px]">Nr.</TableHead>
+            <OrderableTableHead property="name" {...order}>
+              Nazwa
+            </OrderableTableHead>
+            <OrderableTableHead property="productType" {...order}>
+              Typ
+            </OrderableTableHead>
+            <OrderableTableHead property="pizzaType" {...order}>
+              Rozmiar
+            </OrderableTableHead>
+            <OrderableTableHead property="price" {...order}>
+              Cena
+            </OrderableTableHead>
+            <OrderableTableHead property="quantity" {...order}>
+              Ilość
+            </OrderableTableHead>
+            <TableHead>Usunięte składniki</TableHead>
+            <TableHead>Dodatkowe składniki</TableHead>
+            <TableHead>Zamienione składniki</TableHead>
+            <OrderableTableHead property="ready" {...order}>
+              Gotowe
+            </OrderableTableHead>
           </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+        </TableHeader>
+        <TableBody>
+          {(order
+            ? orderBy(items, order.prop as any, order.direction!)
+            : items
+          )?.map((item, key) => (
+            <TableRow
+              className={classNames({ "bg-green-200": item.ready })}
+              key={key}
+            >
+              <TableCell>
+                <p>{key + 1}</p>
+              </TableCell>
+              <TableCell>
+                <p>{item.name}</p>
+              </TableCell>
+              <TableCell>
+                <p>{productTypeToType(item.productType)}</p>
+              </TableCell>
+              <TableCell>
+                <p>{productTypeToSize(item.pizzaType)}</p>
+              </TableCell>
+              <TableCell>
+                <p>{item.price?.toFixed(2)} zł</p>
+              </TableCell>
+              <TableCell>
+                <p>{item.quantity}</p>
+              </TableCell>
+              <TableCell>
+                <ul>
+                  {item.removedIngredients.map(({ name }, key) => (
+                    <li key={key}>
+                      <p className="line-through">{name}</p>
+                    </li>
+                  ))}
+                </ul>
+              </TableCell>
+              <TableCell>
+                <ul>
+                  {item.additionalIngredients.map(({ name, quantity }, key) => (
+                    <li key={key}>
+                      <p>
+                        {name} {quantity > 1 ? `x${quantity}` : ""}
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+              </TableCell>
+              <TableCell>
+                <ul>
+                  {item.replacedIngredients.map(({ fromName, toName }, key) => (
+                    <li key={key}>
+                      <div className="flex">
+                        <p>{fromName}</p>
+                        <p className="px-1">{"->"}</p>
+                        <p>{toName}</p>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </TableCell>
+              <TableCell>
+                <>
+                  {canUpdate ? (
+                    <Ready item={item} />
+                  ) : (
+                    <Popover>
+                      <PopoverTrigger className="flex items-center">
+                        <Ready item={item} />
+                      </PopoverTrigger>
+                      <PopoverContent>
+                        <p>
+                          Aby aktualizować, zmień status na 'W Przygotowaniu'.
+                        </p>
+                      </PopoverContent>
+                    </Popover>
+                  )}
+                </>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TooltipProvider>
   );
 };
 
