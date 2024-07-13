@@ -3,6 +3,7 @@ import { useAppContext } from "@/context/AppContext";
 import { FaCalendarCheck, FaCarrot, FaShoppingCart } from "react-icons/fa";
 import { useLocation } from "react-router-dom";
 import { IoMdSettings } from "react-icons/io";
+import classNames from "classnames";
 
 interface IMenuViewProps {
   className?: string;
@@ -24,7 +25,7 @@ const MenuSection: React.FC<IMenuViewProps> = ({ className }) => {
 
   return (
     <Menu
-      className={className}
+      className={classNames(className, "sticky top-0 self-start")}
       selectedOption={selectedOption}
       options={[
         {
