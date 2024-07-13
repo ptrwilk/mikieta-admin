@@ -2,6 +2,7 @@ const token = () => `Bearer ${localStorage.getItem("token")}` ?? "";
 
 import {
   AdminOrderModelQuery,
+  Guid,
   OrderModel,
   PagedResult,
   ReservationModel,
@@ -38,7 +39,7 @@ export const get = (path: string, convert?: (item: any) => any) => {
 
 export const post = (path: string, body: any, convert?: (item: any) => any) =>
   execute("POST", path, body, convert);
-export const put = (path: string, body: any, convert?: (item: any) => any) =>
+export const put = (path: string, body?: any, convert?: (item: any) => any) =>
   execute("PUT", path, body, convert);
 export const del = (path: string) => execute("DELETE", path, null, undefined);
 
@@ -60,7 +61,11 @@ const execute = (
           "Content-Type": "application/json",
           Authorization: token(),
         },
-    body: isFormData ? body : JSON.stringify(body),
+    body: isFormData
+      ? body
+      : body === undefined
+      ? undefined
+      : JSON.stringify(body),
   }).then(async (response) => {
     const res = await response.json();
 
@@ -112,6 +117,10 @@ const convertPagedReservationModel = (item: PagedResult<ReservationModel>) => {
 
 export const getOrders = (query?: AdminOrderModelQuery) =>
   get(`order${toQuery(query)}`, convertPagedOrderModel);
+
+export const getOrder = (orderId: Guid) =>
+  get(`order/${orderId}`, convertOrderModel);
+
 export const putOrder = (item: OrderModel) =>
   put("order", item, convertOrderModel);
 
