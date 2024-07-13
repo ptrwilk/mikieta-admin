@@ -49,6 +49,7 @@ const OrderTable: React.FC<IOrderTableProps> = ({
   ];
 
   const statusOptions = [
+    { label: "Anulowane", value: Status.Cancelled },
     { label: "Oczekujące", value: Status.Waiting },
     { label: "W Przygotowaniu", value: Status.Preparing },
     { label: "Gotowe", value: Status.Ready },
@@ -190,8 +191,10 @@ const OrderTable: React.FC<IOrderTableProps> = ({
                     item.status === Status.Waiting
                       ? [Status.Ready]
                       : item.status === Status.Preparing
-                      ? [Status.Waiting, Status.Ready]
-                      : [Status.Waiting]
+                      ? [Status.Cancelled]
+                      : item.status === Status.Cancelled
+                      ? [Status.Preparing, Status.Ready]
+                      : [Status.Waiting, Status.Cancelled]
                   }
                   onSelectionClick={(z) =>
                     onUpdate?.({ ...item, status: z.value })

@@ -8,6 +8,7 @@ const HeaderSection = () => {
   const [app, updateApp] = useAppContext();
 
   const statuses = [
+    { text: "Anulowane", status: Status.Cancelled },
     { text: "Oczukujące", status: Status.Waiting },
     { text: "W Przygotowaniu", status: Status.Preparing },
     { text: "Gotowe", status: Status.Ready },

@@ -68,7 +68,7 @@ const DropdownSwitch: React.FC<IDropdownSwitchProps> = ({
                 .filter((x) =>
                   excludedValues.length === 0
                     ? x
-                    : excludedValues?.some((y) => y !== x.value)
+                    : excludedValues.every((y) => y !== x.value)
                 )
                 .map((option, key) => (
                   <DropdownMenuItem
