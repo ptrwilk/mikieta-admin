@@ -32,13 +32,13 @@ const MenuSection: React.FC<IMenuViewProps> = ({ className }) => {
           icon: <FaShoppingCart />,
           label: "Zamówienia",
           to: "/",
-          amount: selectedOption === 1 ? app?.newOrdersAmount : 0,
+          amount: selectedOption !== 0 ? app?.newOrdersAmount : 0,
         },
         {
           icon: <FaCalendarCheck />,
           label: "Rezerewacje",
           to: "/rezerwacje",
-          amount: selectedOption === 0 ? app?.newReservationsAmount : 0,
+          amount: selectedOption !== 1 ? app?.newReservationsAmount : 0,
         },
         {
           icon: <FaCarrot />,
