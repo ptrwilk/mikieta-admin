@@ -31,7 +31,7 @@ const HeaderSection = () => {
         <ul>
           {statuses.map(({ status, text }, key) => (
             <li key={key}>
-              <Badge amount={key === 0 ? app!.newOrdersAmount : 0}>
+              <Badge amount={key === 1 ? app!.newOrdersAmount : 0}>
                 <ButtonStatus
                   selected={status === app!.selectedStatus}
                   number={key + 1}
