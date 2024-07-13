@@ -24,6 +24,7 @@ type AppState = {
   selectedProductStatus: ProductStatus;
   settings?: SettingModel;
   authenticated?: boolean;
+  busy?: boolean;
 };
 
 const AppContext = createContext<

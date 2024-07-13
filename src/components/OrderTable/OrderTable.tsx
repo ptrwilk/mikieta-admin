@@ -125,9 +125,15 @@ const OrderTable: React.FC<IOrderTableProps> = ({
           )?.map((item, key) => (
             <TableRow
               key={key}
-              className={classNames("cursor-pointer", {
-                "bg-slate-200": item.id === selectedItem?.id,
-              })}
+              className={classNames(
+                "cursor-pointer",
+                {
+                  "bg-slate-200": item.id === selectedItem?.id,
+                },
+                {
+                  "bg-green-200": item.totalProducts === item.completedProducts,
+                }
+              )}
               onClick={() => item && onRowClick?.(item)}
             >
               <TableCell>#{item.number}</TableCell>

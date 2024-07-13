@@ -11,6 +11,12 @@ const ProductsSection = () => {
   const [status, setStatus] = useState<boolean | undefined>(undefined);
 
   const handleUpdate = async (item: OrderedProductModel) => {
+    if (app!.busy) {
+      return;
+    }
+
+    updateApp("busy", true);
+
     const index = app?.selectedOrder?.products?.findIndex(
       (x) => x.id === item.id
     );
@@ -46,12 +52,16 @@ const ProductsSection = () => {
         maxRowCount: app!.orders!.maxRowCount,
       });
     }
+
+    updateApp("busy", false);
   };
 
   return (
     <div className={styles["ProductsSection"]}>
       <div className={styles["Header"]}>
-        <h1>Produkty</h1>
+        <h1>
+          Produkty {app!.selectedOrder && `#${app!.selectedOrder.number}`}
+        </h1>
         <StatusFilter
           status={status}
           onClick={(status) =>
