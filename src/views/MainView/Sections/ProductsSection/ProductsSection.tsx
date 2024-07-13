@@ -2,7 +2,7 @@ import { StatusFilter, ProductTable } from "@/components";
 import styles from "./ProductsSection.module.css";
 import { useState } from "react";
 import { useAppContext } from "@/context/AppContext";
-import { OrderModel, OrderedProductModel } from "@/types";
+import { OrderModel, OrderedProductModel, Status } from "@/types";
 import { get, put } from "@/apihelper";
 
 const ProductsSection = () => {
@@ -75,6 +75,7 @@ const ProductsSection = () => {
             (x) => status === undefined || x.ready === status
           )}
           onUpdate={handleUpdate}
+          canUpdate={app!.selectedStatus === Status.Preparing}
         />
       </div>
     </div>
