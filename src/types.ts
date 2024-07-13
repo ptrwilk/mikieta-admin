@@ -50,6 +50,7 @@ export type OrderModel = {
   cost: number;
   costIncludingFee: number;
   fee: number;
+  shouldCalculateFee: boolean;
   deliveryPrice?: number;
   payed: boolean;
   deliveryMethod: DeliveryMethod;
@@ -59,6 +60,7 @@ export type OrderModel = {
   completedProducts: number;
   deliveryAt: Date;
   createdAt: Date;
+  loading?: boolean;
 };
 
 export type OrderedProductModel = {

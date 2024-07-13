@@ -1,4 +1,4 @@
-import { get, getOrders, putOrder } from "@/apihelper";
+import { get, getOrder, getOrders, put, putOrder } from "@/apihelper";
 import { OrderTable, PagingOption } from "@/components";
 import { useAppContext } from "@/context/AppContext";
 import { OrderModel, OrderedProductModel, PagedResult } from "@/types";
@@ -29,20 +29,24 @@ const OrderSection = () => {
     updateApp("selectedOrder", { ...item, products });
   };
 
+  const updateItem = (index: number, item: OrderModel) => {
+    const newOrders = [...app!.orders.data];
+    newOrders[index] = item;
+
+    updateApp("orders", {
+      data: newOrders,
+      maxPageCount: app!.orders.maxPageCount,
+      maxRowCount: app!.orders.maxRowCount,
+    });
+  };
+
   const handleUpdate = async (item: OrderModel) => {
     const index = app!.orders.data.findIndex((x) => x.id === item.id);
 
-    if (index !== undefined) {
+    if (index !== -1) {
       const order = (await putOrder(item)) as OrderModel;
 
-      const newOrders = [...app!.orders.data];
-      newOrders[index] = order;
-
-      updateApp("orders", {
-        data: newOrders,
-        maxPageCount: app!.orders.maxPageCount,
-        maxRowCount: app!.orders.maxRowCount,
-      });
+      updateItem(index, order);
     }
   };
 
@@ -68,6 +72,23 @@ const OrderSection = () => {
     setSelectedPage(page);
   };
 
+  const handleCalculateFee = async (item: OrderModel) => {
+    updateApp("busy", true);
+
+    const index = app!.orders.data.findIndex((x) => x.id === item.id);
+    if (index !== -1) {
+      updateItem(index, { ...item, loading: true });
+
+      await put(`order/${item.id}/calculate-transaction-fee`);
+
+      const order = (await getOrder(item.id)) as OrderModel;
+
+      updateItem(index, order);
+    }
+
+    updateApp("busy", false);
+  };
+
   return (
     <OrderTable
       items={app!.orders.data}
@@ -82,6 +103,7 @@ const OrderSection = () => {
       }}
       onRowClick={handleRowClick}
       onUpdate={handleUpdate}
+      onCalculateFee={handleCalculateFee}
     />
   );
 };
