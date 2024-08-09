@@ -164,8 +164,15 @@ const productTypeToType = (productType: ProductType) => {
       return "Napój";
     case ProductType.Sauce:
       return "Sos";
-    case ProductType.Snack:
-      return "Przekąska";
+    case ProductType.Desert:
+      return "Deser";
+    case ProductType.Salad:
+      return "Sałatka";
+    case ProductType.Macaron:
+      return "Makaron";
+    case ProductType.Dinner:
+      return "Obiad";
+
     default:
       throw new Error(`Product type ${productType} not defined`);
   }
