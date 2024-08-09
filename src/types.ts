@@ -94,7 +94,6 @@ export type ProductModel = {
 export type IngredientModel = {
   id?: Guid;
   name: string;
-  priceSmall: number;
   priceMedium: number;
   priceLarge: number;
 };
@@ -151,7 +150,6 @@ export enum DayOfTheWeek {
 }
 
 export enum PizzaType {
-  Small = "Small",
   Medium = "Medium",
   Large = "Large",
 }
@@ -176,7 +174,10 @@ export enum ProductType {
   Pizza = "Pizza",
   Drink = "Drink",
   Sauce = "Sauce",
-  Snack = "Snack",
+  Desert = "Desert",
+  Salad = "Salad",
+  Macaron = "Macaron",
+  Dinner = "Dinner",
 }
 
 export enum Status {
@@ -204,8 +205,6 @@ export const productTypeToSize = (type?: PizzaType | null) => {
       return "Duża";
     case PizzaType.Medium:
       return "Średnia";
-    case PizzaType.Small:
-      return "Mała";
     default:
       return "-";
   }

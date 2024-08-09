@@ -38,7 +38,6 @@ const IngredientsTable: React.FC<IIngredientsTableProps> = ({
   onDelete,
 }) => {
   const name = useInput();
-  const priceSmall = useInput();
   const priceMedium = useInput();
   const priceLarge = useInput();
 
@@ -61,7 +60,6 @@ const IngredientsTable: React.FC<IIngredientsTableProps> = ({
 
   const onEdit = (item: IngredientModel) => {
     name.setValue(item.name);
-    priceSmall.setValue(item.priceSmall.toString());
     priceMedium.setValue(item.priceMedium.toString());
     priceLarge.setValue(item.priceLarge.toString());
 
@@ -72,7 +70,6 @@ const IngredientsTable: React.FC<IIngredientsTableProps> = ({
     onAddOrUpdate?.({
       ...readonlyItem!,
       name: name.value!,
-      priceSmall: +priceSmall.value!,
       priceMedium: +priceMedium.value!,
       priceLarge: +priceLarge.value!,
     });
@@ -87,8 +84,7 @@ const IngredientsTable: React.FC<IIngredientsTableProps> = ({
   const onAddNewItemClick = () => {
     const item = {
       name: "",
-      pizzaType: PizzaType.Small,
-      priceSmall: 0,
+      pizzaType: PizzaType.Medium,
       priceMedium: 0,
       priceLarge: 0,
     } as IngredientModel;
@@ -105,9 +101,6 @@ const IngredientsTable: React.FC<IIngredientsTableProps> = ({
             <TableHead className="w-[50px]">Nr.</TableHead>
             <OrderableTableHead property="name" {...order}>
               Nazwa
-            </OrderableTableHead>
-            <OrderableTableHead property="priceSmall" {...order}>
-              Mała cena
             </OrderableTableHead>
             <OrderableTableHead property="priceMedium" {...order}>
               Średnia cena
@@ -133,11 +126,6 @@ const IngredientsTable: React.FC<IIngredientsTableProps> = ({
                   readonly={readonly(item)}
                   read={<p>{item.name}</p>}
                   edit={<TextInput {...name} autoFocus />}
-                />
-                <EditableCell
-                  readonly={readonly(item)}
-                  read={<p>{item.priceSmall} zł</p>}
-                  edit={<TextInput {...priceSmall} numeric />}
                 />
                 <EditableCell
                   readonly={readonly(item)}
